@@ -36,7 +36,7 @@ namespace UCM.IAV.Movimiento
         protected Agente agente;
 
         /// <summary>
-        /// Al despertar, establecer el agente que hará uso del comportamiento
+        /// Al despertar, establecer el agente (script) que hará uso del comportamiento
         /// </summary>
         public virtual void Awake()
         {
@@ -48,9 +48,9 @@ namespace UCM.IAV.Movimiento
         /// </summary>
         public virtual void Update()
         {
-            if (agente.combinarPorPeso)
+            if (agente.mezclarPorPeso)
                 agente.SetDireccion(GetDireccion(), peso);
-            else if (agente.comnbinarPorPrioridad)
+            else if (agente.mezclarPorPrioridad)
                 agente.SetDireccion(GetDireccion(), prioridad);
             else
                 agente.SetDireccion(GetDireccion());

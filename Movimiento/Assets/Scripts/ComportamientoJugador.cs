@@ -27,7 +27,7 @@ namespace UCM.IAV.Movimiento
             Direccion direccion = new Direccion();
             direccion.lineal.x = Input.GetAxis("Horizontal");
             direccion.lineal.z = Input.GetAxis("Vertical");
-            direccion.lineal.Normalize();
+            direccion.lineal.Normalize(); // Normalizar el vector
             direccion.lineal *= agente.aceleracionMax;
             return direccion;
         }

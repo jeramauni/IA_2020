@@ -45,11 +45,13 @@ namespace UCM.IAV.Movimiento
         {
             velocidad.x = Input.GetAxis("Horizontal");
             velocidad.z = Input.GetAxis("Vertical");
+            // Faltaba por normalizar el vector
+            velocidad.Normalize();
             velocidad *= velocidadMax; 
         }
 
         /// <summary>
-        /// En cada tick fijo, según haya cuerpo rígido o no, uso el simulador físico aplicando fuerzas o no
+        /// En cada tick fijo, haya cuerpo rígido o no, hago simulación física y cambio la posición de las cosas (si hay cuerpo rígido aplico fuerzas y si no, no)
         /// </summary>
         public override void FixedUpdate()
         {
@@ -59,7 +61,8 @@ namespace UCM.IAV.Movimiento
             }
             else
             {
-                _cuerpoRigido.AddForce(velocidad * Time.deltaTime, ForceMode.VelocityChange);
+                // El cuerpo rígido no podrá estar marcado como cinemático
+                _cuerpoRigido.AddForce(velocidad * Time.deltaTime, ForceMode.VelocityChange); // Cambiamos directamente la velocidad, sin considerar la masa (pidiendo que avance esa distancia de golpe)
             } 
         }
 

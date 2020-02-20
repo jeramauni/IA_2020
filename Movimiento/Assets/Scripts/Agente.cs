@@ -20,15 +20,15 @@ namespace UCM.IAV.Movimiento {
 /// </summary>
     public class Agente : MonoBehaviour {
         /// <summary>
-        /// Combinar por peso
+        /// Mezclar por peso
         /// </summary>
-        [Tooltip("Combinar por peso.")]
-        public bool combinarPorPeso = false;
+        [Tooltip("Mezclar por peso.")]
+        public bool mezclarPorPeso = false;
         /// <summary>
-        /// Combinar por prioridad
+        /// Mezclar por prioridad
         /// </summary>
-        [Tooltip("Combinar por prioridad.")]
-        public bool comnbinarPorPrioridad = false;
+        [Tooltip("Mezclar por prioridad.")]
+        public bool mezclarPorPrioridad = false;
         /// <summary>
         /// Umbral de prioridad para tener el valor en cuenta
         /// </summary>
@@ -93,7 +93,7 @@ namespace UCM.IAV.Movimiento {
             velocidad = Vector3.zero;
             direccion = new Direccion();
             grupos = new Dictionary<int, List<Direccion>>();
-            cuerpoRigido = GetComponent<Rigidbody>();
+            cuerpoRigido = GetComponent<Rigidbody>(); // Cojo el cuerpo rígido
         }
 
         /// <summary>
@@ -140,11 +140,11 @@ namespace UCM.IAV.Movimiento {
         }
 
         /// <summary>
-        /// En cada parte tardía del tick, hace tareas de corrección numérica
+        /// En cada parte tardía del tick, hace tareas de corrección numérica (ajustar a los máximos, la combinación etc.
         /// </summary>
         public virtual void LateUpdate()
         {
-            if (comnbinarPorPrioridad)
+            if (mezclarPorPrioridad)
             {
                 direccion = GetPrioridadDireccion();
                 grupos.Clear();
@@ -173,6 +173,10 @@ namespace UCM.IAV.Movimiento {
                 velocidad = Vector3.zero;
             }
 
+            // En realidad si se quiere cambiar la orientación lo suyo es hacerlo con un comportamiento, no así:
+            transform.LookAt(transform.position + velocidad);
+
+            // Se limpia el steering de cara al próximo tick
             direccion = new Direccion();
         }
 
