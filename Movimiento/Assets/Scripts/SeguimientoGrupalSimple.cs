@@ -5,37 +5,40 @@ using UnityEngine;
 public class SeguimientoGrupalSimple : MonoBehaviour
 {
     // Variables
+    [SerializeField]
+    private float maxVelocity_ = 0.0f;
+    [SerializeField]
+    private float aceleration_ = 0.0f;
+
+    // Variables asignables por editor
     public GameObject objective;
-
-    [SerializeField]
-    private float max_Velocity = 0.0f;
-    [SerializeField]
-    private float aceleration = 0.0f;
-
-    private Rigidbody rb;
-    private Vector3 objective_pos;
+    // Variables NO asignables por editor
+    private Rigidbody rb_;
+    private Vector3 objectivePos_;
     
     //-----------------------------------------------------------------------
+
+    private void Awake()
+    {
+        // Coger nuestro Rigidbody
+        rb_ = GetComponent<Rigidbody>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        // Coger nuestro Rigidbody
-        rb = GetComponent<Rigidbody>();
-        // Inicializar a 0
-        objective_pos = Vector3.zero;
+        // Inicializar a 0 el vector de la posicion
+        objectivePos_ = Vector3.zero;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         // Actualizar posicion del objetivo
-        objective_pos = objective.transform.position;
+        objectivePos_ = objective.transform.position;
         // Moverse hacia el objetivo
-        Vector3 i = (objective_pos - this.transform.position);
-        i.Normalize();
-        i *= aceleration;
-        rb.AddForce(i);
+        Vector3 i = (objectivePos_ - this.transform.position).normalized;
+        rb_.AddForce(i *= aceleration_);
         // Mirar al objetivo
         Vector3 lookPoint = new Vector3(objective.transform.position.x, 0.0f, objective.transform.position.z);
         this.transform.LookAt(lookPoint);
