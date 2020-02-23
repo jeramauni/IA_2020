@@ -442,8 +442,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50d02766a4a8b074d86c89e8fe1e1a04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  max_Velocity: 0
-  aceleration: 1.8
+  maxVelocity_: 0
+  maxAceleration_: 10
+  maxSpeed_: 0
   objective: {fileID: 1021455439}
 --- !u!65 &340452268
 BoxCollider:

@@ -8,13 +8,16 @@ public class SeguimientoGrupalSimple : MonoBehaviour
     [SerializeField]
     private float maxVelocity_ = 0.0f;
     [SerializeField]
-    private float aceleration_ = 0.0f;
+    private float maxAceleration_ = 1.5f;
+    [SerializeField]
+    private float maxSpeed_ = 0.0f;
+
+    private float targetRadius = 0.0f;
 
     // Variables asignables por editor
     public GameObject objective;
     // Variables NO asignables por editor
     private Rigidbody rb_;
-    private Vector3 objectivePos_;
     
     //-----------------------------------------------------------------------
 
@@ -24,23 +27,17 @@ public class SeguimientoGrupalSimple : MonoBehaviour
         rb_ = GetComponent<Rigidbody>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // Inicializar a 0 el vector de la posicion
-        objectivePos_ = Vector3.zero;
-    }
-
-    // Update is called once per frame
     void FixedUpdate()
     {
-        // Actualizar posicion del objetivo
-        objectivePos_ = objective.transform.position;
-        // Moverse hacia el objetivo
-        Vector3 i = (objectivePos_ - this.transform.position).normalized;
-        rb_.AddForce(i *= aceleration_);
+        /// MOVIMIENTO HACIA EL OBJETIVO
+        // Moverse hacia el objetivo: conseguir la direccion al objetivo y normalizarla
+        Vector3 dir = (objective.transform.position - this.transform.position).normalized;
+        rb_.AddForce(dir *= maxAceleration_);
         // Mirar al objetivo
         Vector3 lookPoint = new Vector3(objective.transform.position.x, 0.0f, objective.transform.position.z);
         this.transform.LookAt(lookPoint);
+
+        // LLEGADA
+
     }
 }

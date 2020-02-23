@@ -3,7 +3,7 @@
    http://www.federicopeinado.com
 
    Este fichero forma parte del material de la asignatura Inteligencia Artificial para Videojuegos.
-   Esta asignatura se imparte en la Facultad de Informática de la Universidad Complutense de Madrid (España).
+   Esta asignatura se imparte en la Facultad de Informatica de la Universidad Complutense de Madrid (Espana).
 
    Autor: Federico Peinado 
    Contacto: email@federicopeinado.com
@@ -22,7 +22,7 @@ namespace UCM.IAV.Movimiento
     public class JugadorAgente : Agente
     {
         /// <summary>
-        /// El componente de cuerpo rígido
+        /// El componente de cuerpo rigido
         /// </summary>
         private Rigidbody _cuerpoRigido;
         /// <summary>
@@ -31,7 +31,7 @@ namespace UCM.IAV.Movimiento
         private Vector3 _dir;
 
         /// <summary>
-        /// Al despertar, establecer el cuerpo rígido
+        /// Al despertar, establecer el cuerpo rigido
         /// </summary>
         private void Awake()
         {
@@ -39,7 +39,7 @@ namespace UCM.IAV.Movimiento
         }
 
         /// <summary>
-        /// En cada tick, mover el avatar del jugador según las órdenes de este último
+        /// En cada tick, mover el avatar del jugador segun las ordenes de este último
         /// </summary>
         public override void Update()
         {
@@ -51,7 +51,7 @@ namespace UCM.IAV.Movimiento
         }
 
         /// <summary>
-        /// En cada tick fijo, haya cuerpo rígido o no, hago simulación física y cambio la posición de las cosas (si hay cuerpo rígido aplico fuerzas y si no, no)
+        /// En cada tick fijo, haya cuerpo rigido o no, hago simulacion fisica y cambio la posicion de las cosas (si hay cuerpo rigido aplico fuerzas y si no, no)
         /// </summary>
         public override void FixedUpdate()
         {
@@ -61,13 +61,13 @@ namespace UCM.IAV.Movimiento
             }
             else
             {
-                // El cuerpo rígido no podrá estar marcado como cinemático
+                // El cuerpo rigido no podra estar marcado como cinematico
                 _cuerpoRigido.AddForce(velocidad * Time.deltaTime, ForceMode.VelocityChange); // Cambiamos directamente la velocidad, sin considerar la masa (pidiendo que avance esa distancia de golpe)
             } 
         }
 
         /// <summary>
-        /// En cada parte tardía del tick, encarar el agente
+        /// En cada parte tardia del tick, encarar el agente
         /// </summary>
         public override void LateUpdate()
         {

@@ -3,7 +3,7 @@
    http://www.federicopeinado.com
 
    Este fichero forma parte del material de la asignatura Inteligencia Artificial para Videojuegos.
-   Esta asignatura se imparte en la Facultad de Informática de la Universidad Complutense de Madrid (España).
+   Esta asignatura se imparte en la Facultad de Informatica de la Universidad Complutense de Madrid (Espana).
 
    Autor: Federico Peinado 
    Contacto: email@federicopeinado.com
@@ -35,34 +35,34 @@ namespace UCM.IAV.Movimiento {
         [Tooltip("Umbral de prioridad.")]
         public float umbralPrioridad = 0.2f;
         /// <summary>
-        /// Velocidad máxima
+        /// Velocidad maxima
         /// </summary>
-        [Tooltip("Velocidad máxima.")]
+        [Tooltip("Velocidad maxima.")]
         public float velocidadMax;
         /// <summary>
-        /// Aceleración máxima
+        /// Aceleracion maxima
         /// </summary>
-        [Tooltip("Aceleración máxima.")]
+        [Tooltip("Aceleracion maxima.")]
         public float aceleracionMax;
         /// <summary>
-        /// Rotación máxima
+        /// Rotacion maxima
         /// </summary>
-        [Tooltip("Rotación máxima.")]
+        [Tooltip("Rotacion maxima.")]
         public float rotacionMax;
         /// <summary>
-        /// Aceleración angular máxima
+        /// Aceleracion angular maxima
         /// </summary>
-        [Tooltip("Aceleración angular máxima.")]
+        [Tooltip("Aceleracion angular maxima.")]
         public float aceleracionAngularMax;
         /// <summary>
         /// Orientacion (es como la velocidad angular)
         /// </summary>
-        [Tooltip("Orientación.")]
+        [Tooltip("Orientacion.")]
         public float orientacion;
         /// <summary>
-        /// Rotatción (valor que puede variar, como la velocidad, para cambiar la orientación)
+        /// Rotatcion (valor que puede variar, como la velocidad, para cambiar la orientacion)
         /// </summary>
-        [Tooltip("Rotación.")]
+        [Tooltip("Rotacion.")]
         public float rotacion;
         /// <summary>
         /// Velocidad
@@ -70,9 +70,9 @@ namespace UCM.IAV.Movimiento {
         [Tooltip("Velocidad.")]
         public Vector3 velocidad;
         /// <summary>
-        /// Valor de dirección / direccionamiento
+        /// Valor de direccion / direccionamiento
         /// </summary>
-        [Tooltip("Dirección.")]
+        [Tooltip("Direccion.")]
         protected Direccion direccion;
         /// <summary>
         /// Grupos de direcciones, agrupados por valor de prioridad
@@ -80,9 +80,9 @@ namespace UCM.IAV.Movimiento {
         [Tooltip("Grupos de direcciones.")]
         private Dictionary<int, List<Direccion>> grupos;
         /// <summary>
-        /// Componente de cuerpo rígido
+        /// Componente de cuerpo rigido
         /// </summary>
-        [Tooltip("Cuerpo rígido.")]
+        [Tooltip("Cuerpo rigido.")]
         private Rigidbody cuerpoRigido;
 
         /// <summary>
@@ -93,11 +93,11 @@ namespace UCM.IAV.Movimiento {
             velocidad = Vector3.zero;
             direccion = new Direccion();
             grupos = new Dictionary<int, List<Direccion>>();
-            cuerpoRigido = GetComponent<Rigidbody>(); // Cojo el cuerpo rígido
+            cuerpoRigido = GetComponent<Rigidbody>(); // Cojo el cuerpo rigido
         }
 
         /// <summary>
-        /// En cada tick fijo, si hay cuerpo rígido, uso el simulador físico aplicando fuerzas o no
+        /// En cada tick fijo, si hay cuerpo rigido, uso el simulador fisico aplicando fuerzas o no
         /// </summary>
         public virtual void FixedUpdate()
         {
@@ -106,41 +106,41 @@ namespace UCM.IAV.Movimiento {
 
             Vector3 displacement = velocidad * Time.deltaTime;
             orientacion += rotacion * Time.deltaTime;
-            // Necesitamos "constreñir" inteligentemente la orientación al rango (0, 360)
+            // Necesitamos "constrenhir" inteligentemente la orientacion al rango (0, 360)
             if (orientacion < 0.0f)
                 orientacion += 360.0f;
             else if (orientacion > 360.0f)
                 orientacion -= 360.0f;
-            // El ForceMode dependerá de lo que quieras conseguir
-            // Estamos usando VelocityChange sólo con propósitos ilustrativos
+            // El ForceMode dependera de lo que quieras conseguir
+            // Estamos usando VelocityChange solo con propositos ilustrativos
             cuerpoRigido.AddForce(displacement, ForceMode.VelocityChange);
             Vector3 orientationVector = OriToVec(orientacion);
             cuerpoRigido.rotation = Quaternion.LookRotation(orientationVector, Vector3.up);
         }
 
         /// <summary>
-        /// En cada tick, hace lo básico del movimiento del agente
+        /// En cada tick, hace lo basico del movimiento del agente
         /// </summary>
         public virtual void Update()
         {
             if (cuerpoRigido != null)
                 return;
-            // ... código previo
+            // ... codigo previo
             Vector3 desplazamiento = velocidad * Time.deltaTime;
             orientacion += rotacion * Time.deltaTime;
-            // Necesitamos "constreñir" inteligentemente la orientación al rango (0, 360)
+            // Necesitamos "constrenhir" inteligentemente la orientacion al rango (0, 360)
             if (orientacion < 0.0f)
                 orientacion += 360.0f;
             else if (orientacion > 360.0f)
                 orientacion -= 360.0f;
             transform.Translate(desplazamiento, Space.World);
-            // Restaura la rotación al punto inicial antes de rotar el objeto nuestro valor
+            // Restaura la rotacion al punto inicial antes de rotar el objeto nuestro valor
             transform.rotation = new Quaternion();
             transform.Rotate(Vector3.up, orientacion);
         }
 
         /// <summary>
-        /// En cada parte tardía del tick, hace tareas de corrección numérica (ajustar a los máximos, la combinación etc.
+        /// En cada parte tardia del tick, hace tareas de correccion numerica (ajustar a los mï¿½ximos, la combinacion etc.
         /// </summary>
         public virtual void LateUpdate()
         {
@@ -173,15 +173,15 @@ namespace UCM.IAV.Movimiento {
                 velocidad = Vector3.zero;
             }
 
-            // En realidad si se quiere cambiar la orientación lo suyo es hacerlo con un comportamiento, no así:
+            // En realidad si se quiere cambiar la orientacion lo suyo es hacerlo con un comportamiento, no asi:
             transform.LookAt(transform.position + velocidad);
 
-            // Se limpia el steering de cara al próximo tick
+            // Se limpia el steering de cara al proximo tick
             direccion = new Direccion();
         }
 
         /// <summary>
-        /// Establece la dirección tal cual
+        /// Establece la direccion tal cual
         /// </summary>
         public void SetDireccion(Direccion direccion)
         {
@@ -189,7 +189,7 @@ namespace UCM.IAV.Movimiento {
         }
 
         /// <summary>
-        /// Establece la dirección por peso
+        /// Establece la direccion por peso
         /// </summary>
         /// <param name="direccion"></param>
         /// <param name="peso"></param>
@@ -200,7 +200,7 @@ namespace UCM.IAV.Movimiento {
         }
 
         /// <summary>
-        /// Establece la dirección por prioridad
+        /// Establece la direccion por prioridad
         /// </summary>
         /// <param name="direccion"></param>
         /// <param name="prioridad"></param>
@@ -214,7 +214,7 @@ namespace UCM.IAV.Movimiento {
         }
 
         /// <summary>
-        /// Devuelve el valor de dirección calculado por prioridad
+        /// Devuelve el valor de direccion calculado por prioridad
         /// </summary>
         /// <returns></returns>
         private Direccion GetPrioridadDireccion()
@@ -239,7 +239,7 @@ namespace UCM.IAV.Movimiento {
             return direccion;
         }
         /// <summary>
-        /// Calculates el Vector3 dado un cierto valor de orientación
+        /// Calculates el Vector3 dado un cierto valor de orientacion
         /// </summary>
         /// <param name="orientacion"></param>
         /// <returns></returns>
