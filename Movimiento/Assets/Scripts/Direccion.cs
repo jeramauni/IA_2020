@@ -28,5 +28,9 @@ namespace UCM.IAV.Movimiento
             angular = 0.0f;
             lineal = new Vector3();
         }
+        public Direccion(float angle, Vector3 line) {
+            angular = angle;
+            lineal = line;
+        }
     }
 }
