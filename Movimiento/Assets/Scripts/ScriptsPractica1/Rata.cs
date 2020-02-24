@@ -6,6 +6,7 @@ namespace UCM.IAV.Movimiento
     {
         // KINEMATIC
         public float maxVelocity = 2.0f;
+        private Quaternion orientation;
         protected struct Dir {
             public Quaternion angle;
             public Vector3 direc;
@@ -24,9 +25,6 @@ namespace UCM.IAV.Movimiento
         }
         private void Update() {
             dir = getSteering();
-
-            Debug.Log("Rotacion: " + rb_.rotation + "\n");
-            Debug.Log("Velocidad: " + rb_.velocity + "\n");
             
             // Modificar la posicion y la orientacion
             float time = Time.deltaTime;
@@ -35,18 +33,8 @@ namespace UCM.IAV.Movimiento
 
             // y la velocidad y la rotation
             rb_.velocity += dir.direc * time;
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, dir.angle, 1);
         }
-
-        // Funcion para modificar la orientacion segun la velocidad
-        // private float newOrientation(float current, Vector3 vel) {
-        //     // Comprobar que hay velocidad
-        //     if (vel.magnitude > 0) {
-        //         // Calcular la orientacion dada la velocidad
-        //         return Vector3.Angle(new Vector3(1.0f, 0.0f, 0.0f), vel);
-        //     }
-        //     // Si no, usar la orientación actual
-        //     else return current;
-        // }
 
         // BUSQUEDA
         private Dir getSteering() {
@@ -59,9 +47,8 @@ namespace UCM.IAV.Movimiento
             result.direc *= maxVelocity;
 
             // Poner en la direccion que queremos que vaya
-            //this.orientation = newOrientation(this.orientation, result.lineal);
-
-            result.angle = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+            result.direc.y = 0;
+            result.angle = Quaternion.LookRotation(result.direc);
             return result;
         }
     }
