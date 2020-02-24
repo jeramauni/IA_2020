@@ -5,9 +5,9 @@ namespace UCM.IAV.Movimiento
     public class Rata : MonoBehaviour
     {
         // KINEMATIC
-        public Vector3 position;
+        private Vector3 position;
+        private Vector3 velocity;
         public float orientation;
-        public Vector3 velocity;
         public float rotation;
         private float time_;
         protected Direccion steering_;
@@ -24,6 +24,8 @@ namespace UCM.IAV.Movimiento
         }
         private void Start() {
             position = this.transform.position;
+            velocity = rb_.velocity;
+            time_ = Time.deltaTime;
             timeToTarget = 0.25f;
         }
         private void Update() {
