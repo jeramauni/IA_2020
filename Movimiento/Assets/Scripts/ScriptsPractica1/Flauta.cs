@@ -11,26 +11,26 @@ namespace UCM.IAV.Practica1
         // Start is called before the first frame update
         void Start()
         {
-            huir.enabled = false;
+            //huir.enabled = false;
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (seguir == null || huir == null)
-                return;
+            // if (seguir == null || huir == null)
+            //     return;
 
-            if (Input.GetKey(KeyCode.Space))
-            {
-                huir.enabled = true;
-                seguir.enabled = false;
-            }
-            else
-            {
-                huir.enabled = false;
-                seguir.enabled = true;
-                //merodear.enabled = true;
-            }
+            // if (Input.GetKey(KeyCode.Space))
+            // {
+            //     huir.enabled = true;
+            //     seguir.enabled = false;
+            // }
+            // else
+            // {
+            //     huir.enabled = false;
+            //     seguir.enabled = true;
+            //     //merodear.enabled = true;
+            // }
 
         }
     }

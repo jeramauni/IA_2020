@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 78873675}
   - component: {fileID: 78873671}
   m_Layer: 0
-  m_Name: Enemigo
+  m_Name: Perro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,13 +192,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3532c4e6d998b61429f90949467d6999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objetivo: {fileID: 1021455441}
-  velMovimiento: 4
-  radioObjetivo: 5
-  multAnchuraRayo: 0.54
-  multRayo: 20
-  distRayo: 5
-  velocidadGiro: 1
+  rayWidth: 0.8
+  rayRebound: 50
+  rayDistance: 4
+  turnSpeed: 1
+  targetRadius: 2
+  brakeRadius: 4
+  maxSpeed: 1
+  target: {fileID: 0}
 --- !u!4 &78873673
 Transform:
   m_ObjectHideFlags: 0
@@ -1246,7 +1247,7 @@ GameObject:
   - component: {fileID: 1021455442}
   - component: {fileID: 1021455443}
   m_Layer: 0
-  m_Name: Avatar
+  m_Name: Flautista
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

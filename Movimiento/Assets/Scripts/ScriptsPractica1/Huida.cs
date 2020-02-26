@@ -6,7 +6,7 @@ namespace UCM.IAV.Practica1
     {
 
         // Update is called once per frame
-        void Update()
+        protected override void Update()
         {
             /// Para evitar obstaculos de una manera simple hacemos casteo de rayos
             /// Cuantos mas raycast mas preciso sera el movimiento
