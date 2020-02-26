@@ -13,8 +13,8 @@ namespace UCM.IAV.Practica1
         private float maxSpeed = 1.0f;
         [SerializeField]
         private float maxAcceleration = 0.5f;
-        [SerializeField]
-        private float timeToTarget = 0.25f;
+        // [SerializeField]
+        // private float timeToTarget = 0.25f;
 
         protected struct Dir {
             public Quaternion angle;
@@ -60,18 +60,18 @@ namespace UCM.IAV.Practica1
             
             // Comprobar si estoy dentro del radio y pararme
             if (distance <= targetRadius) {
-                Debug.Log("Estoy dentro del radio de parada");
+                //Debug.Log("Estoy dentro del radio de parada");
                 return new Dir(Quaternion.LookRotation(direction), Vector3.zero);
             }
             // Si estoy fuera del radio exterior, ir a maxima velocidad
             float targetSpeed;
             if (distance > brakeRadius) {
                 targetSpeed = maxSpeed;
-                Debug.Log("Estoy fuera del radio de freno");
+                //Debug.Log("Estoy fuera del radio de freno");
             }
             else {
                 targetSpeed = maxSpeed * distance / brakeRadius;
-                Debug.Log("Estoy dentro del radio de freno");  
+                //Debug.Log("Estoy dentro del radio de freno");  
             }
 
             // La velocidad combina rapidez y direccion
@@ -79,13 +79,16 @@ namespace UCM.IAV.Practica1
             targetVel.Normalize();
             targetVel *= targetSpeed;
             targetVel.y = 0;
-            //Debug.Log("Velocidad objetivo: " + targetVel);
+            float v = Mathf.Sqrt(targetVel.x * targetVel.x + 
+                targetVel.y * targetVel.y +
+                targetVel.z * targetVel.z);
+            Debug.Log("Velocidad objetivo: " + v);
 
             // Hay que moverse hacia el objetivo en el tiempo establecido
             result.vel = targetVel - dir.vel;
             result.vel.y = 0;
-            //Debug.Log("Velocidad real: " + result.vel);
-            result.vel /= timeToTarget;
+            // result.vel /= timeToTarget;
+            
 
             // Calcular la distancia al objetivo de nuevo
             float _v_ = Mathf.Sqrt(result.vel.x * result.vel.x + 
@@ -97,6 +100,11 @@ namespace UCM.IAV.Practica1
                 result.vel.Normalize();
                 result.vel *= maxSpeed;
                 result.vel.y = 0;
+
+                v = Mathf.Sqrt(result.vel.x * result.vel.x + 
+                result.vel.y * result.vel.y +
+                result.vel.z * result.vel.z);
+                Debug.Log("Velocidad real: " + v);
             }
             // Poner en la direccion que queremos que vaya
             result.angle = Quaternion.LookRotation(direction);
