@@ -5,9 +5,17 @@ namespace UCM.IAV.Practica1
     {
         public Transform rats;
         protected override void Update() {
-            if (spacebarPressed) {
-                base.Update();
+            // Comprobación de la tecla espacio
+            if (Input.GetKey(KeyCode.Space)) {
+                spacebarPressed = true;
+                rb_.velocity = Vector3.zero;
             }
+            else if (Input.GetKeyUp(KeyCode.Space)) {
+                spacebarPressed = false;
+                rb_.velocity = Vector3.zero;
+            }
+            if (!spacebarPressed)
+                base.Update();
             else {
             dir = newSteering();
             // Modificar la posicion y la orientacion
@@ -20,7 +28,6 @@ namespace UCM.IAV.Practica1
             transform.rotation = Quaternion.Slerp(transform.rotation, dir.angle, turnSpeed);
             }
         }
-
         private Dir newSteering() {
             Dir result;
             // Coger la direccion al objetivo y capar la 'y'

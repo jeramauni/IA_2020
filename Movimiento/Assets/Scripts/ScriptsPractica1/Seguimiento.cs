@@ -6,6 +6,8 @@ namespace UCM.IAV.Practica1
     {
         // RAYCAST
         [Header ("Atributos del Raycast")]
+        [SerializeField] [Tooltip ("No aconsejable pulsarlo")]
+        private bool activateRaycast = false;
         [SerializeField] [Range(0.1f, 0.8f)] 
         [Tooltip ("Separacion del rayo en funcion del centro del cuerpo")]
         private float rayWidth = 0.8f;
@@ -102,53 +104,56 @@ namespace UCM.IAV.Practica1
             result.angle = Quaternion.LookRotation(direction);
             return result;
         }
-        // private void FixedUpdate()
-        // {            
-        //     /// Para evitar obstaculos de una manera simple hacemos casteo de rayos
-        //     /// Cuantos mas raycast mas preciso sera el movimiento
-        //     /// en este caso con 3 sera suficiente para simular el movimiento
+        private void FixedUpdate()
+        {            
+            if (!activateRaycast)
+                return;
+            /// Para evitar obstaculos de una manera simple hacemos casteo de rayos
+            /// Cuantos mas raycast mas preciso sera el movimiento
+            /// en este caso con 3 sera suficiente para simular el movimiento
 
-        //     // vector direccion hacia el objetivo
-        //     Vector3 direc = (target.position - transform.position).normalized;
-        //     direc.y = 0;
-        //     RaycastHit ray;
+            // vector direccion hacia el objetivo
+            Vector3 direc = (target.position - transform.position).normalized;
+            direc.y = 0;
+            RaycastHit ray;
 
-        //     Vector3 rayoDer = transform.position + (transform.right * rayWidth);
-        //     Vector3 rayoIzq = transform.position - (transform.right * rayWidth);
+            Vector3 rayoDer = transform.position + (transform.right * rayWidth);
+            Vector3 rayoIzq = transform.position - (transform.right * rayWidth);
             
-        //     // Comprobacion del rayo
-        //     if (Physics.Raycast(transform.position, transform.forward, out ray, rayDistance)) {
-        //         Debug.DrawLine(transform.position, ray.point, Color.yellow);
-        //         // Si no castea al player actualizamos la direccion
-        //         if (ray.transform != target.transform) {
-        //             direc += ray.normal * rayRebound;
-        //             direc.y = 0;
-        //         }
-        //     }
-        //     else Debug.DrawRay(transform.position, transform.forward * rayDistance, Color.magenta);
-        //     // Comprobacion del rayo derecho
-        //     if (Physics.Raycast(rayoDer, transform.forward, out ray, rayDistance)) {
-        //         Debug.DrawLine(rayoDer, ray.point, Color.yellow);
-        //         if (ray.transform != target.transform) {
-        //             direc += ray.normal * rayRebound;
-        //             direc.y = 0;
-        //         }
-        //     }
-        //     else Debug.DrawRay(rayoDer, transform.forward * rayDistance, Color.magenta);
-        //     // Comprobacion del rayo izquierdo
-        //     if (Physics.Raycast(rayoIzq, transform.forward, out ray, rayDistance)) {
-        //         Debug.DrawLine(rayoIzq, ray.point, Color.yellow);
-        //         if (ray.transform != target.transform) {
-        //             direc += ray.normal * rayRebound;
-        //             direc.y = 0;
-        //         }
-        //     }
-        //     else Debug.DrawRay(rayoIzq, transform.forward * rayDistance, Color.magenta);
+            // Comprobacion del rayo
+            if (Physics.Raycast(transform.position, transform.forward, out ray, rayDistance)) {
+                Debug.DrawLine(transform.position, ray.point, Color.yellow);
+                // Si no castea al player actualizamos la direccion
+                if (ray.transform != target.transform) {
+                    direc += ray.normal * rayRebound;
+                    direc.y = 0;
+                }
+            }
+            else Debug.DrawRay(transform.position, transform.forward * rayDistance, Color.magenta);
+            // Comprobacion del rayo derecho
+            if (Physics.Raycast(rayoDer, transform.forward, out ray, rayDistance)) {
+                Debug.DrawLine(rayoDer, ray.point, Color.yellow);
+                if (ray.transform != target.transform) {
+                    direc += ray.normal * rayRebound;
+                    direc.y = 0;
+                }
+            }
+            else Debug.DrawRay(rayoDer, transform.forward * rayDistance, Color.magenta);
+            // Comprobacion del rayo izquierdo
+            if (Physics.Raycast(rayoIzq, transform.forward, out ray, rayDistance)) {
+                Debug.DrawLine(rayoIzq, ray.point, Color.yellow);
+                if (ray.transform != target.transform) {
+                    direc += ray.normal * rayRebound;
+                    direc.y = 0;
+                }
+            }
+            else Debug.DrawRay(rayoIzq, transform.forward * rayDistance, Color.magenta);
         
-        //     // Rotacion del objeto
-        //     Quaternion rot = Quaternion.LookRotation(direc);
-        //     // Orientamos el transform para que mire hacia el objetivo
-        //     transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * turnSpeed);
-        // }
+            // Rotacion del objeto
+            Quaternion rot = Quaternion.LookRotation(direc);
+            // Orientamos el transform para que mire hacia el objetivo
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * turnSpeed);
+        }
+
     }
 }
