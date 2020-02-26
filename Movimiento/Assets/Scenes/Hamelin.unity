@@ -1145,10 +1145,10 @@ MonoBehaviour:
   rayWidth: 0.2
   rayRebound: 50
   rayDistance: 2
-  turnSpeed: 1
+  turnSpeed: 2
   targetRadius: 2
   brakeRadius: 4
-  maxSpeed: 1
+  maxSpeed: 2
   target: {fileID: 1021455441}
 --- !u!1 &963194225
 GameObject:
