@@ -5,10 +5,13 @@ namespace UCM.IAV.Practica1
     public class Rata : MonoBehaviour
     {
         // KINEMATIC
-        public float targetRadius = 2.0f;
-        public float brakeRadius = 4.0f;
-        public float maxSpeed = 1.0f;
-        public float timeToTarget = 0.25f;
+        [SerializeField]
+        private float targetRadius = 2.0f;
+        [SerializeField]
+        private float brakeRadius = 4.0f;
+        [SerializeField]
+        private float maxSpeed = 1.0f;
+
         protected struct Dir {
             public Quaternion angle;
             public Vector3 vel;
@@ -17,6 +20,7 @@ namespace UCM.IAV.Practica1
                 vel = v;
             }
         };
+
         private Dir dir;
         private Rigidbody rb_;
         // KINEMATIC SEEK
@@ -26,7 +30,7 @@ namespace UCM.IAV.Practica1
             rb_ = GetComponent<Rigidbody>();
         }
         private void Update() {
-            dir = getSteering(out float _v_);
+            dir = getSteering();
 
             // Modificar la posicion y la orientacion
             float time = Time.deltaTime;
@@ -34,49 +38,53 @@ namespace UCM.IAV.Practica1
             this.transform.position += rb_.velocity * time + dir.vel * half_t_sq;
 
             // y la velocidad y la rotation
-            if (_v_ > targetRadius) {
-                Debug.Log("Velocidad: " + _v_);
-                rb_.velocity = dir.vel;
-            }
+            rb_.velocity = dir.vel;
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, dir.angle, 1);
         }
 
         // BUSQUEDA Y LLEGADA
-        private Dir getSteering(out float _v_) {
+        private Dir getSteering() {
             Dir result;
-            // Coger la direccion al objetivo
-            result.vel =  target.transform.position - this.transform.position;
-
+            // Coger la direccion al objetivo y capar la y
+            Vector3 direction =  target.transform.position - this.transform.position;
+            direction.y = 0;
             // Calcular el modulo del vector para ver si es menor que el radio. 
             // El modulo es la distancia desde un punto al otro del vector
-            _v_ = Mathf.Sqrt(result.vel.x * result.vel.x + 
-                result.vel.y * result.vel.y +
-                result.vel.z * result.vel.z);
+            float distance = Mathf.Sqrt(direction.x * direction.x + 
+                direction.y * direction.y +
+                direction.z * direction.z);
+            
             // Comprobar si estoy dentro del radio y pararme
-            if (_v_ <= targetRadius) {
-                rb_.velocity = Vector3.zero;
+            if (distance <= targetRadius) {
+                return new Dir(Quaternion.LookRotation(direction), Vector3.zero);
+            }
+            // Si estoy fuera del radio exterior, ir a maxima velocidad
+            float targetSpeed;
+            if (distance > brakeRadius) {
+                targetSpeed = maxSpeed;
+            }
+            else {
+                targetSpeed = maxSpeed * distance / brakeRadius; 
             }
 
-            // Si estoy fuera del radio exterior, ir a maxima velocidad
-            if (_v_ <= brakeRadius && _v_ > targetRadius) {
-                result.vel *= maxSpeed * _v_ / brakeRadius;
-                float _l_ = Mathf.Sqrt(result.vel.x * result.vel.x + 
-                result.vel.y * result.vel.y +
-                result.vel.z * result.vel.z);
-                Debug.Log("Distancia: " + _l_);
-            }
+            // La velocidad combina rapidez y direccion
+            Vector3 targetVel = direction;
+            targetVel.Normalize();
+            targetVel *= targetSpeed;
+            targetVel.y = 0;
+
+            // Debugeando velocidad
+            float v = Mathf.Sqrt(targetVel.x * targetVel.x + 
+                targetVel.y * targetVel.y +
+                targetVel.z * targetVel.z);
+            Debug.Log("Velocidad objetivo: " + v);
 
             // Hay que moverse hacia el objetivo en el tiempo establecido
-            result.vel /= timeToTarget;
-
-            // La velocidad va a lo largo de esta direccion, a toda velocidad
-            if (_v_ > maxSpeed) {
-                result.vel.Normalize();
-                result.vel *= maxSpeed;
-            }
-            // Poner en la direccion que queremos que vaya
+            result.vel = targetVel - dir.vel;
             result.vel.y = 0;
-            result.angle = Quaternion.LookRotation(result.vel);
+
+            // Poner en la direccion que queremos que vaya
+            result.angle = Quaternion.LookRotation(direction);
             return result;
         }
     }
