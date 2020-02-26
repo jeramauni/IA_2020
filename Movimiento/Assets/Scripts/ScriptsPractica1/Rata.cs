@@ -9,6 +9,7 @@ namespace UCM.IAV.Practica1
         public float brakeRadius = 4.0f;
         public float maxSpeed = 1.0f;
         public float timeToTarget = 0.25f;
+
         protected struct Dir {
             public Quaternion angle;
             public Vector3 vel;
@@ -17,6 +18,7 @@ namespace UCM.IAV.Practica1
                 vel = v;
             }
         };
+
         private Dir dir;
         private Rigidbody rb_;
         // KINEMATIC SEEK
