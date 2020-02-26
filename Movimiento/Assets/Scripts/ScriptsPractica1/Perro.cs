@@ -15,7 +15,7 @@ public class Perro : MonoBehaviour
     public float distRayo = 5; // distancia de casteo del rayo
 
 
-    public float velocidadGiro; //velocidad de rotacion
+    public float velocidadGiro = 8f; //velocidad de rotacion
     private Vector3 vel;
     void Start()
     {
