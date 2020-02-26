@@ -87,25 +87,7 @@ namespace UCM.IAV.Practica1
             // Hay que moverse hacia el objetivo en el tiempo establecido
             result.vel = targetVel - dir.vel;
             result.vel.y = 0;
-            // result.vel /= timeToTarget;
             
-
-            // Calcular la distancia al objetivo de nuevo
-            float _v_ = Mathf.Sqrt(result.vel.x * result.vel.x + 
-                result.vel.y * result.vel.y +
-                result.vel.z * result.vel.z);
-
-            // La velocidad va a lo largo de esta direccion, a toda velocidad
-            if (_v_ > maxAcceleration) {
-                result.vel.Normalize();
-                result.vel *= maxSpeed;
-                result.vel.y = 0;
-
-                v = Mathf.Sqrt(result.vel.x * result.vel.x + 
-                result.vel.y * result.vel.y +
-                result.vel.z * result.vel.z);
-                Debug.Log("Velocidad real: " + v);
-            }
             // Poner en la direccion que queremos que vaya
             result.angle = Quaternion.LookRotation(direction);
             return result;
