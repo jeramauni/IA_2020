@@ -4,35 +4,18 @@ using UnityEngine;
 
 namespace UCM.IAV.Movimiento
 {
-    public class Seguimiento : MonoBehaviour
+    public class Huida : Seguimiento
     {
-        public Transform objetivo;
-        protected Rigidbody cuerpoRigido;
-        public float velMovimiento = 8;
-        public int radioObjetivo = 5; // Para que no se choque contra el jugador
 
-        // Para los raycast
-        public float multAnchuraRayo = 0.8f; // separacion del rayo en funcion del centro del cuerpo
-        public float multRayo = 50.0f; // multiplicador para la fuerza con la que se repele de las paredes
-        public float distRayo = 4; // distancia de casteo del rayo
-
-
-        public float velocidadGiro = 8; //velocidad de rotacion
-        protected Vector3 vel;
-        void Start()
-        {
-            cuerpoRigido = GetComponent<Rigidbody>();
-        }
         // Update is called once per frame
         void Update()
         {
-
             /// Para evitar obstaculos de una manera simple hacemos casteo de rayos
             /// Cuantos mas raycast mas preciso sera el movimiento
             /// en este caso con 3 sera suficiente para simular el movimiento
 
             // vector direccion hacia el objetivo
-            Vector3 dir = (objetivo.position - transform.position).normalized;
+            Vector3 dir = (transform.position - objetivo.position).normalized;
             RaycastHit hit;
 
             Vector3 rayoDer = transform.position + (transform.right * multAnchuraRayo);
@@ -80,7 +63,7 @@ namespace UCM.IAV.Movimiento
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * velocidadGiro);
 
             // calcula la distancia entre el objetivo y el objeto
-            if (Vector3.Distance(transform.position, objetivo.position) >= radioObjetivo)
+            if (Vector3.Distance(transform.position, objetivo.position) <= radioObjetivo)
             {
                 // y si es mayor que el radio del objetivo actualiza la velocidad
                 vel = transform.forward * velMovimiento * Time.deltaTime;
@@ -90,16 +73,18 @@ namespace UCM.IAV.Movimiento
             }
 
         }
+
         private void FixedUpdate()
         {
             // si es un cuerpo rigido aplicamos la fuerza de movimiento
             if (cuerpoRigido == null)
                 return;
 
-            if (Vector3.Distance(transform.position, objetivo.position) >= radioObjetivo)
+            if (Vector3.Distance(transform.position, objetivo.position) < radioObjetivo)
             {
                 cuerpoRigido.AddForce(vel, ForceMode.VelocityChange);
             }
         }
+
     }
 }

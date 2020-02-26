@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 78873672}
   - component: {fileID: 78873671}
   - component: {fileID: 78873676}
+  - component: {fileID: 78873675}
   m_Layer: 0
   m_Name: Enemigo
   m_TagString: Untagged
@@ -326,6 +327,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &78873675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78873670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785c484e9f662c34d90ddd4e3305a5ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objetivo: {fileID: 1021455441}
+  velMovimiento: 8
+  radioObjetivo: 10
+  multAnchuraRayo: 0.8
+  multRayo: 50
+  distRayo: 4
+  velocidadGiro: 8
 --- !u!114 &78873676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1493,6 +1513,7 @@ GameObject:
   - component: {fileID: 1021455441}
   - component: {fileID: 1021455440}
   - component: {fileID: 1021455442}
+  - component: {fileID: 1021455443}
   m_Layer: 0
   m_Name: Avatar
   m_TagString: Untagged
@@ -1553,6 +1574,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &1021455443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021455439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8284b519a8fdc304abf916a5409a8bff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seguir: {fileID: 78873676}
+  huir: {fileID: 78873675}
 --- !u!1 &1063362047
 GameObject:
   m_ObjectHideFlags: 0
