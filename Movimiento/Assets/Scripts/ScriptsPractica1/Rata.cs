@@ -60,18 +60,18 @@ namespace UCM.IAV.Practica1
             
             // Comprobar si estoy dentro del radio y pararme
             if (distance <= targetRadius) {
-                //Debug.Log("Estoy dentro del radio de parada");
+                Debug.Log("Estoy dentro del radio de parada");
                 return new Dir(Quaternion.LookRotation(direction), Vector3.zero);
             }
             // Si estoy fuera del radio exterior, ir a maxima velocidad
             float targetSpeed;
             if (distance > brakeRadius) {
                 targetSpeed = maxSpeed;
-                //Debug.Log("Estoy fuera del radio de freno");
+                Debug.Log("Estoy fuera del radio de freno");
             }
             else {
                 targetSpeed = maxSpeed * distance / brakeRadius;
-                //Debug.Log("Estoy dentro del radio de freno");  
+                Debug.Log("Estoy dentro del radio de freno");  
             }
 
             // La velocidad combina rapidez y direccion
@@ -79,12 +79,12 @@ namespace UCM.IAV.Practica1
             targetVel.Normalize();
             targetVel *= targetSpeed;
             targetVel.y = 0;
-            Debug.Log("Velocidad objetivo: " + targetVel);
+            //Debug.Log("Velocidad objetivo: " + targetVel);
 
             // Hay que moverse hacia el objetivo en el tiempo establecido
             result.vel = targetVel - dir.vel;
             result.vel.y = 0;
-            Debug.Log("Velocidad real: " + result.vel);
+            //Debug.Log("Velocidad real: " + result.vel);
             result.vel /= timeToTarget;
 
             // Calcular la distancia al objetivo de nuevo
