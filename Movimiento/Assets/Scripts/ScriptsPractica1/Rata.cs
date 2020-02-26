@@ -1,7 +1,7 @@
+using UnityEngine;
+
 namespace UCM.IAV.Practica1
 {
-    using UnityEngine;
-
     public class Rata : MonoBehaviour
     {
         // KINEMATIC

@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace UCM.IAV.Movimiento
+namespace UCM.IAV.Practica1
 {
     public class Flauta : MonoBehaviour
     {
