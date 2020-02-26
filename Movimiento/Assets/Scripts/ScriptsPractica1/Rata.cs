@@ -11,10 +11,6 @@ namespace UCM.IAV.Practica1
         private float brakeRadius = 4.0f;
         [SerializeField]
         private float maxSpeed = 1.0f;
-        [SerializeField]
-        private float maxAcceleration = 0.5f;
-        // [SerializeField]
-        // private float timeToTarget = 0.25f;
 
         protected struct Dir {
             public Quaternion angle;
@@ -60,18 +56,15 @@ namespace UCM.IAV.Practica1
             
             // Comprobar si estoy dentro del radio y pararme
             if (distance <= targetRadius) {
-                //Debug.Log("Estoy dentro del radio de parada");
                 return new Dir(Quaternion.LookRotation(direction), Vector3.zero);
             }
             // Si estoy fuera del radio exterior, ir a maxima velocidad
             float targetSpeed;
             if (distance > brakeRadius) {
                 targetSpeed = maxSpeed;
-                //Debug.Log("Estoy fuera del radio de freno");
             }
             else {
-                targetSpeed = maxSpeed * distance / brakeRadius;
-                //Debug.Log("Estoy dentro del radio de freno");  
+                targetSpeed = maxSpeed * distance / brakeRadius; 
             }
 
             // La velocidad combina rapidez y direccion
@@ -79,6 +72,8 @@ namespace UCM.IAV.Practica1
             targetVel.Normalize();
             targetVel *= targetSpeed;
             targetVel.y = 0;
+
+            // Debugeando velocidad
             float v = Mathf.Sqrt(targetVel.x * targetVel.x + 
                 targetVel.y * targetVel.y +
                 targetVel.z * targetVel.z);
@@ -87,7 +82,7 @@ namespace UCM.IAV.Practica1
             // Hay que moverse hacia el objetivo en el tiempo establecido
             result.vel = targetVel - dir.vel;
             result.vel.y = 0;
-            
+
             // Poner en la direccion que queremos que vaya
             result.angle = Quaternion.LookRotation(direction);
             return result;
