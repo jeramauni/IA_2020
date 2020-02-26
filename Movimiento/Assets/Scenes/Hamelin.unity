@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &3853001
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -195,16 +195,17 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 78873673}
+  - component: {fileID: 78873674}
   - component: {fileID: 78873672}
   - component: {fileID: 78873671}
-  - component: {fileID: 78873674}
+  - component: {fileID: 78873676}
   m_Layer: 0
   m_Name: Enemigo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &78873671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,7 +213,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 78873670}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82e92ec8f463fd84cac92ffd22bc97c9, type: 3}
   m_Name: 
@@ -227,7 +228,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 78873670}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e27b1398245256a4aa176c4cad05e629, type: 3}
   m_Name: 
@@ -250,7 +251,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 78873670}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 1, z: 2}
+  m_LocalPosition: {x: 3.47, y: 1, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1649510675}
@@ -273,6 +274,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &78873676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78873670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fbc0dd3bdb2dbc49a743844371d2412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objetivo: {fileID: 1021455441}
+  velMovimiento: 8
+  radioObjetivo: 5
+  multAnchuraRayo: 0.8
+  multRayo: 50
+  distRayo: 4
+  velocidadGiro: 8
 --- !u!1 &149594257
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,7 +401,7 @@ GameObject:
   - component: {fileID: 163727212}
   m_Layer: 0
   m_Name: Pared 2
-  m_TagString: Untagged
+  m_TagString: Obstaculo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -567,7 +587,7 @@ GameObject:
   - component: {fileID: 418997850}
   m_Layer: 0
   m_Name: Pared 4
-  m_TagString: Untagged
+  m_TagString: Obstaculo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -659,11 +679,11 @@ GameObject:
   - component: {fileID: 447196357}
   m_Layer: 0
   m_Name: "Obst\xE1culo 2"
-  m_TagString: Untagged
+  m_TagString: Obstaculo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!136 &447196357
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1028,11 +1048,11 @@ GameObject:
   - component: {fileID: 730313604}
   m_Layer: 0
   m_Name: "Obst\xE1culo 1"
-  m_TagString: Untagged
+  m_TagString: Obstaculo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!136 &730313604
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1199,7 +1219,7 @@ GameObject:
   - component: {fileID: 807835671}
   m_Layer: 0
   m_Name: Pared 1
-  m_TagString: Untagged
+  m_TagString: Obstaculo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1271,8 +1291,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807835670}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.01, y: 0.5, z: -10}
-  m_LocalScale: {x: 20, y: 1, z: 1}
+  m_LocalPosition: {x: 0.01, y: 0.5, z: -3.81}
+  m_LocalScale: {x: 5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
@@ -1709,7 +1729,7 @@ GameObject:
   - component: {fileID: 1692001912}
   m_Layer: 0
   m_Name: Pared 3
-  m_TagString: Untagged
+  m_TagString: Obstaculo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1801,11 +1821,11 @@ GameObject:
   - component: {fileID: 1763350891}
   m_Layer: 0
   m_Name: "Obst\xE1culo 3"
-  m_TagString: Untagged
+  m_TagString: Obstaculo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!136 &1763350891
 CapsuleCollider:
   m_ObjectHideFlags: 0
