@@ -31,7 +31,7 @@ namespace UCM.IAV.Practica1
         private Dir newSteering() {
             Dir result;
             // Coger la direccion al objetivo y capar la 'y'
-            Vector3 direction =  transform.position - target.position;
+            Vector3 direction =  transform.position - rats.position;
             direction.y = 0;
 
             Vector3 targetVel = direction;
