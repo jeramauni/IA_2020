@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Range(1.0f, 15.0f)]
     public float maxVel = 10.0f;
     private Rigidbody cuerpoRigido;
     private Vector3 velocidad;
-
+    [SerializeField]
+    private GameObject flauta;
     // Start is called before the first frame update
     void Start()
     {
         cuerpoRigido = GetComponent<Rigidbody>();
+        if (flauta != null)
+        {
+            flauta.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -20,7 +26,10 @@ public class PlayerController : MonoBehaviour
 
         velocidad.x = Input.GetAxis("Horizontal");
         velocidad.z = Input.GetAxis("Vertical");
-
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyUp(KeyCode.Space))
+        {
+            flauta.SetActive(!flauta.activeSelf);
+        }
         if (cuerpoRigido == null)
             transform.Translate(velocidad * maxVel * Time.deltaTime);
     }

@@ -25,7 +25,7 @@ namespace UCM.IAV.Practica1
         protected float targetRadius = 2.0f;
         [SerializeField] [Range(3.0f, 4.0f)]
         protected float brakeRadius = 4.0f;
-        [SerializeField] [Range(1.0f, 10.0f)]
+        [SerializeField] [Range(1.0f, 6.0f)]
         protected float maxSpeed = 1.0f;
         // KINEMATIC SEEK
         [Header ("Búsqueda Cinematica")]

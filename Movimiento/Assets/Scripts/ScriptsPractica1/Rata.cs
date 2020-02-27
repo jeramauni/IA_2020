@@ -140,8 +140,8 @@ namespace UCM.IAV.Practica1
             // Distancia entre rata vecina y esta rata
             float separation_ = DistanciaDosPuntos(this.transform.position.x, this.transform.position.z, tf.position.x, tf.position.z);
             // Si la rata vecina esta dentro del radio de separacion
-            if (separation_ < ratsManagerScript.separationRadius && separation_ > 0.05)
-            {
+            if (separation_ < ratsManagerScript.separationRadius)
+                {
                 //Aumentamos el numero de ratas cercanas en +1
                 num_ratas_cercanas++;
                 // Potencia [0 - 1] en funcion de cuan cerca de la rata este la rata vecina
