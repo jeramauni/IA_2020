@@ -3,17 +3,17 @@ namespace UCM.IAV.Practica1
 {
     public class Perro : Seguimiento
     {
+        // KINEMATIC SEEK
+        [Header ("Búsqueda Cinematica")]
         public Transform rats;
         protected override void Update() {
             // Comprobación de la tecla espacio
-            if (Input.GetKey(KeyCode.Space)) {
+            if (Input.GetKeyDown(KeyCode.Space))
                 spacebarPressed = true;
-                rb_.velocity = Vector3.zero;
-            }
-            else if (Input.GetKeyUp(KeyCode.Space)) {
+            else if (Input.GetKeyUp(KeyCode.Space))
                 spacebarPressed = false;
-                rb_.velocity = Vector3.zero;
-            }
+
+            // Si la barra espaciadora no esta pulsada, 
             if (!spacebarPressed)
                 base.Update();
             else {
@@ -24,7 +24,7 @@ namespace UCM.IAV.Practica1
             transform.position += rb_.velocity * time + dir.vel * half_t_sq;
 
             // y la velocidad y la rotation
-            rb_.velocity = dir.vel;
+            rb_.velocity += dir.vel * time;
             transform.rotation = Quaternion.Slerp(transform.rotation, dir.angle, turnSpeed);
             }
         }

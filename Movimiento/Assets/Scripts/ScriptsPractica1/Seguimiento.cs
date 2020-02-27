@@ -58,7 +58,7 @@ namespace UCM.IAV.Practica1
             this.transform.position += rb_.velocity * time + dir.vel * half_t_sq;
 
             // y la velocidad y la rotation
-            rb_.velocity = dir.vel;
+            rb_.velocity += dir.vel * time;
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, dir.angle, turnSpeed);
         }
 
