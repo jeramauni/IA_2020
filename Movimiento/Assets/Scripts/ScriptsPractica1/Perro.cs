@@ -17,15 +17,15 @@ namespace UCM.IAV.Practica1
             if (!spacebarPressed)
                 base.Update();
             else {
-            dir = newSteering();
-            // Modificar la posicion y la orientacion
-            float time = Time.deltaTime;
-            float half_t_sq = 0.5f * time * time;
-            transform.position += rb_.velocity * time + dir.vel * half_t_sq;
+                dir = newSteering();
+                // Modificar la posicion y la orientacion
+                float time = Time.deltaTime;
+                float half_t_sq = 0.5f * time * time;
+                transform.position += rb_.velocity * time + dir.vel * half_t_sq;
 
-            // y la velocidad y la rotation
-            rb_.velocity += dir.vel * time;
-            transform.rotation = Quaternion.Slerp(transform.rotation, dir.angle, turnSpeed);
+                // y la velocidad y la rotation
+                rb_.velocity += dir.vel * time;
+                transform.rotation = Quaternion.Slerp(transform.rotation, dir.angle, turnSpeed);
             }
         }
         private Dir newSteering() {
