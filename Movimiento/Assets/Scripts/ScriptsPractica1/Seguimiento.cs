@@ -51,7 +51,6 @@ namespace UCM.IAV.Practica1
         }
         protected virtual void Update() {
             dir = getSteering();
-
             // Modificar la posicion y la orientacion
             float time = Time.deltaTime;
             float half_t_sq = 0.5f * time * time;
