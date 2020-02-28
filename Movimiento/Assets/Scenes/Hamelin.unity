@@ -689,7 +689,7 @@ MonoBehaviour:
   brakeRadius: 4
   maxSpeed: 10
   target: {fileID: 1021455441}
-  rats: {fileID: 853314172}
+  rats: {fileID: 1604275996}
 --- !u!4 &78873673
 Transform:
   m_ObjectHideFlags: 0
@@ -7339,8 +7339,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tfRatas: []
   separationRadius: 1
-  cohesionRadius: 2
   velSeparation: 10
+  cohesionRadius: 2
   velCohesion: 10
 --- !u!1 &1628852601
 GameObject:

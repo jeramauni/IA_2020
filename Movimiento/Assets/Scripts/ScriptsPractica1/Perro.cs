@@ -4,7 +4,7 @@ namespace UCM.IAV.Practica1
     public class Perro : Seguimiento
     {
         // KINEMATIC SEEK
-        [Header ("Búsqueda Cinematica")]
+        [Header ("Huida")]
         public Transform rats;
         protected override void Update() {
             // Comprobación de la tecla espacio
