@@ -19,7 +19,7 @@ namespace UCM.IAV.Practica1
                 spacebarPressed = false;
 
             // Si la barra espaciadora no esta pulsada, 
-            if (!spacebarPressed) {
+            if (spacebarPressed) {
                 dir = getSonSteering();
                 Debug.Log("===========ORIGINAL===========");
                 Debug.Log(dir.vel);
