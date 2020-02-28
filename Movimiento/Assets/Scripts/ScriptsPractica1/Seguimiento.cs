@@ -5,16 +5,17 @@ namespace UCM.IAV.Practica1
     public class Seguimiento : MonoBehaviour
     {
         // RAYCAST
-        [Header ("Atributos del Raycast")]
-        [SerializeField] [Tooltip ("No aconsejable pulsarlo")]
+        //[Header ("Atributos del Raycast")]
+        [SerializeField] [HideInInspector]
+        [Tooltip ("No aconsejable pulsarlo")]
         private bool activateRaycast = false;
-        [SerializeField] [Range(0.1f, 0.8f)] 
+        [SerializeField] [Range(0.1f, 0.8f)] [HideInInspector]
         [Tooltip ("Separacion del rayo en funcion del centro del cuerpo")]
         private float rayWidth = 0.8f;
-        [SerializeField] [Range(50.0f, 75.0f)]
+        [SerializeField] [Range(50.0f, 75.0f)][HideInInspector]
         [Tooltip ("Multiplicador para la fuerza con la que se repele de las paredes")]
         private float rayRebound = 50.0f;
-        [SerializeField] [Range(1.0f, 4.0f)]
+        [SerializeField] [Range(1.0f, 4.0f)] [HideInInspector]
         [Tooltip ("Distancia de casteo del rayo")]
         private float rayDistance = 4.0f;
         // KINEMATIC
