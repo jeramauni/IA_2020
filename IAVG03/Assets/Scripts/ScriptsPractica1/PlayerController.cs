@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         velocidad.x = Input.GetAxis("Horizontal");
         velocidad.z = Input.GetAxis("Vertical");
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyUp(KeyCode.Space))
