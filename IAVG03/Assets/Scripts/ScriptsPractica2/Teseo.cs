@@ -3,7 +3,7 @@ namespace UCM.IAV.Practica2 {
     public class Teseo : MonoBehaviour
     {
         // Laberinto con casillas y direcciones
-        
+        public MazeLoader mazeLoader;
         // Velocidad constante
         private const float speed = 1.0f;
         // Direcciones a las que puede ir teseo
@@ -28,6 +28,7 @@ namespace UCM.IAV.Practica2 {
         }
         // Mediante transforms, modificar la posicion, direccion y orientacion
         private void Update() {
+            // Empieza el movimiento
             float time = Time.deltaTime;
             float half_t_sq = 0.5f * time * time;
             // Comprobación de la tecla espacio. Si esta pulsada, seguir el hilo
@@ -44,15 +45,13 @@ namespace UCM.IAV.Practica2 {
                 && transform.position.x % (int)transform.position.x > 0.9f
                 && transform.position.y % (int)transform.position.y < 1.1f
                 && transform.position.y % (int)transform.position.y < 0.9f) {
-                    /*
-                    if (lab[(int)transform.position.x, (int)transform.position.y].walls[0] == true
-                    && dir.vel.x > 0.9) {
-                        this.transform.position += rb_.velocity * time + dir.vel * half_t_sq;
+                    if (mazeLoader.mazeCells[(int)transform.position.x, (int)transform.position.y].walls[0] == true && dir.vel.x > 0.9) {
+                        //this.transform.position += rb_.velocity * time + dir.vel * half_t_sq;
                     }
-                    if (lab[(int)transform.position.x, (int)transform.position.y].walls[1] == true) {}
-                    if (lab[(int)transform.position.x, (int)transform.position.y].walls[2] == true) {}
-                    if (lab[(int)transform.position.x, (int)transform.position.y].walls[3] == true) {}
-                    */
+                    if (mazeLoader.mazeCells[(int)transform.position.x, (int)transform.position.y].walls[1] == true) {}
+                    if (mazeLoader.mazeCells[(int)transform.position.x, (int)transform.position.y].walls[2] == true) {}
+                    if (mazeLoader.mazeCells[(int)transform.position.x, (int)transform.position.y].walls[3] == true) {}
+                    
                 }
             }
             // Modificar la posicion
