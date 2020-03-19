@@ -153,18 +153,26 @@ public class HuntAndKillMazeAlgorithm : MazeAlgorithm {
 			if (direction == 1 && row > 0 && mazeCells [row - 1, column].visited) {
 				DestroyWallIfItExists (mazeCells [row, column].northWall);
 				DestroyWallIfItExists (mazeCells [row - 1, column].southWall);
+				mazeCells[row, column].walls[0] = true;
+				mazeCells[row - 1, column].walls[1] = true;
 				wallDestroyed = true;
 			} else if (direction == 2 && row < (mazeRows-2) && mazeCells [row + 1, column].visited) {
 				DestroyWallIfItExists (mazeCells [row, column].southWall);
 				DestroyWallIfItExists (mazeCells [row + 1, column].northWall);
+				mazeCells[row, column].walls[1] = true;
+				mazeCells[row + 1, column].walls[0] = true;
 				wallDestroyed = true;
 			} else if (direction == 3 && column > 0 && mazeCells [row, column-1].visited) {
 				DestroyWallIfItExists (mazeCells [row, column].westWall);
 				DestroyWallIfItExists (mazeCells [row, column-1].eastWall);
+				mazeCells[row, column].walls[2] = true;
+				mazeCells[row, column + 1].walls[3] = true;
 				wallDestroyed = true;
 			} else if (direction == 4 && column < (mazeColumns-2) && mazeCells [row, column+1].visited) {
 				DestroyWallIfItExists (mazeCells [row, column].eastWall);
 				DestroyWallIfItExists (mazeCells [row, column+1].westWall);
+				mazeCells[row, column].walls[3] = true;
+				mazeCells[row, column - 1].walls[2] = true;
 				wallDestroyed = true;
 			}
 		}

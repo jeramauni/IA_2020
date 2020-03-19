@@ -70,8 +70,9 @@ public class MazeLoader : MonoBehaviour {
 				writer.Write(" | ");
 
 			}
-			writer.WriteLine('\n');
+			writer.Write('\n');
 		}
+		writer.WriteLine();
 		writer.Close();
 	}
 }
