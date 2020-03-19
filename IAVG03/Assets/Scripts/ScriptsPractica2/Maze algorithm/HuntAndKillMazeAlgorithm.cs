@@ -41,7 +41,7 @@ public class HuntAndKillMazeAlgorithm : MazeAlgorithm {
 				DestroyWallIfItExists (mazeCells [currentRow, currentColumn].southWall);
 				DestroyWallIfItExists (mazeCells [currentRow + 1, currentColumn].northWall);
 				mazeCells[currentRow, currentColumn].walls[1] = true;
-				if (currentRow + 1 <= mazeCells.GetLength(0))
+				if (currentRow + 1 < mazeCells.GetLength(0))
 					mazeCells[currentRow + 1, currentColumn].walls[0] = true;
 				currentRow++;
 			} else if (direction == 3 && CellIsAvailable (currentRow, currentColumn + 1)) {
@@ -49,7 +49,7 @@ public class HuntAndKillMazeAlgorithm : MazeAlgorithm {
 				DestroyWallIfItExists (mazeCells [currentRow, currentColumn].eastWall);
 				DestroyWallIfItExists (mazeCells [currentRow, currentColumn + 1].westWall);
 				mazeCells[currentRow, currentColumn].walls[2] = true;
-				if (currentColumn + 1 <= mazeCells.GetLength(1))
+				if (currentColumn + 1 < mazeCells.GetLength(1))
 					mazeCells[currentRow, currentColumn + 1].walls[3] = true;
 				currentColumn++;
 			} else if (direction == 4 && CellIsAvailable (currentRow, currentColumn - 1)) {
@@ -165,15 +165,15 @@ public class HuntAndKillMazeAlgorithm : MazeAlgorithm {
 				DestroyWallIfItExists (mazeCells [row, column].southWall);
 				DestroyWallIfItExists (mazeCells [row + 1, column].northWall);
 				mazeCells[row, column].walls[1] = true;
-				if (row + 1 <= mazeCells.GetLength(0))
+				if (row + 1 < mazeCells.GetLength(0))
 					mazeCells[row + 1, column].walls[0] = true;
 				wallDestroyed = true;
 			} else if (direction == 3 && column > 0 && mazeCells [row, column-1].visited) {
 				DestroyWallIfItExists (mazeCells [row, column].westWall);
 				DestroyWallIfItExists (mazeCells [row, column-1].eastWall);
 				mazeCells[row, column].walls[2] = true;
-				if (column + 1 <= mazeCells.GetLength(1))
-					mazeCells[row, column + 1].walls[3] = true;
+				if (column + 1 < mazeCells.GetLength(1))				
+					mazeCells[row, column + 1].walls[3] = true;			
 				wallDestroyed = true;
 			} else if (direction == 4 && column < (mazeColumns-2) && mazeCells [row, column+1].visited) {
 				DestroyWallIfItExists (mazeCells [row, column].eastWall);
