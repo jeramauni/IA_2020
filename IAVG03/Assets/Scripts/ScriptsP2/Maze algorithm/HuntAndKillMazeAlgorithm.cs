@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 public class HuntAndKillMazeAlgorithm : MazeAlgorithm {
 
 	private int currentRow = 0;
@@ -33,21 +32,29 @@ public class HuntAndKillMazeAlgorithm : MazeAlgorithm {
 				// North
 				DestroyWallIfItExists (mazeCells [currentRow, currentColumn].northWall);
 				DestroyWallIfItExists (mazeCells [currentRow - 1, currentColumn].southWall);
+				mazeCells[currentRow, currentColumn].walls[0] = true;
+				mazeCells[currentRow - 1, currentColumn].walls[1] = true;
 				currentRow--;
 			} else if (direction == 2 && CellIsAvailable (currentRow + 1, currentColumn)) {
 				// South
 				DestroyWallIfItExists (mazeCells [currentRow, currentColumn].southWall);
 				DestroyWallIfItExists (mazeCells [currentRow + 1, currentColumn].northWall);
+				mazeCells[currentRow, currentColumn].walls[1] = true;
+				mazeCells[currentRow + 1, currentColumn].walls[0] = true;
 				currentRow++;
 			} else if (direction == 3 && CellIsAvailable (currentRow, currentColumn + 1)) {
 				// east
 				DestroyWallIfItExists (mazeCells [currentRow, currentColumn].eastWall);
 				DestroyWallIfItExists (mazeCells [currentRow, currentColumn + 1].westWall);
+				mazeCells[currentRow, currentColumn].walls[2] = true;
+				mazeCells[currentRow, currentColumn + 1].walls[3] = true;
 				currentColumn++;
 			} else if (direction == 4 && CellIsAvailable (currentRow, currentColumn - 1)) {
 				// west
 				DestroyWallIfItExists (mazeCells [currentRow, currentColumn].westWall);
 				DestroyWallIfItExists (mazeCells [currentRow, currentColumn - 1].eastWall);
+				mazeCells[currentRow, currentColumn].walls[3] = true;
+				mazeCells[currentRow, currentColumn - 1].walls[2] = true;
 				currentColumn--;
 			}
 

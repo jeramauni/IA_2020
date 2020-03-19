@@ -443,8 +443,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 334ef5519144d0e438a932a03abdacc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mazeRows: 10
-  mazeColumns: 10
+  mazeRows: 3
+  mazeColumns: 2
   wallGo: {fileID: 100000, guid: 403c7d1fcaa50ea4e8acd406751a88fd, type: 3}
   floorGo: {fileID: 100000, guid: a0702439d05d5334e885e87aeba2a438, type: 3}
   size: 1
