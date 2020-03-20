@@ -2,35 +2,44 @@
 using System.IO;
 
 namespace UCM.IAV.Practica2 {
+	//Cargador del laberinto al iniciar la partida
 	public class MazeLoader : MonoBehaviour {
+		//Numero de filas y columnas
 		public int mazeRows, mazeColumns;
+		//Prefab de paredes y suelo
 		public GameObject wallGo;
 		public GameObject floorGo;
-
-		public float size = 2f;
-
+		//Tamaño de los objetos del laberinto (Usado para reescalar el laberinto)
+		public float size = 1.25f;
+		//Mapa de baldosas y elementos del laberinto
 		public MazeCell[,] mazeCells;
 
-		// Use this for initialization
 		void Start () {
+			//Instancia los objetos del laberinto en la escena
 			InitializeMaze ();
-
+			//Construye el algoritmo generador del laberinto pasandole 'mazeCells' como el mapa de baldosas a utilizar 
 			MazeAlgorithm ma = new HuntAndKillMazeAlgorithm (mazeCells);
+			//Crea el laberinto definitivo usando el algoritmo de Hunt And Kill
 			ma.CreateMaze ();
+			//(OPCIONAL) Imprime el mapa de baldosas en "Assets/debug.txt"
 			DebugMaze();
 		}
 		
+		//Instancia todos los posibles objetos del laberinto y les asigna un nombre rellenando el mapa de baldosas
 		private void InitializeMaze() {
 
 			mazeCells = new MazeCell[mazeRows,mazeColumns];
 
+			//Para cada posición posible del mapa de baldosas...
 			for (int r = 0; r < mazeRows; r++) {
 				for (int c = 0; c < mazeColumns; c++) {
 					mazeCells [r, c] = new MazeCell ();
-					
+					//Crea una baldosa...
 					mazeCells[r, c].floor = Instantiate(floorGo, new Vector3(r * size, -(size / 2f), c * size), Quaternion.identity) as GameObject;
+					//Le asigna un nombre único...
 					mazeCells[r, c].floor.name = "Floor " + r + "," + c;
 
+					//Y crea las paredes correspondientes 
 					if (c == 0)
 					{
 						mazeCells[r, c].westWall = Instantiate(wallGo, new Vector3(r * size, 0, (c * size) - (size / 2f)), Quaternion.identity) as GameObject;
@@ -55,9 +64,10 @@ namespace UCM.IAV.Practica2 {
 			}
 		}
 
+		//Genera un archivo debug.txt en "Assets/" conteniendo una representación del mapa de baldosas
 		private void DebugMaze ()
 		{
-			StreamWriter writer = new StreamWriter("Assets/test.txt", true);
+			StreamWriter writer = new StreamWriter("Assets/debug.txt", true);
 			writer.WriteLine("Debug: Maze " + mazeRows + "x" + mazeColumns);
 			for (int i = 0; i < mazeCells.GetLength(0); i++)
 			{

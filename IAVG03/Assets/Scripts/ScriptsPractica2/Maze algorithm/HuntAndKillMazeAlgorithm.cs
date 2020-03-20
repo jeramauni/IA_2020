@@ -2,14 +2,16 @@
 namespace UCM.IAV.Practica2 {
 	public class HuntAndKillMazeAlgorithm : MazeAlgorithm {
 
+		//Iteradores de la posición en el mapa de baldosas
 		private int currentRow = 0;
 		private int currentColumn = 0;
-
+		//Flag de finalización
 		private bool courseComplete = false;
 
+		//Constructora
 		public HuntAndKillMazeAlgorithm(MazeCell[,] mazeCells) : base(mazeCells) {
 		}
-
+		//Crea el laberinto final utilizando el algoritmo de Hunt and Kill
 		public override void CreateMaze () {
 			HuntAndKill ();
 		}
@@ -18,11 +20,12 @@ namespace UCM.IAV.Practica2 {
 			mazeCells [currentRow, currentColumn].visited = true;
 
 			while (! courseComplete) {
-				Kill(); // Will run until it hits a dead end.
-				Hunt(); // Finds the next unvisited cell with an adjacent visited cell. If it can't find any, it sets courseComplete to true.
+				Kill(); // Se ejecutará hasta que encuentre un callejón sin salida
+				Hunt(); // Busca la siguiente baldosa sin visitar adyacente a una visitada. Si no lo consigue, pone courseComplete a true.
 			}
 		}
 
+		//Va moviendose por el mapa aleatoriamente destruyendo paredes  mientras haya una ruta disponible
 		private void Kill() {
 			while (RouteStillAvailable (currentRow, currentColumn)) {
 				int direction = Random.Range (1, 5);
@@ -66,23 +69,23 @@ namespace UCM.IAV.Practica2 {
 		}
 
 		private void Hunt() {
-			courseComplete = true; // Set it to this, and see if we can prove otherwise below!
+			courseComplete = true; // Suponemos que hemos finalizado y comprobamos lo opuesto debajo
 
 			for (int r = 0; r < mazeRows; r++) {
 				for (int c = 0; c < mazeColumns; c++) {
 					if (!mazeCells [r, c].visited && CellHasAnAdjacentVisitedCell(r,c)) {
-						courseComplete = false; // Yep, we found something so definitely do another Kill cycle.
+						courseComplete = false; // Encontramos una baldosa asi que debemos Kill() de nuevo
 						currentRow = r;
 						currentColumn = c;
 						DestroyAdjacentWall (currentRow, currentColumn);
 						mazeCells [currentRow, currentColumn].visited = true;
-						return; // Exit the function
+						return;
 					}
 				}
 			}
 		}
 
-
+		//Devuelve verdadero si hay alguna ruta disponible adyacente a la baldosa 
 		private bool RouteStillAvailable(int row, int column) {
 			int availableRoutes = 0;
 
@@ -105,6 +108,7 @@ namespace UCM.IAV.Practica2 {
 			return availableRoutes > 0;
 		}
 
+		//Devuelve verdadero si la posición seleccionada contiene una baldosa válida y sin visitar
 		private bool CellIsAvailable(int row, int column) {
 			if (row >= 0 && row < mazeRows && column >= 0 && column < mazeColumns && !mazeCells [row, column].visited) {
 				return true;
@@ -113,39 +117,40 @@ namespace UCM.IAV.Practica2 {
 			}
 		}
 
+		//Destruye la pared seleccionada
 		private void DestroyWallIfItExists(GameObject wall) {
 			if (wall != null) {
 				GameObject.Destroy (wall);
 			}
 		}
 
+		// Devuelve verdadero si hay alguna baldosa visitada adyacente a esta.
 		private bool CellHasAnAdjacentVisitedCell(int row, int column) {
 			int visitedCells = 0;
 
-			// Look 1 row up (north) if we're on row 1 or greater
+			// Mira una fila encima (N) si estamos en la fila 1 o superior
 			if (row > 0 && mazeCells [row - 1, column].visited) {
 				visitedCells++;
 			}
 
-			// Look one row down (south) if we're the second-to-last row (or less)
+			// Mira una fila debajo (S) si estamos en la penúltima fila o menos
 			if (row < (mazeRows-2) && mazeCells [row + 1, column].visited) {
 				visitedCells++;
 			}
 
-			// Look one row left (west) if we're column 1 or greater
+			//Mira una columna a la izquierda (W) si estamos en la columna 1 o superior
 			if (column > 0 && mazeCells [row, column - 1].visited) {
 				visitedCells++;
 			}
 
-			// Look one row right (east) if we're the second-to-last column (or less)
+			// Mira una columna a la derecha (E) si estamos en la penúltima columna o menos
 			if (column < (mazeColumns-2) && mazeCells [row, column + 1].visited) {
 				visitedCells++;
 			}
 
-			// return true if there are any adjacent visited cells to this one
 			return visitedCells > 0;
 		}
-
+		//Destruye una pared aleatoria adyacente a la posición seleccionada y por tanto abre un posible camino -> mazeCells[row, column].walls[x] = true;
 		private void DestroyAdjacentWall(int row, int column) {
 			bool wallDestroyed = false;
 
@@ -182,8 +187,6 @@ namespace UCM.IAV.Practica2 {
 					wallDestroyed = true;
 				}
 			}
-
 		}
-
-}
+	}
 }
