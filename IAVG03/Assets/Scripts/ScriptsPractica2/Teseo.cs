@@ -37,7 +37,6 @@ namespace UCM.IAV.Practica2 {
 
         // Mediante transforms, modificar la posicion, direccion y orientacion
         void Update() {
-            // Debug.Log("Arriba: " + mazeLoader.mazeCells[dir.actualPosX, dir.actualPosZ].walls[2] + "| Abajo: " + mazeLoader.mazeCells[dir.actualPosX, dir.actualPosZ].walls[3] + "| Izquierda: " + mazeLoader.mazeCells[dir.actualPosX, dir.actualPosZ].walls[0] + "| Derecha: " + mazeLoader.mazeCells[dir.actualPosX, dir.actualPosZ].walls[1]);
             // Empieza el movimiento
             float time = Time.deltaTime;
             // Comprobación de la tecla espacio. Si NO esta pulsada, hacer un movimiento normal
@@ -95,17 +94,17 @@ namespace UCM.IAV.Practica2 {
         }
         private void goThere(float time) {
             if (dir.last != DIRE.NONE) {
-                    if (!canIGoThere(dir.actual) && dir.last != dir.actual)
-                        goDirection(dir.last, time);
-                    else {
-                        goDirection(dir.actual, time);
-                        dir.velLast = dir.vel;
-                    }
-                }
-                else { 
+                if (!canIGoThere(dir.actual) && dir.last != dir.actual)
+                    goDirection(dir.last, time);
+                else {
                     goDirection(dir.actual, time);
-                    dir.last = dir.actual;
+                    dir.velLast = dir.vel;
                 }
+            }
+            else { 
+                goDirection(dir.actual, time);
+                dir.last = dir.actual;
+            }
         }
         private bool canIGoThere(DIRE direccion) {
             int wall = 0;
@@ -116,8 +115,14 @@ namespace UCM.IAV.Practica2 {
                 case DIRE.RIGHT: wall = 1; break;
                 case DIRE.NONE: return false;
             }
-            // Debug.Log("PosX: " + dir.actualPosX + "| PosZ: " + dir.actualPosZ + "| Puerta num: " + direccion + "| Esta abierta: " + mazeLoader.mazeCells[dir.actualPosX, dir.actualPosZ].walls[wall]);
-            return mazeLoader.mazeCells[dir.actualPosX, dir.actualPosZ].walls[wall];
+            bool alineado = true;
+            // if (wall == 3 || wall == 2 && transform.position.x > dir.actualPosX * mazeLoader.size - 0.2
+            // && transform.position.x < dir.actualPosX * mazeLoader.size + 0.2)
+            //     alineado = true;
+            // else if (wall == 1 || wall == 0 && transform.position.z > dir.actualPosZ * mazeLoader.size - 0.2
+            // && transform.position.z < dir.actualPosZ * mazeLoader.size + 0.2)
+            //     alineado = true;
+            return mazeLoader.mazeCells[dir.actualPosX, dir.actualPosZ].walls[wall] && alineado;
         }
         private void goDirection(DIRE direccion, float time) {
             switch(direccion) {
@@ -163,7 +168,6 @@ namespace UCM.IAV.Practica2 {
                     }
                     else dir.lastPosX--;
                     // Si no hay muro a la izquierda o si aun no ha terminado de recorrer la casilla que tiene muro, se mueve
-                    // Debug.Log(transform.position.z + ">" + (dir.actualPosZ * mazeLoader.size - 0.2) + "&& " + transform.position.z + "<" + (dir.actualPosZ * mazeLoader.size + 0.2));
                     if (mazeLoader.mazeCells[dir.actualPosX, dir.actualPosZ].walls[0]
                     && transform.position.z > dir.actualPosZ * mazeLoader.size - 0.2
                     && transform.position.z < dir.actualPosZ * mazeLoader.size + 0.2) {
@@ -181,7 +185,6 @@ namespace UCM.IAV.Practica2 {
                     }
                     else dir.lastPosX++;
                     // Si no hay muro a la derecha, se mueve
-                    // Debug.Log(transform.position.z + ">" + (dir.actualPosZ * mazeLoader.size - 0.2) + "&& " + transform.position.z + "<" + (dir.actualPosZ * mazeLoader.size + 0.2));
                     if (mazeLoader.mazeCells[dir.actualPosX, dir.actualPosZ].walls[1]
                     && transform.position.z > dir.actualPosZ * mazeLoader.size - 0.2
                     && transform.position.z < dir.actualPosZ * mazeLoader.size + 0.2) {
