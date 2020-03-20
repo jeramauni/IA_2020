@@ -26,7 +26,6 @@ namespace UCM.IAV.Practica2 {
 		private void Kill() {
 			while (RouteStillAvailable (currentRow, currentColumn)) {
 				int direction = Random.Range (1, 5);
-				//int direction = ProceduralNumberGenerator.GetNextNumber ();
 
 				if (direction == 1 && CellIsAvailable (currentRow - 1, currentColumn)) {
 					// North
@@ -151,8 +150,7 @@ namespace UCM.IAV.Practica2 {
 			bool wallDestroyed = false;
 
 			while (!wallDestroyed) {
-				// int direction = Random.Range (1, 5);
-				int direction = ProceduralNumberGenerator.GetNextNumber ();
+				 int direction = Random.Range (1, 5);
 
 				if (direction == 1 && row > 0 && mazeCells [row - 1, column].visited) {
 					DestroyWallIfItExists (mazeCells [row, column].northWall);
