@@ -1,0 +1,372 @@
+Debug: Maze 4x4
+False-False-True-False- | False-False-True-True- | False-False-True-True- | False-True-False-True- | 
+False-True-False-False- | False-True-True-False- | False-True-False-True- | True-True-False-False- | 
+True-True-False-False- | True-True-False-False- | True-True-False-False- | True-True-False-False- | 
+True-False-True-False- | True-False-False-True- | True-False-True-False- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-True-False-True- | False-True-True-False- | False-True-False-True- | 
+False-True-False-False- | True-True-False-False- | True-False-True-False- | True-False-False-True- | 
+True-True-False-False- | True-False-True-False- | False-False-True-True- | False-True-False-True- | 
+True-False-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-True-True-False- | False-True-True-True- | False-True-False-True- | 
+True-True-False-False- | True-False-False-False- | True-True-False-False- | True-True-False-False- | 
+True-False-True-False- | False-False-True-True- | True-False-False-True- | True-True-False-False- | 
+False-False-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-True-False-True- | False-True-True-False- | False-True-False-True- | 
+False-True-False-False- | True-False-True-False- | True-False-False-True- | True-True-False-False- | 
+True-True-False-False- | False-True-True-False- | False-True-True-True- | True-False-False-True- | 
+True-False-True-False- | True-False-False-True- | True-False-True-False- | False-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-False-True-True- | False-False-True-True- | False-True-False-True- | 
+False-True-True-False- | False-False-False-True- | False-True-True-False- | True-True-False-True- | 
+True-True-False-False- | False-True-True-False- | True-False-False-True- | True-True-False-False- | 
+True-False-True-False- | True-False-False-True- | False-False-True-False- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-True-False-False- | False-True-True-False- | False-True-False-True- | 
+True-False-True-False- | True-False-True-True- | True-False-False-True- | True-True-False-False- | 
+False-True-False-False- | False-True-True-False- | False-True-False-True- | True-True-False-False- | 
+True-False-True-False- | True-False-False-True- | True-False-True-False- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-True-True-False- | False-True-False-True- | False-True-False-False- | 
+True-True-False-False- | True-True-False-False- | True-False-True-False- | True-True-False-True- | 
+True-True-False-False- | True-True-False-False- | False-True-False-False- | True-True-False-False- | 
+True-False-True-False- | True-False-False-True- | True-False-True-False- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-True-False-False- | False-True-True-False- | False-True-False-True- | 
+True-False-True-False- | True-False-True-True- | True-False-False-True- | True-True-False-False- | 
+False-True-False-True- | False-True-True-False- | False-False-True-True- | True-False-False-True- | 
+True-False-False-False- | True-False-True-False- | False-False-True-True- | False-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-True-False-True- | False-False-True-False- | False-True-False-True- | 
+False-True-True-False- | True-False-False-True- | False-False-True-False- | True-True-False-True- | 
+True-False-True-False- | False-False-True-True- | False-True-False-True- | True-True-False-False- | 
+False-False-True-False- | False-False-True-True- | True-False-False-True- | True-False-False-False- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-True-False-True- | False-True-True-False- | False-True-False-True- | 
+False-True-True-False- | True-False-False-True- | True-True-False-False- | True-True-False-False- | 
+True-True-False-False- | False-False-True-False- | True-False-False-True- | True-True-False-False- | 
+True-False-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-True-False-True- | False-False-True-False- | False-True-False-True- | 
+False-True-False-False- | True-True-False-False- | False-True-True-False- | True-False-False-True- | 
+True-False-True-False- | True-False-False-True- | True-False-True-False- | False-True-False-True- | 
+False-False-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-False-True-False- | False-True-False-True- | False-True-False-False- | 
+True-False-True-False- | False-True-False-True- | True-False-True-False- | True-True-False-True- | 
+False-True-False-True- | True-True-False-False- | False-True-True-False- | True-True-False-True- | 
+True-False-False-False- | True-False-True-False- | True-False-False-True- | True-False-False-False- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-True-True-False- | False-True-False-True- | False-True-False-False- | 
+True-True-False-False- | True-True-False-False- | True-True-True-False- | True-False-False-True- | 
+True-True-False-False- | True-True-False-False- | True-False-True-False- | False-True-False-True- | 
+True-False-True-False- | True-False-False-True- | False-False-True-False- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-True-False- | False-True-False-True- | False-True-True-False- | False-True-False-True- | 
+True-True-False-False- | True-False-True-False- | True-False-False-True- | True-True-False-False- | 
+True-True-False-False- | False-True-True-False- | False-False-True-True- | True-False-False-True- | 
+True-False-False-False- | True-False-True-False- | False-False-True-True- | False-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-True-False- | False-True-False-True- | False-True-True-False- | False-False-False-True- | 
+True-True-False-False- | True-True-False-False- | True-False-True-False- | False-True-False-True- | 
+True-True-False-False- | True-False-True-False- | False-True-False-True- | True-True-False-False- | 
+True-False-True-False- | False-False-False-True- | True-False-True-False- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-True-False-True- | False-False-True-False- | False-True-False-True- | 
+False-True-True-False- | True-False-False-True- | False-True-True-False- | True-False-False-True- | 
+True-False-True-False- | False-True-False-True- | True-False-True-False- | False-True-False-True- | 
+False-False-True-False- | True-False-False-True- | False-False-True-False- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-True-True-False- | False-True-False-True- | False-True-True-False- | 
+True-True-False-False- | True-False-False-False- | True-True-False-False- | True-True-False-False- | 
+True-False-True-False- | False-False-True-True- | True-False-False-True- | True-True-False-False- | 
+False-False-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-False-True-False- | False-True-False-True- | False-True-True-False- | 
+True-True-False-False- | False-True-True-False- | True-False-False-True- | True-True-False-False- | 
+True-True-False-False- | True-True-False-False- | False-True-False-False- | True-True-False-False- | 
+True-False-True-False- | True-False-False-True- | True-False-True-False- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-False-True-True- | False-True-False-True- | False-True-True-False- | 
+False-True-True-False- | False-False-True-True- | True-False-False-True- | True-True-False-False- | 
+True-True-False-False- | False-False-True-False- | False-True-False-True- | True-True-False-False- | 
+True-False-True-False- | False-False-True-True- | True-False-False-True- | True-False-False-False- | 
+
+Debug: Maze 4x4
+False-True-True-False- | False-True-False-True- | False-True-True-False- | False-False-False-True- | 
+True-True-False-False- | True-True-False-False- | True-False-True-False- | False-True-False-True- | 
+True-True-False-False- | True-True-False-False- | False-True-True-False- | True-False-False-True- | 
+True-False-False-False- | True-False-True-False- | True-False-False-True- | False-False-True-False- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-False-True-False- | False-False-True-True- | False-True-False-True- | 
+True-True-False-False- | False-True-True-False- | False-True-True-True- | True-False-False-True- | 
+True-True-False-False- | True-True-False-False- | True-True-False-False- | False-True-False-False- | 
+True-False-True-False- | True-False-False-True- | True-False-True-False- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-True-True-False- | False-False-True-True- | False-True-False-True- | 
+True-False-True-False- | True-True-False-True- | False-False-True-False- | True-True-False-True- | 
+False-True-False-False- | True-False-True-False- | False-True-False-True- | True-True-False-False- | 
+True-False-True-False- | False-False-True-True- | True-False-False-True- | True-False-False-False- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-True-False-True- | False-True-True-False- | False-False-False-True- | 
+False-True-True-False- | True-False-False-True- | True-True-True-False- | False-True-False-True- | 
+True-False-True-False- | False-True-False-True- | True-True-False-False- | True-True-False-False- | 
+False-False-False-True- | True-False-True-False- | True-False-False-True- | True-False-False-False- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-False-True-True- | False-True-False-True- | False-True-True-False- | 
+False-True-True-False- | False-False-True-True- | True-False-False-True- | True-True-False-False- | 
+True-True-False-False- | False-False-True-False- | False-True-False-True- | True-True-False-False- | 
+True-False-True-False- | False-False-True-True- | True-False-False-True- | True-False-False-False- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-True-False-True- | False-False-True-False- | False-True-False-True- | 
+False-True-True-False- | True-False-False-True- | False-True-False-False- | True-True-False-False- | 
+True-False-True-False- | False-True-False-True- | True-True-True-False- | True-False-False-True- | 
+False-False-True-False- | True-False-False-True- | True-False-True-False- | False-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-True-False- | False-True-False-True- | False-False-True-False- | False-True-False-True- | 
+True-True-False-False- | True-False-True-False- | False-True-False-True- | True-True-False-False- | 
+True-True-False-False- | False-False-True-False- | True-False-True-True- | True-False-False-True- | 
+True-False-True-False- | False-False-True-True- | False-False-True-True- | False-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-False-True-False- | False-False-True-True- | False-True-False-True- | 
+True-True-True-False- | False-True-False-True- | False-True-True-False- | True-False-False-True- | 
+True-True-False-False- | True-True-False-False- | True-False-True-False- | False-True-False-True- | 
+True-False-False-False- | True-False-True-False- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-False-True-True- | False-True-False-True- | False-True-True-False- | 
+False-True-True-False- | False-True-False-True- | True-True-False-False- | True-False-False-False- | 
+True-True-False-False- | True-False-False-False- | True-False-True-False- | False-True-False-True- | 
+True-False-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-False-True-True- | False-False-True-True- | False-True-False-True- | 
+False-True-True-False- | False-True-False-True- | False-True-True-False- | True-False-False-True- | 
+True-True-False-False- | True-False-True-False- | True-False-False-True- | False-True-False-False- | 
+True-False-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-True-False- | False-False-True-True- | False-True-False-True- | False-True-False-False- | 
+True-True-False-False- | False-True-False-False- | True-True-False-False- | True-True-False-False- | 
+True-True-True-False- | True-False-False-True- | True-True-False-False- | True-True-False-False- | 
+True-False-True-False- | False-False-False-True- | True-False-True-False- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-True-False-True- | False-True-True-False- | False-True-False-True- | 
+False-True-True-False- | True-False-False-True- | True-True-False-False- | True-True-False-False- | 
+True-True-True-False- | False-True-False-True- | True-True-False-False- | True-True-False-False- | 
+True-False-False-False- | True-False-True-False- | True-False-False-True- | True-False-False-False- | 
+
+Debug: Maze 4x4
+False-True-True-False- | False-True-False-True- | False-True-True-False- | False-True-False-True- | 
+True-False-False-False- | True-True-False-False- | True-True-False-False- | True-True-False-False- | 
+False-True-True-False- | True-False-False-True- | True-True-False-False- | True-True-False-False- | 
+True-False-True-False- | False-False-True-True- | True-False-False-True- | True-False-False-False- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-True-False-False- | False-True-True-False- | False-True-False-True- | 
+True-True-False-False- | True-False-True-False- | True-False-False-True- | True-True-False-False- | 
+True-True-True-False- | False-True-False-True- | False-True-True-False- | True-False-False-True- | 
+True-False-False-False- | True-False-True-False- | True-False-False-True- | False-False-True-False- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-False-True-False- | False-True-True-True- | False-True-False-True- | 
+True-False-True-False- | False-True-False-True- | True-False-False-False- | True-True-False-False- | 
+False-True-False-True- | True-False-True-False- | False-True-False-True- | True-True-False-False- | 
+True-False-True-False- | False-False-False-True- | True-False-True-False- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-True-True-False- | False-True-True-True- | False-True-False-True- | 
+True-True-False-False- | True-False-True-False- | True-False-False-True- | True-False-False-False- | 
+True-True-False-False- | False-True-True-False- | False-False-True-True- | False-True-False-True- | 
+True-False-True-False- | True-False-False-True- | False-False-True-False- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-True-True-False- | False-True-False-True- | False-True-True-False- | 
+True-False-True-False- | True-False-False-True- | True-True-False-False- | True-False-False-False- | 
+False-True-True-False- | False-False-False-True- | True-False-True-False- | False-True-False-True- | 
+True-False-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-True-False-True- | False-True-True-False- | False-False-False-True- | 
+False-True-True-False- | True-False-False-True- | True-True-True-False- | False-True-False-True- | 
+True-False-True-False- | False-True-False-True- | True-True-False-False- | True-True-False-False- | 
+False-False-False-True- | True-False-True-False- | True-False-False-True- | True-False-False-False- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-False-True-True- | False-False-True-True- | False-True-False-True- | 
+False-True-True-False- | False-False-True-True- | False-True-False-True- | True-True-False-False- | 
+True-True-False-False- | False-True-True-False- | True-False-False-True- | True-True-False-False- | 
+True-False-False-False- | True-False-True-False- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-False-True-True- | False-False-True-True- | False-True-False-True- | 
+False-True-True-False- | False-True-False-True- | False-True-True-False- | True-False-False-True- | 
+True-True-False-False- | True-False-True-False- | True-False-False-True- | False-True-False-False- | 
+True-False-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-True-False-False- | False-True-True-False- | False-True-False-True- | 
+True-False-True-False- | True-False-True-True- | True-False-False-True- | True-True-False-False- | 
+False-True-True-False- | False-False-False-True- | False-True-True-False- | True-False-False-True- | 
+True-False-True-False- | False-False-True-True- | True-False-False-True- | False-False-True-False- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-False-True-False- | False-False-True-True- | False-True-False-True- | 
+True-True-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+True-False-True-False- | False-False-True-True- | False-False-True-True- | False-True-False-True- | 
+False-False-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-True-True-False- | False-True-True-True- | False-True-False-True- | 
+True-False-True-False- | True-False-False-True- | True-False-False-False- | True-True-False-False- | 
+False-True-False-True- | False-True-True-False- | False-False-True-True- | True-False-False-True- | 
+True-False-False-False- | True-False-True-False- | False-False-True-True- | False-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-True-True-False- | False-True-False-True- | False-True-True-False- | 
+True-False-True-False- | True-False-False-True- | True-True-False-False- | True-True-False-False- | 
+False-True-True-False- | False-True-False-True- | True-True-False-False- | True-True-False-False- | 
+True-False-False-False- | True-False-True-False- | True-False-False-True- | True-False-False-False- | 
+
+Debug: Maze 4x4
+False-True-True-False- | False-True-False-True- | False-False-True-False- | False-True-False-True- | 
+True-True-False-False- | True-False-True-False- | False-False-True-True- | True-False-False-True- | 
+True-True-False-False- | False-False-True-False- | False-True-True-True- | False-True-False-True- | 
+True-False-True-False- | False-False-True-True- | True-False-False-True- | True-False-False-False- | 
+
+Debug: Maze 4x4
+False-True-True-False- | False-False-True-True- | False-True-False-True- | False-True-False-False- | 
+True-False-True-False- | False-True-False-True- | True-True-False-False- | True-True-False-False- | 
+False-True-False-False- | True-True-False-False- | True-True-False-False- | True-True-False-False- | 
+True-False-True-False- | True-False-False-True- | True-False-True-False- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-False-True-True- | False-True-False-True- | False-True-False-False- | 
+False-True-True-False- | False-True-False-True- | True-False-True-False- | True-True-False-True- | 
+True-True-False-False- | True-True-False-False- | False-True-True-False- | True-False-False-True- | 
+True-False-False-False- | True-False-True-False- | True-False-False-True- | False-False-True-False- | 
+
+Debug: Maze 4x4
+False-True-True-False- | False-True-False-True- | False-False-True-False- | False-True-False-True- | 
+True-True-False-False- | True-True-False-False- | False-True-True-False- | True-False-False-True- | 
+True-True-False-False- | True-True-False-False- | True-False-True-False- | False-True-False-True- | 
+True-False-False-False- | True-False-True-False- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-False-True-True- | False-True-False-True- | False-True-False-False- | 
+False-True-True-False- | False-True-True-True- | True-False-False-True- | True-True-False-False- | 
+True-True-False-False- | True-False-True-False- | False-False-False-True- | True-True-False-False- | 
+True-False-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-True-False- | False-False-True-True- | False-True-False-True- | False-True-False-False- | 
+True-True-False-False- | False-True-True-False- | True-False-True-True- | True-False-False-True- | 
+True-True-False-False- | True-False-False-False- | False-True-True-False- | False-True-False-True- | 
+True-False-True-False- | False-False-True-True- | True-False-False-True- | True-False-False-False- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-False-True-True- | False-False-True-True- | False-True-False-True- | 
+False-True-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+True-True-False-False- | False-True-True-False- | False-False-True-True- | False-True-False-True- | 
+True-False-True-False- | True-False-False-True- | False-False-True-False- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-True-False-True- | False-True-True-False- | False-True-False-True- | 
+False-True-False-False- | True-True-False-False- | True-True-False-False- | True-True-False-False- | 
+True-True-True-False- | True-False-False-True- | True-True-False-False- | True-True-False-False- | 
+True-False-True-False- | False-False-False-True- | True-False-True-False- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-True-True-False- | False-True-True-True- | False-True-False-True- | 
+True-True-False-False- | True-False-False-False- | True-True-False-False- | True-True-False-False- | 
+True-False-True-False- | False-False-True-True- | True-False-False-True- | True-True-False-False- | 
+False-False-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-True-False-True- | False-True-True-False- | False-False-False-True- | 
+False-True-True-False- | True-False-False-True- | True-False-True-False- | False-True-False-True- | 
+True-True-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+True-False-True-False- | False-False-True-True- | False-False-True-True- | False-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-True-False- | False-True-False-True- | False-True-True-False- | False-True-False-True- | 
+True-True-False-False- | True-False-True-False- | True-False-False-True- | True-True-False-False- | 
+True-True-False-False- | False-True-True-False- | False-False-False-True- | True-True-False-False- | 
+True-False-False-False- | True-False-True-False- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-False-False- | False-True-False-False- | False-True-True-False- | False-True-False-True- | 
+True-False-True-False- | True-True-False-True- | True-True-False-False- | True-True-False-False- | 
+False-True-False-True- | True-True-False-False- | True-False-False-False- | True-True-False-False- | 
+True-False-False-False- | True-False-True-False- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-False-True-True- | False-False-True-True- | False-True-False-True- | 
+False-True-True-False- | False-False-True-True- | False-False-True-True- | True-True-False-True- | 
+True-True-False-False- | False-False-True-False- | False-True-False-True- | True-True-False-False- | 
+True-False-True-False- | False-False-True-True- | True-False-False-True- | True-False-False-False- | 
+
+Debug: Maze 4x4
+False-True-True-False- | False-False-True-True- | False-True-False-True- | False-True-False-False- | 
+True-True-False-False- | False-True-False-False- | True-False-True-False- | True-False-False-True- | 
+True-True-False-False- | True-True-False-False- | False-False-True-False- | False-True-False-True- | 
+True-False-True-False- | True-False-False-True- | False-False-True-False- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-True-False-True- | False-True-True-False- | False-True-False-True- | 
+False-False-False-True- | True-False-True-False- | True-True-False-True- | True-True-False-False- | 
+False-True-True-False- | False-True-False-True- | True-True-False-False- | True-True-False-False- | 
+True-False-False-False- | True-False-True-False- | True-False-False-True- | True-False-False-False- | 
+
+Debug: Maze 4x4
+False-False-True-False- | False-True-False-True- | False-True-True-False- | False-True-False-True- | 
+False-True-True-False- | True-False-False-True- | True-True-False-False- | True-True-False-False- | 
+True-True-False-False- | False-False-True-False- | True-False-False-True- | True-True-False-False- | 
+True-False-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-True-False- | False-True-False-True- | False-False-True-False- | False-True-False-True- | 
+True-False-False-False- | True-True-False-False- | False-True-True-False- | True-False-False-True- | 
+False-True-True-False- | True-False-False-True- | True-False-True-False- | False-True-False-True- | 
+True-False-True-False- | False-False-True-True- | False-False-True-True- | True-False-False-True- | 
+
+Debug: Maze 4x4
+False-True-True-False- | False-True-False-True- | False-True-True-False- | False-True-False-True- | 
+True-True-False-False- | True-True-False-False- | True-False-False-False- | True-True-False-False- | 
+True-True-False-False- | True-True-False-False- | False-True-True-False- | True-False-False-True- | 
+True-False-False-False- | True-False-True-False- | True-False-False-True- | False-False-True-False- | 
+
+Debug: Maze 4x4
+False-True-True-False- | False-False-True-True- | False-False-True-True- | False-True-False-True- | 
+True-False-False-False- | False-True-True-False- | False-False-True-True- | True-False-False-True- | 
+False-True-True-False- | True-False-False-True- | False-True-True-False- | False-True-False-True- | 
+True-False-True-False- | False-False-True-True- | True-False-False-True- | True-False-False-False- | 
+

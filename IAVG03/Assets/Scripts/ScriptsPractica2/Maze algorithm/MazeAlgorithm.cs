@@ -1,15 +1,14 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿namespace UCM.IAV.Practica2 {
+	public abstract class MazeAlgorithm {
+		protected MazeCell[,] mazeCells;
+		protected int mazeRows, mazeColumns;
 
-public abstract class MazeAlgorithm {
-	protected MazeCell[,] mazeCells;
-	protected int mazeRows, mazeColumns;
+		protected MazeAlgorithm(MazeCell[,] mazeCells) : base() {
+			this.mazeCells = mazeCells;
+			mazeRows = mazeCells.GetLength(0);
+			mazeColumns = mazeCells.GetLength(1);
+		}
 
-	protected MazeAlgorithm(MazeCell[,] mazeCells) : base() {
-		this.mazeCells = mazeCells;
-		mazeRows = mazeCells.GetLength(0);
-		mazeColumns = mazeCells.GetLength(1);
+		public abstract void CreateMaze ();
 	}
-
-	public abstract void CreateMaze ();
 }
