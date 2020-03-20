@@ -15,6 +15,6 @@
 		}
 
 		//Método que creará el laberinto definitivo
-		public abstract void CreateMaze ();
+		public abstract void CreateMaze (bool perfectMaze);
 	}
 }

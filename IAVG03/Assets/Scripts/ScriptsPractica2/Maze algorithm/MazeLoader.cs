@@ -13,14 +13,15 @@ namespace UCM.IAV.Practica2 {
 		public float size = 1.25f;
 		//Mapa de baldosas y elementos del laberinto
 		public MazeCell[,] mazeCells;
-
+		//Indicador del tipo de laberinto deseado (true = un solo camino posible de inicio a fin / false = posibilidad de que haya más de un solo camino posible)
+		public bool perfectMaze = true;
 		void Start () {
 			//Instancia los objetos del laberinto en la escena
 			InitializeMaze ();
 			//Construye el algoritmo generador del laberinto pasandole 'mazeCells' como el mapa de baldosas a utilizar 
 			MazeAlgorithm ma = new HuntAndKillMazeAlgorithm (mazeCells);
 			//Crea el laberinto definitivo usando el algoritmo de Hunt And Kill
-			ma.CreateMaze ();
+			ma.CreateMaze (perfectMaze);
 			//(OPCIONAL) Imprime el mapa de baldosas en "Assets/debug.txt"
 			DebugMaze();
 		}

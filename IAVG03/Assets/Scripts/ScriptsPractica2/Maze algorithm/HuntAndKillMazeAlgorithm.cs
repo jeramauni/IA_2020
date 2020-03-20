@@ -12,7 +12,7 @@ namespace UCM.IAV.Practica2 {
 		public HuntAndKillMazeAlgorithm(MazeCell[,] mazeCells) : base(mazeCells) {
 		}
 		//Crea el laberinto final utilizando el algoritmo de Hunt and Kill
-		public override void CreateMaze () {
+		public override void CreateMaze (bool perfectMaze) {
 			HuntAndKill ();
 		}
 
@@ -186,6 +186,15 @@ namespace UCM.IAV.Practica2 {
 						mazeCells[row, column - 1].walls[2] = true;				
 					wallDestroyed = true;
 				}
+			}
+		}
+
+		//Destruye paredes aleatorias del interior del laberinto para crear la posibilidad de que haya más de un camino para llegar al final
+		private void Imperfections()
+		{
+			for (int nparedes = 0; nparedes < 8; nparedes++)
+			{
+
 			}
 		}
 	}
