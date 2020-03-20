@@ -139,7 +139,7 @@ namespace UCM.IAV.Practica2 {
                     && transform.position.x < dir.actualPosX * mazeLoader.size + 0.2) {
                         dir.vel.x = 0;
                         transform.position += dir.vel * time;
-                        transform.rotation = new Quaternion(1, 0, 0, 0);
+                        transform.rotation = default(Quaternion);
                         dir.last = DIRE.UP;
                     }
                 } break;
@@ -156,7 +156,7 @@ namespace UCM.IAV.Practica2 {
                     && transform.position.x < dir.actualPosX * mazeLoader.size + 0.2) {
                         dir.vel.x = 0;
                         transform.position += dir.vel * time;
-                        transform.rotation = new Quaternion(1, 0, 0, 0);
+                        transform.rotation = default(Quaternion);
                         dir.last = DIRE.DOWN;
                     }
                 } break;
@@ -173,7 +173,7 @@ namespace UCM.IAV.Practica2 {
                     && transform.position.z < dir.actualPosZ * mazeLoader.size + 0.2) {
                         dir.vel.z = 0;
                         transform.position += dir.vel * time;
-                        transform.rotation = new Quaternion(1, 0, 0, 0);
+                        transform.rotation = default(Quaternion);
                         dir.last = DIRE.LEFT;
                     }
                 } break;
@@ -190,7 +190,7 @@ namespace UCM.IAV.Practica2 {
                     && transform.position.z < dir.actualPosZ * mazeLoader.size + 0.2) {
                         dir.vel.z = 0;
                         transform.position += dir.vel * time;
-                        transform.rotation = new Quaternion(1, 0, 0, 0);
+                        transform.rotation = default(Quaternion);
                         dir.last = DIRE.RIGHT;
                     }
                 } break;
