@@ -8,12 +8,22 @@ namespace UCM.IAV.Practica2 {
 		//Flag de finalización
 		private bool courseComplete = false;
 
+		//imperfections
+		//Parámetro para cálculo de numero de paredes (un número elevado borrará menos paredes)
+		float pp = 14.0f;
+		//Mínimo tamaño necesario para aplicar Imperfections() -> (NUNCA deberá ser mint < 3)
+		int minT = 3;
+
 		//Constructora
 		public HuntAndKillMazeAlgorithm(MazeCell[,] mazeCells) : base(mazeCells) {
 		}
 		//Crea el laberinto final utilizando el algoritmo de Hunt and Kill
 		public override void CreateMaze (bool perfectMaze) {
 			HuntAndKill ();
+			if (!perfectMaze)
+			{
+				Imperfections();
+			}
 		}
 
 		private void HuntAndKill() {
@@ -189,12 +199,105 @@ namespace UCM.IAV.Practica2 {
 			}
 		}
 
-		//Destruye paredes aleatorias del interior del laberinto para crear la posibilidad de que haya más de un camino para llegar al final
+		//Destruye paredes pseudo-aleatorias del interior del laberinto para crear más de un camino posible para llegar al final
 		private void Imperfections()
 		{
-			for (int nparedes = 0; nparedes < 8; nparedes++)
+			
+			if (mazeRows < minT || mazeColumns < minT)
+			{
+				Debug.Log("No se puede crear un laberinto imperfecto de " + mazeRows + " x " + mazeColumns);
+			}
+			else
 			{
 
+				//Fórmula que calcula el número de paredes a borrar en función del tamaño del laberinto y el parámetro 'pp'
+				int nparedes = Mathf.Abs(Mathf.RoundToInt(mazeRows * mazeColumns / pp));
+
+				int row = 1;
+				int column = 1;
+				int j = 0; 
+				bool gotwall = false;
+
+				//Hasta haber borrado 'nparedes'...
+				for (int i = 0; i < nparedes; i++)
+				{
+					//Mientras no encuentre una dirección con pared o no encuentre ninguna...
+					while (!gotwall && j < 4)
+					{
+						if (mazeCells[row, column].walls[j] == false)
+						{
+							switch (j)
+							{
+								case 0:
+									DestroyWallIfItExists(mazeCells[row, column].northWall);
+									mazeCells[row, column].walls[0] = true;
+
+									if (row - 1 >= 0)
+									{
+										DestroyWallIfItExists(mazeCells[row - 1, column].southWall);
+										mazeCells[row - 1, column].walls[1] = true;
+
+									}
+
+									break;
+
+								case 1:
+									DestroyWallIfItExists(mazeCells[row, column].southWall);
+									mazeCells[row, column].walls[1] = true;
+
+									if (row + 1 < mazeRows)
+									{
+										DestroyWallIfItExists(mazeCells[row + 1, column].northWall);
+										mazeCells[row + 1, column].walls[0] = true; 
+
+									}
+
+									break;
+
+								case 2:
+									DestroyWallIfItExists(mazeCells[row, column].eastWall);
+									mazeCells[row, column].walls[2] = true;
+
+									if(column + 1 < mazeColumns)
+									{
+										DestroyWallIfItExists(mazeCells[row, column + 1].westWall);
+										mazeCells[row, column + 1].walls[3] = true;
+									}
+
+									break;
+
+								case 3:
+									DestroyWallIfItExists(mazeCells[row, column].westWall);
+									mazeCells[row, column].walls[3] = true;
+
+									if (column - 1 >= 0)
+									{
+										DestroyWallIfItExists(mazeCells[row, column - 1].eastWall);
+										mazeCells[row, column - 1].walls[2] = true;
+									}
+
+									break;
+
+								default:
+									break;
+							}
+							gotwall = true;
+						}
+						else
+						{
+							j++;
+						}
+					}
+					//Resets
+					gotwall = false;
+					j = 0;
+					//Actualización de la siguiente baldosa
+					row = Random.Range(row + 1, mazeRows - 2);
+					if ( row >= mazeRows - 1)
+						row = 1;
+
+					column = Random.Range(1, mazeColumns - 1);			
+				}
 			}
 		}
 	}
