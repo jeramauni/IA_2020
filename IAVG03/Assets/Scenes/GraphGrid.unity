@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mazeLoader: {fileID: 2039109465}
+  speed: 1
 --- !u!4 &441223021 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: 0d552b782a490d8498f28bcfebd43b8a,
@@ -445,8 +446,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 334ef5519144d0e438a932a03abdacc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mazeRows: 4
-  mazeColumns: 4
+  mazeRows: 20
+  mazeColumns: 20
   wallGo: {fileID: 100000, guid: 403c7d1fcaa50ea4e8acd406751a88fd, type: 3}
   floorGo: {fileID: 100000, guid: a0702439d05d5334e885e87aeba2a438, type: 3}
   size: 1.25

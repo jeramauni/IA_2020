@@ -45,32 +45,28 @@ namespace UCM.IAV.Practica2 {
 					DestroyWallIfItExists (mazeCells [currentRow, currentColumn].northWall);
 					DestroyWallIfItExists (mazeCells [currentRow - 1, currentColumn].southWall);
 					mazeCells[currentRow, currentColumn].walls[0] = true;
-					if (currentRow - 1 >= 0)
-						mazeCells[currentRow - 1, currentColumn].walls[1] = true;
+					mazeCells[currentRow - 1, currentColumn].walls[1] = true;
 					currentRow--;
 				} else if (direction == 2 && CellIsAvailable (currentRow + 1, currentColumn)) {
 					// South
 					DestroyWallIfItExists (mazeCells [currentRow, currentColumn].southWall);
 					DestroyWallIfItExists (mazeCells [currentRow + 1, currentColumn].northWall);
 					mazeCells[currentRow, currentColumn].walls[1] = true;
-					if (currentRow + 1 < mazeCells.GetLength(0))
-						mazeCells[currentRow + 1, currentColumn].walls[0] = true;
+					mazeCells[currentRow + 1, currentColumn].walls[0] = true;
 					currentRow++;
 				} else if (direction == 3 && CellIsAvailable (currentRow, currentColumn + 1)) {
 					// east
 					DestroyWallIfItExists (mazeCells [currentRow, currentColumn].eastWall);
 					DestroyWallIfItExists (mazeCells [currentRow, currentColumn + 1].westWall);
 					mazeCells[currentRow, currentColumn].walls[2] = true;
-					if (currentColumn + 1 < mazeCells.GetLength(1))
-						mazeCells[currentRow, currentColumn + 1].walls[3] = true;
+					mazeCells[currentRow, currentColumn + 1].walls[3] = true;
 					currentColumn++;
 				} else if (direction == 4 && CellIsAvailable (currentRow, currentColumn - 1)) {
 					// west
 					DestroyWallIfItExists (mazeCells [currentRow, currentColumn].westWall);
 					DestroyWallIfItExists (mazeCells [currentRow, currentColumn - 1].eastWall);
 					mazeCells[currentRow, currentColumn].walls[3] = true;
-					if (currentColumn - 1 >= 0)
-						mazeCells[currentRow, currentColumn - 1].walls[2] = true;
+					mazeCells[currentRow, currentColumn - 1].walls[2] = true;
 					currentColumn--;
 				}
 
@@ -129,8 +125,9 @@ namespace UCM.IAV.Practica2 {
 
 		//Destruye la pared seleccionada
 		private void DestroyWallIfItExists(GameObject wall) {
-			if (wall != null) {
-				GameObject.Destroy (wall);
+			if (wall != null)
+			{
+				GameObject.Destroy(wall);
 			}
 		}
 
@@ -171,29 +168,28 @@ namespace UCM.IAV.Practica2 {
 					DestroyWallIfItExists (mazeCells [row, column].northWall);
 					DestroyWallIfItExists (mazeCells [row - 1, column].southWall);
 					mazeCells[row, column].walls[0] = true;
-					if (row - 1 >= 0)
-						mazeCells[row - 1, column].walls[1] = true;
+					mazeCells[row - 1, column].walls[1] = true;
 					wallDestroyed = true;
+
 				} else if (direction == 2 && row < (mazeRows-2) && mazeCells [row + 1, column].visited) {
 					DestroyWallIfItExists (mazeCells [row, column].southWall);
 					DestroyWallIfItExists (mazeCells [row + 1, column].northWall);
 					mazeCells[row, column].walls[1] = true;
-					if (row + 1 < mazeCells.GetLength(0))
-						mazeCells[row + 1, column].walls[0] = true;
+					mazeCells[row + 1, column].walls[0] = true;
 					wallDestroyed = true;
+
 				} else if (direction == 3 && column > 0 && mazeCells [row, column-1].visited) {
 					DestroyWallIfItExists (mazeCells [row, column].westWall);
 					DestroyWallIfItExists (mazeCells [row, column-1].eastWall);
-					mazeCells[row, column].walls[2] = true;
-					if (column + 1 < mazeCells.GetLength(1))				
-						mazeCells[row, column + 1].walls[3] = true;			
+					mazeCells[row, column].walls[3] = true;
+					mazeCells[row, column - 1].walls[2] = true;			
 					wallDestroyed = true;
+
 				} else if (direction == 4 && column < (mazeColumns-2) && mazeCells [row, column+1].visited) {
 					DestroyWallIfItExists (mazeCells [row, column].eastWall);
-					DestroyWallIfItExists (mazeCells [row, column+1].westWall);
-					mazeCells[row, column].walls[3] = true;
-					if (column-1 >= 0)				
-						mazeCells[row, column - 1].walls[2] = true;				
+					DestroyWallIfItExists (mazeCells [row, column + 1].westWall);
+					mazeCells[row, column].walls[2] = true;
+					mazeCells[row, column + 1].walls[3] = true;				
 					wallDestroyed = true;
 				}
 			}
@@ -236,57 +232,44 @@ namespace UCM.IAV.Practica2 {
 								case 0:
 									DestroyWallIfItExists(mazeCells[row, column].northWall);
 									mazeCells[row, column].walls[0] = true;
-									Debug.Log("Borrada pared N en: " + row + '-' + column);
+									//Debug.Log("Borrada pared N en: " + row + '-' + column);
 
-									if (row - 1 >= 0)
-									{
-										DestroyWallIfItExists(mazeCells[row - 1, column].southWall);
-										mazeCells[row - 1, column].walls[1] = true;
-										Debug.Log("Borrada pared S en: " + (row - 1) + '-' + column);
-									}
+									DestroyWallIfItExists(mazeCells[row - 1, column].southWall);
+									mazeCells[row - 1, column].walls[1] = true;
+									//Debug.Log("Borrada pared S en: " + (row - 1) + '-' + column);
 
 									break;
 
 								case 1:
 									DestroyWallIfItExists(mazeCells[row, column].southWall);
 									mazeCells[row, column].walls[1] = true;
-									Debug.Log("Borrada pared S en: " + row + '-' + column);
+									//Debug.Log("Borrada pared S en: " + row + '-' + column);
 
-									if (row + 1 < mazeRows)
-									{
-										DestroyWallIfItExists(mazeCells[row + 1, column].northWall);
-										mazeCells[row + 1, column].walls[0] = true;
-										Debug.Log("Borrada pared N en: " + (row + 1) + '-' + column);
-									}
+									DestroyWallIfItExists(mazeCells[row + 1, column].northWall);
+									mazeCells[row + 1, column].walls[0] = true;
+									//Debug.Log("Borrada pared N en: " + (row + 1) + '-' + column);
 
 									break;
 
 								case 2:
 									DestroyWallIfItExists(mazeCells[row, column].eastWall);
 									mazeCells[row, column].walls[2] = true;
-									Debug.Log("Borrada pared E en: " + row + '-' + column);
+									//Debug.Log("Borrada pared E en: " + row + '-' + column);
 
-									if (column + 1 < mazeColumns)
-									{
-										DestroyWallIfItExists(mazeCells[row, column + 1].westWall);
-										mazeCells[row, column + 1].walls[3] = true;
-										Debug.Log("Borrada pared W en: " + row + '-' + (column + 1));
-
-									}
+									DestroyWallIfItExists(mazeCells[row, column + 1].westWall);
+									mazeCells[row, column + 1].walls[3] = true;
+									//Debug.Log("Borrada pared W en: " + row + '-' + (column + 1));
 
 									break;
 
 								case 3:
 									DestroyWallIfItExists(mazeCells[row, column].westWall);
 									mazeCells[row, column].walls[3] = true;
-									Debug.Log("Borrada pared W en: " + row + '-' + column);
+									//Debug.Log("Borrada pared W en: " + row + '-' + column);
 
-									if (column - 1 >= 0)
-									{
-										DestroyWallIfItExists(mazeCells[row, column - 1].eastWall);
-										mazeCells[row, column - 1].walls[2] = true;
-										Debug.Log("Borrada pared E en: " + row + '-' + (column - 1));
-									}
+									DestroyWallIfItExists(mazeCells[row, column - 1].eastWall);
+									mazeCells[row, column - 1].walls[2] = true;
+									//Debug.Log("Borrada pared E en: " + row + '-' + (column - 1));
 
 									break;
 
