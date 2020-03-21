@@ -5,18 +5,27 @@ namespace UCM.IAV.Practica2 {
 	//Cargador del laberinto al iniciar la partida
 	public class MazeLoader : MonoBehaviour {
 		//Numero de filas y columnas
+		[Range (1, 150)]
 		public int mazeRows, mazeColumns;
 		//Prefab de paredes y suelo
-		public GameObject wallGo;
-		public GameObject floorGo;
+		[SerializeField]
+		private GameObject wallGo;
+		[SerializeField]
+		private GameObject floorGo;
 		//Camara
 		private Camera camera;
 		//Tamaño de los objetos del laberinto (Usado para reescalar el laberinto)
+		[HideInInspector]
 		public float size = 1.25f;
 		//Mapa de baldosas y elementos del laberinto
+		[HideInInspector]
 		public MazeCell[,] mazeCells;
 		//Indicador del tipo de laberinto deseado (true = un solo camino posible de inicio a fin / false = posibilidad de que haya más de un solo camino posible)
-		public bool perfectMaze = true;
+		[SerializeField]
+		private bool perfectMaze = true;
+		//Material de la casilla de salida
+		[SerializeField]
+		private Material exitMaterial;
 		void Start () {
 			//Coloca la cámara en una posición acorde al tamaño del laberinto
 			camera = Camera.main;
@@ -46,11 +55,15 @@ namespace UCM.IAV.Practica2 {
 			for (int r = 0; r < mazeRows; r++) {
 				for (int c = 0; c < mazeColumns; c++) {
 					mazeCells [r, c] = new MazeCell ();
+					
 					//Crea una baldosa...
 					mazeCells[r, c].floor = Instantiate(floorGo, new Vector3(r * size, -(size / 2f), c * size), Quaternion.identity) as GameObject;
 					//Le asigna un nombre único...
 					mazeCells[r, c].floor.name = "Floor " + r + "," + c;
-
+					if (r == 0 && r == c)
+					{
+						mazeCells[r, c].floor.GetComponent<MeshRenderer>().material = exitMaterial;
+					}
 					//Y crea las paredes correspondientes 
 					if (c == 0)
 					{

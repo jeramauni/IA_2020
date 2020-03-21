@@ -22,7 +22,7 @@ namespace UCM.IAV.Practica2 {
 			HuntAndKill ();
 			if (!perfectMaze)
 			{
-				Imperfections();
+				Imperfections();			
 			}
 		}
 
@@ -202,7 +202,10 @@ namespace UCM.IAV.Practica2 {
 		//Destruye paredes pseudo-aleatorias del interior del laberinto para crear más de un camino posible para llegar al final
 		private void Imperfections()
 		{
-			
+			DiffRandomGenerator rndR = new DiffRandomGenerator(1, mazeRows - 2);
+			DiffRandomGenerator rndC = new DiffRandomGenerator(1, mazeColumns - 2);
+
+
 			if (mazeRows < minT || mazeColumns < minT)
 			{
 				Debug.Log("No se puede crear un laberinto imperfecto de " + mazeRows + " x " + mazeColumns);
@@ -215,15 +218,17 @@ namespace UCM.IAV.Practica2 {
 
 				int row = 1;
 				int column = 1;
-				int j = 0; 
+				//Pared
+				DiffRandomGenerator rndWall = new DiffRandomGenerator(0, 3);
+				int j = rndWall.Next();
 				bool gotwall = false;
 
 				//Hasta haber borrado 'nparedes'...
 				for (int i = 0; i < nparedes; i++)
 				{
 					//Mientras no encuentre una dirección con pared o no encuentre ninguna...
-					while (!gotwall && j < 4)
-					{
+					while (!gotwall && j != -1)
+					{						
 						if (mazeCells[row, column].walls[j] == false)
 						{
 							switch (j)
@@ -231,12 +236,13 @@ namespace UCM.IAV.Practica2 {
 								case 0:
 									DestroyWallIfItExists(mazeCells[row, column].northWall);
 									mazeCells[row, column].walls[0] = true;
+									Debug.Log("Borrada pared N en: " + row + '-' + column);
 
 									if (row - 1 >= 0)
 									{
 										DestroyWallIfItExists(mazeCells[row - 1, column].southWall);
 										mazeCells[row - 1, column].walls[1] = true;
-
+										Debug.Log("Borrada pared S en: " + (row - 1) + '-' + column);
 									}
 
 									break;
@@ -244,12 +250,13 @@ namespace UCM.IAV.Practica2 {
 								case 1:
 									DestroyWallIfItExists(mazeCells[row, column].southWall);
 									mazeCells[row, column].walls[1] = true;
+									Debug.Log("Borrada pared S en: " + row + '-' + column);
 
 									if (row + 1 < mazeRows)
 									{
 										DestroyWallIfItExists(mazeCells[row + 1, column].northWall);
-										mazeCells[row + 1, column].walls[0] = true; 
-
+										mazeCells[row + 1, column].walls[0] = true;
+										Debug.Log("Borrada pared N en: " + (row + 1) + '-' + column);
 									}
 
 									break;
@@ -257,11 +264,14 @@ namespace UCM.IAV.Practica2 {
 								case 2:
 									DestroyWallIfItExists(mazeCells[row, column].eastWall);
 									mazeCells[row, column].walls[2] = true;
+									Debug.Log("Borrada pared E en: " + row + '-' + column);
 
-									if(column + 1 < mazeColumns)
+									if (column + 1 < mazeColumns)
 									{
 										DestroyWallIfItExists(mazeCells[row, column + 1].westWall);
 										mazeCells[row, column + 1].walls[3] = true;
+										Debug.Log("Borrada pared W en: " + row + '-' + (column + 1));
+
 									}
 
 									break;
@@ -269,11 +279,13 @@ namespace UCM.IAV.Practica2 {
 								case 3:
 									DestroyWallIfItExists(mazeCells[row, column].westWall);
 									mazeCells[row, column].walls[3] = true;
+									Debug.Log("Borrada pared W en: " + row + '-' + column);
 
 									if (column - 1 >= 0)
 									{
 										DestroyWallIfItExists(mazeCells[row, column - 1].eastWall);
 										mazeCells[row, column - 1].walls[2] = true;
+										Debug.Log("Borrada pared E en: " + row + '-' + (column - 1));
 									}
 
 									break;
@@ -285,18 +297,25 @@ namespace UCM.IAV.Practica2 {
 						}
 						else
 						{
-							j++;
+							j = rndWall.Next();
 						}
 					}
+
 					//Resets
 					gotwall = false;
 					j = 0;
-					//Actualización de la siguiente baldosa
-					row = Random.Range(row + 1, mazeRows - 2);
-					if ( row >= mazeRows - 1)
-						row = 1;
 
-					column = Random.Range(1, mazeColumns - 1);			
+					if((row = rndR.Next()) == -1)
+					{
+						rndR.Reset(1, mazeRows - 2);
+						row = rndR.Next();
+					}
+
+					if ((column = rndC.Next()) == -1)
+					{
+						rndC.Reset(1, mazeColumns - 2);
+						column = rndC.Next();
+					}
 				}
 			}
 		}
