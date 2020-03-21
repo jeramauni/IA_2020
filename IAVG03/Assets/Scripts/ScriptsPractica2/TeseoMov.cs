@@ -44,8 +44,8 @@ namespace UCM.IAV.Practica2 {
                 if (transform.position.x < dir.x * tileSize - (tileSize / 2.0f)) dir.x--;
                 if (transform.position.z > dir.z * tileSize + (tileSize / 2.0f)) dir.z++;
                 if (transform.position.z < dir.z * tileSize - (tileSize / 2.0f)) dir.z--;
-                Debug.Log(" (" + dir.x + ", " + dir.z + ")");
-                Debug.Log("N: " + mazeLoader.mazeCells[dir.x, dir.z].walls[2] + " | S: " + mazeLoader.mazeCells[dir.x, dir.z].walls[3] + " | E: " + mazeLoader.mazeCells[dir.x, dir.z].walls[1] + " | W: " + mazeLoader.mazeCells[dir.x, dir.z].walls[0]);
+                //Debug.Log(" (" + dir.x + ", " + dir.z + ")");
+                //Debug.Log("N: " + mazeLoader.mazeCells[dir.x, dir.z].walls[2] + " | S: " + mazeLoader.mazeCells[dir.x, dir.z].walls[3] + " | E: " + mazeLoader.mazeCells[dir.x, dir.z].walls[1] + " | W: " + mazeLoader.mazeCells[dir.x, dir.z].walls[0]);
                 // Movimiento por railes
                 // ARRIBA Y ABAJO
                 // Comprobar que este dentro del rail vertical
