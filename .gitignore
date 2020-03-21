@@ -10,6 +10,9 @@
 [Ll]ogs/
 [Mm]emoryCaptures/
 
+IAVG03/Assets/debug.txt
+IAVG03/Assets/test.txt 
+
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
 
