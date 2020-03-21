@@ -31,9 +31,10 @@ namespace UCM.IAV.Practica2 {
 			DebugMaze();
 		}
 		
+		//Coloca la cámara en el centro del laberinto para dar una sensación de transición al iniciar la partida
 		private void PlaceCamera()
 		{
-			camera.transform.position = new Vector3((mazeRows - 1) * 1.25f / 2.0f, camera.transform.position.y, camera.transform.position.z); //(mazeColumns - 1) * 1.25f / 2.0f
+			camera.transform.position = new Vector3((mazeRows - 1) * 1.25f / 2.0f, camera.transform.position.y, (mazeColumns - 1) * 1.25f / 2.0f);
 		}
 
 		//Instancia todos los posibles objetos del laberinto y les asigna un nombre rellenando el mapa de baldosas
