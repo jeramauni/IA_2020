@@ -9,6 +9,8 @@ namespace UCM.IAV.Practica2 {
 		//Prefab de paredes y suelo
 		public GameObject wallGo;
 		public GameObject floorGo;
+		//Camara
+		private Camera camera;
 		//Tamaño de los objetos del laberinto (Usado para reescalar el laberinto)
 		public float size = 1.25f;
 		//Mapa de baldosas y elementos del laberinto
@@ -16,6 +18,9 @@ namespace UCM.IAV.Practica2 {
 		//Indicador del tipo de laberinto deseado (true = un solo camino posible de inicio a fin / false = posibilidad de que haya más de un solo camino posible)
 		public bool perfectMaze = true;
 		void Start () {
+			//Coloca la cámara en una posición acorde al tamaño del laberinto
+			camera = Camera.main;
+			PlaceCamera();
 			//Instancia los objetos del laberinto en la escena
 			InitializeMaze ();
 			//Construye el algoritmo generador del laberinto pasandole 'mazeCells' como el mapa de baldosas a utilizar 
@@ -26,6 +31,11 @@ namespace UCM.IAV.Practica2 {
 			DebugMaze();
 		}
 		
+		private void PlaceCamera()
+		{
+			camera.transform.position = new Vector3((mazeRows - 1) * 1.25f / 2.0f, camera.transform.position.y, camera.transform.position.z); //(mazeColumns - 1) * 1.25f / 2.0f
+		}
+
 		//Instancia todos los posibles objetos del laberinto y les asigna un nombre rellenando el mapa de baldosas
 		private void InitializeMaze() {
 
