@@ -2,9 +2,12 @@
 namespace UCM.IAV.Practica2 {
     public class TeseoMov : MonoBehaviour
     {
+        [Header ("Laberinto")]
         // Laberinto con casillas y direcciones
         public MazeLoader mazeLoader;
         // Velocidad del player
+        [Header ("Velocidad")] [Range(1.0f, 3.0f)]
+        [Tooltip ("Rango optimo de velocidad")]
         public float speed = 1.0f;
         // Struct con velocidad y angulo
         protected struct Dir {
