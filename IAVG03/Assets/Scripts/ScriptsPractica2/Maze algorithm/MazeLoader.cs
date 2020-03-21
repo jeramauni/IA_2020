@@ -12,8 +12,6 @@ namespace UCM.IAV.Practica2 {
 		private GameObject wallGo;
 		[SerializeField]
 		private GameObject floorGo;
-		//Camara
-		private Camera camera;
 		//Tamaño de los objetos del laberinto (Usado para reescalar el laberinto)
 		[HideInInspector]
 		public float size = 1.25f;
@@ -27,8 +25,6 @@ namespace UCM.IAV.Practica2 {
 		[SerializeField]
 		private Material exitMaterial;
 		void Start () {
-			//Coloca la cámara en una posición acorde al tamaño del laberinto
-			camera = Camera.main;
 			PlaceCamera();
 			//Instancia los objetos del laberinto en la escena
 			InitializeMaze ();
@@ -43,7 +39,7 @@ namespace UCM.IAV.Practica2 {
 		//Coloca la cámara en el centro del laberinto para dar una sensación de transición al iniciar la partida
 		private void PlaceCamera()
 		{
-			camera.transform.position = new Vector3((mazeRows - 1) * 1.25f / 2.0f, camera.transform.position.y, (mazeColumns - 1) * 1.25f / 2.0f);
+			Camera.main.transform.position = new Vector3((mazeRows - 1) * 1.25f / 2.0f, Camera.main.transform.position.y, (mazeColumns - 1) * 1.25f / 2.0f);
 		}
 
 		//Instancia todos los posibles objetos del laberinto y les asigna un nombre rellenando el mapa de baldosas
