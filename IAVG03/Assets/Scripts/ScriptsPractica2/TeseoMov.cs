@@ -39,11 +39,7 @@ namespace UCM.IAV.Practica2 {
                             dir.vel.x = 1.0f;
                 }
 
-                // Si se atranca, desatrancarlo
-                if (transform.position.x % mazeLoader.size < mazeLoader.size * 0.85)
-                    transform.Translate(new Vector3(transform.position.x + mazeLoader.size * 0.15f, 0.0f, 0.0f));
-                if (transform.position.x % mazeLoader.size > mazeLoader.size * 0.15)
-                    transform.Translate(new Vector3(transform.position.x - mazeLoader.size * 0.15f, 0.0f, 0.0f));
+                
                 // Actualizar el movimiento
                 transform.position += dir.vel * time;
 
