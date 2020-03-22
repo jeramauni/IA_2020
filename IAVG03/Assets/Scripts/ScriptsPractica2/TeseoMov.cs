@@ -10,6 +10,10 @@ namespace UCM.IAV.Practica2 {
         [Header ("Velocidad")] [Range(1.0f, 3.0f)]
         [Tooltip ("Rango optimo de velocidad")]
         public float speed = 1.0f;
+        // Coste del movimiento de las casillas
+        [Header ("Coste de A*")] [Range(1.0f, 10.0f)]
+        [Tooltip ("Rango optimo de costes")]
+        public float costeMov = 10.0f;
         // Struct con velocidad y angulo
         protected struct Dir {
             public Vector3 vel;
@@ -109,205 +113,127 @@ namespace UCM.IAV.Practica2 {
             List<MazeCell> camino = new List<MazeCell>();
             
             float costeActual = 0;
-            //float costeEstimado = ;
-
+            // Abrir dos listas con las celdas posibles, y las ya recorridas
             List<MazeCell> open = new List<MazeCell>();
-            open.Add(maze[dir.x, dir.z]);
-
             List<MazeCell> close = new List<MazeCell>();
-
+            // La primera celda debe ser la actual
+            MazeCell celdaActual = maze[dir.x, dir.z];
+            // Asi que se anade en la lista abierta
+            open.Add(celdaActual);
+            // Y una vez hecho esto empezar a recorrer la lista abierta
             while (open.Count > 0) {
-                // Encuentra el elemento mas pequeño de la lista abierta usando el coste estimado
-                MazeCell celdaActual = open[0];
-                open.Remove(open[0]);
+                // Quita de la lista abierta la celda actual y la mete en la cerrada
+                open.Remove(celdaActual);
                 close.Add(celdaActual);
+                // Mete dentro de la lista abierta todas las posibiidades de movimiento
+                getVecinos(open, maze, celdaActual, costeActual);
+                // Y luego guarda la casilla mas cercana a la casilla actual
                 MazeCell celdaMasCercana = getNearestCell(open, maze, celdaActual);
+                // Actualizar los valores de los vecinos
 
-                // // Si es el nodo bueno, acabar la busqueda
-                // if (currentCell == end) {
-                //     foreach (MazeCell c in close) {
-                //         camino.Add(c);
-                //     }
-                // }
-                // // Si no, coger sus conexiones
-                // bool [] conections = mazeLoader.mazeCells[currentCell.x, currentCell.z].walls;
-                // // Recorrer todas las conexiones de la casilla
-                // for (int i = 0; i < conections.Length; ++i){
-                //     // Conseguir el coste hasta esa casilla entre el acumulado y lo que costaria llegar hasta alli
-                //     MazeCell endCell = null;
-                //     if (conections[i]) {
-                //         switch (i) {
-                //             case 2: endCell = mazeLoader.mazeCells[currentCell.x, currentCell.z + 1]; break;
-                //             case 3: endCell = mazeLoader.mazeCells[currentCell.x, currentCell.z - 1]; break;
-                //             case 1: endCell = mazeLoader.mazeCells[currentCell.x + 1, currentCell.z]; break;
-                //             case 0: endCell = mazeLoader.mazeCells[currentCell.x - 1, currentCell.z];break;
-                //         }
-                //     }
-                //     float endCellCost = costeActual + endCell.finalCost;
-
-                //     // Si la celda esta en la lista de close, tal vez hay que saltarlo o quitarlo de la lista 'close'
-                //     if (close.Contains(endCell)) {
-                //         // Aqui encontramos en la lista 'close' el nodo que ha sido registrado
-                //         MazeCell endNodeRecord = close.Find(x => x.finalCost == endCellCost);
-
-                //         // Si nuestra ruta no es mejor, entonces no seguir
-                //         float endNodeRecordCost = costeActual + endNodeRecord.finalCost;
-                //         if (endNodeRecordCost <= endCellCost) {
-                //             continue;
-                //         }
-                //         // Quitarlo de la lista 'close'
-                //         close.Remove(endNodeRecord);
-                //         // Podemos usar el coste de los valores viejos para calcular su heuristica sin llamar a la funcion que calcula la heuristica
-                //         //float endCellHeuristic =
-                //     }
-                // }
+                // El coste ahora de todas las G es el de antes mas lo que ya llevamos
+                costeActual += celdaMasCercana.getG();
+                // Quitar esta celda de la lista abierta
+                open.Remove(celdaActual);
+                // Y meterla en la lista de celdas ya visitadas
+                close.Add(celdaActual);
+                // Ahora la celda actual debe de ser la ultima celda metida en la lista cerrada
+                celdaActual = close[close.Count - 1];
             }
             return camino;
         }
-        void getVecinos(List<MazeCell> open, MazeCell[,] maze, MazeCell celdaActual) {
-            // Celda arriba
-            if (celdaActual.walls[2])
-                open.Add(maze[celdaActual.x, celdaActual.z + 1]);
-            // Celda abajo
-            if (celdaActual.walls[3])
-                open.Add(maze[celdaActual.x, celdaActual.z - 1]);
-            // Celda derecha
-            if (celdaActual.walls[0])
-                open.Add(maze[celdaActual.x + 1, celdaActual.z]);
-            // Celda izquerda
-            if (celdaActual.walls[1])
-                open.Add(maze[celdaActual.x - 1, celdaActual.z]);
-            // Celda arriba derecha
-            if (celdaActual.walls[0] && maze[celdaActual.x + 1, celdaActual.z].walls[2] 
-                && celdaActual.walls[2] && maze[celdaActual.x, celdaActual.z + 1].walls[0])
-                open.Add(maze[celdaActual.x + 1, celdaActual.z - 1]);
-            // Celda arriba izquierda
-            if (celdaActual.walls[1] && maze[celdaActual.x - 1, celdaActual.z].walls[2] 
-                && celdaActual.walls[2] && maze[celdaActual.x, celdaActual.z + 1].walls[1])
-                open.Add(maze[celdaActual.x + 1, celdaActual.z - 1]);
-            // Celda abajo derecha
-            if (celdaActual.walls[0] && maze[celdaActual.x + 1, celdaActual.z].walls[3] 
-                && celdaActual.walls[3] && maze[celdaActual.x, celdaActual.z - 1].walls[0])
-                open.Add(maze[celdaActual.x + 1, celdaActual.z - 1]);
-            // Celda abajo izquierda
-            if (celdaActual.walls[1] && maze[celdaActual.x - 1, celdaActual.z].walls[3] 
-                && celdaActual.walls[3] && maze[celdaActual.x, celdaActual.z - 1].walls[1])
-                open.Add(maze[celdaActual.x - 1, celdaActual.z - 1]);
-        }
-        // Metodo que encuentra el elemento mas "cercano"
-        MazeCell getNearestCell(List<MazeCell> open, MazeCell[,] maze, MazeCell celdaActual) {
-            MazeCell celdaMasCercana = null;
-            MazeCell celda;
-            float costeMasBarato = 0;
-            // Comprobar manualmente si puede ir a cada una de las 8 direcciones (diagonales incluidas)
+        // Anade a la lista 'open' todas las celdas que se puedan visitar desde la actual, y les dice de donde vienen
+        void getVecinos(List<MazeCell> open, MazeCell[,] maze, MazeCell celdaActual, float costeActual) {
             // Celda arriba
             if (celdaActual.walls[2]) {
-                celda = maze[celdaActual.x, celdaActual.z + 1];
-                celda.setG(10);
-                celda.setH(heuristica(celda.x, celda.z));
-                // Asignar provisionalmente la celda izquierda como la más cercana
-                // costeMasBarato = getF();
-                costeMasBarato = 10 + heuristica(celda.x, celda.z);
-                celdaMasCercana = celda;
-
+                maze[celdaActual.x, celdaActual.z + 1].setPadre(celdaActual);
+                maze[celdaActual.x, celdaActual.z + 1].setG(costeActual + costeMov);
+                maze[celdaActual.x, celdaActual.z + 1].setH(heuristica(celdaActual.x, celdaActual.z + 1));
+                if (!open.Contains(maze[celdaActual.x, celdaActual.z + 1]))
+                    open.Add(maze[celdaActual.x, celdaActual.z + 1]);
             }
             // Celda abajo
             if (celdaActual.walls[3]) {
-                celda = maze[celdaActual.x, celdaActual.z - 1];
-                celda.setG(10);
-                celda.setH(heuristica(celda.x, celda.z));
-                // Asignar provisionalmente la celda izquierda como la más cercana
-                // float coste = getF();
-                float coste = 10 + heuristica(celda.x, celda.z);
-                if (costeMasBarato == 0 || costeMasBarato > coste) {
-                    costeMasBarato = coste;
-                    celdaMasCercana = celda;
-                }
+                maze[celdaActual.x, celdaActual.z - 1].setPadre(celdaActual);
+                maze[celdaActual.x, celdaActual.z - 1].setG(costeActual + costeMov);
+                maze[celdaActual.x, celdaActual.z - 1].setH(heuristica(celdaActual.x, celdaActual.z - 1));
+                if (!open.Contains(maze[celdaActual.x, celdaActual.z - 1]))
+                    open.Add(maze[celdaActual.x, celdaActual.z - 1]);
             }
             // Celda derecha
             if (celdaActual.walls[0]) {
-                celda = maze[celdaActual.x + 1, celdaActual.z];
-                celda.setG(10);
-                celda.setH(heuristica(celda.x, celda.z));
-                // Asignar provisionalmente la celda izquierda como la más cercana
-                // float coste = getF();
-                float coste = 10 + heuristica(celda.x, celda.z);
-                if (costeMasBarato == 0 || costeMasBarato > coste) {
-                    costeMasBarato = coste;
-                    celdaMasCercana = celda;
-                }
+                maze[celdaActual.x + 1, celdaActual.z].setPadre(celdaActual);
+                maze[celdaActual.x + 1, celdaActual.z].setG(costeActual + costeMov);
+                maze[celdaActual.x + 1, celdaActual.z].setH(heuristica(celdaActual.x + 1, celdaActual.z));
+                if (!open.Contains(maze[celdaActual.x + 1, celdaActual.z]))
+                    open.Add(maze[celdaActual.x + 1, celdaActual.z]);
             }
-            // Celda izquierda
+            // Celda izquerda
             if (celdaActual.walls[1]) {
-                celda = maze[celdaActual.x - 1, celdaActual.z];
-                celda.setG(10);
-                celda.setH(heuristica(celda.x, celda.z));
-                // Asignar provisionalmente la celda izquierda como la más cercana
-                // float coste = getF();
-                float coste = 10 + heuristica(celdaMasCercana.x, celdaMasCercana.z);
-                if (costeMasBarato == 0 || costeMasBarato > coste) {
-                    costeMasBarato = coste;
-                    celdaMasCercana = celda;
-                }
+                maze[celdaActual.x - 1, celdaActual.z].setPadre(celdaActual);
+                maze[celdaActual.x - 1, celdaActual.z].setG(costeActual + costeMov);
+                maze[celdaActual.x - 1, celdaActual.z].setH(heuristica(celdaActual.x - 1, celdaActual.z));
+                if (!open.Contains(maze[celdaActual.x - 1, celdaActual.z]))
+                    open.Add(maze[celdaActual.x - 1, celdaActual.z]);
             }
             // Celda arriba derecha
             if (celdaActual.walls[0] && maze[celdaActual.x + 1, celdaActual.z].walls[2] 
                 && celdaActual.walls[2] && maze[celdaActual.x, celdaActual.z + 1].walls[0]) {
-                celda = maze[celdaActual.x + 1, celdaActual.z - 1];
-                celda.setG(Mathf.Sqrt(10 * 10 + 10 * 10));
-                celda.setH(heuristica(celda.x, celda.z));
-                // Asignar provisionalmente la celda izquierda como la más cercana
-                // float coste = getF();
-                float coste = Mathf.Sqrt(10 * 10 + 10 * 10) + heuristica(celda.x, celda.z);
-                if (costeMasBarato == 0 || costeMasBarato > coste) {
-                    costeMasBarato = coste;
-                    celdaMasCercana = celda;
-                }
+                maze[celdaActual.x + 1, celdaActual.z + 1].setPadre(celdaActual);
+                maze[celdaActual.x + 1, celdaActual.z + 1].setG(costeActual + Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov));
+                maze[celdaActual.x + 1, celdaActual.z + 1].setH(heuristica(celdaActual.x + 1, celdaActual.z + 1));
+                if (!open.Contains(maze[celdaActual.x + 1, celdaActual.z + 1]))
+                    open.Add(maze[celdaActual.x + 1, celdaActual.z + 1]);
             }
             // Celda arriba izquierda
             if (celdaActual.walls[1] && maze[celdaActual.x - 1, celdaActual.z].walls[2] 
                 && celdaActual.walls[2] && maze[celdaActual.x, celdaActual.z + 1].walls[1]) {
-                celda = maze[celdaActual.x + 1, celdaActual.z - 1];
-                celda.setG(Mathf.Sqrt(10 * 10 + 10 * 10));
-                celda.setH(heuristica(celda.x, celda.z));
-                // Asignar provisionalmente la celda izquierda como la más cercana
-                // float coste = getF();
-                float coste = Mathf.Sqrt(10 * 10 + 10 * 10) + heuristica(celda.x, celda.z);
-                if (costeMasBarato == 0 || costeMasBarato > coste) {
-                    costeMasBarato = coste;
-                    celdaMasCercana = celda;
-                }
+                maze[celdaActual.x - 1, celdaActual.z + 1].setPadre(celdaActual);
+                maze[celdaActual.x - 1, celdaActual.z + 1].setG(costeActual + Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov));
+                maze[celdaActual.x - 1, celdaActual.z + 1].setH(heuristica(celdaActual.x - 1, celdaActual.z + 1));
+                if (!open.Contains(maze[celdaActual.x - 1, celdaActual.z + 1]))
+                    open.Add(maze[celdaActual.x - 1, celdaActual.z + 1]);
             }
             // Celda abajo derecha
             if (celdaActual.walls[0] && maze[celdaActual.x + 1, celdaActual.z].walls[3] 
                 && celdaActual.walls[3] && maze[celdaActual.x, celdaActual.z - 1].walls[0]) {
-                celda = maze[celdaActual.x + 1, celdaActual.z - 1];
-                celda.setG(Mathf.Sqrt(10 * 10 + 10 * 10));
-                celda.setH(heuristica(celda.x, celda.z));
-                // Asignar provisionalmente la celda izquierda como la más cercana
-                // float coste = getF();
-                float coste = Mathf.Sqrt(10 * 10 + 10 * 10) + heuristica(celda.x, celda.z);
-                if (costeMasBarato == 0 || costeMasBarato > coste) {
-                    costeMasBarato = coste;
-                    celdaMasCercana = celda;
-                }
+                maze[celdaActual.x + 1, celdaActual.z - 1].setPadre(celdaActual);
+                maze[celdaActual.x + 1, celdaActual.z - 1].setG(costeActual + Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov));
+                maze[celdaActual.x + 1, celdaActual.z - 1].setH(heuristica(celdaActual.x + 1, celdaActual.z - 1));
+                if (!open.Contains(maze[celdaActual.x + 1, celdaActual.z - 1]))
+                    open.Add(maze[celdaActual.x + 1, celdaActual.z - 1]);
             }
             // Celda abajo izquierda
             if (celdaActual.walls[1] && maze[celdaActual.x - 1, celdaActual.z].walls[3] 
                 && celdaActual.walls[3] && maze[celdaActual.x, celdaActual.z - 1].walls[1]) {
-                celda = maze[celdaActual.x - 1, celdaActual.z - 1];
-                celda.setG(10);
-                celda.setH(heuristica(celda.x, celda.z));
-                // Asignar provisionalmente la celda izquierda como la más cercana
-                // float coste = getF();
-                float coste = Mathf.Sqrt(10 * 10 + 10 * 10) + heuristica(celda.x, celda.z);
-                if (costeMasBarato == 0 || costeMasBarato > coste) {
-                    costeMasBarato = coste;
-                    celdaMasCercana = celda;
-                }
+                maze[celdaActual.x - 1, celdaActual.z - 1].setPadre(celdaActual);
+                maze[celdaActual.x - 1, celdaActual.z - 1].setG(costeActual + Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov));
+                maze[celdaActual.x - 1, celdaActual.z - 1].setH(heuristica(celdaActual.x - 1, celdaActual.z - 1));
+                if (!open.Contains(maze[celdaActual.x - 1, celdaActual.z - 1]))
+                    open.Add(maze[celdaActual.x - 1, celdaActual.z - 1]);
             }
-            return celdaMasCercana;
         }
+        // Conseguir la celda mas cercana a ti
+        MazeCell getNearestCell(List<MazeCell> open, MazeCell[,] maze, MazeCell celdaActual) {
+            MazeCell celdaCercana = null;
+            float costeMin = 0, coste = 0;
+            foreach (MazeCell c in open) {
+                if(coste == 0) {
+                    costeMin = coste = c.getF();
+                    celdaCercana = c;
+                }
+                else coste = c.getF();
+
+                if (costeMin > coste)
+                    celdaCercana = c;
+            }
+            return celdaCercana;
+        }
+        // Actualiza los vecinos si tienen una G menor
+        void actualizaVecinos(List<MazeCell> open, MazeCell[,] maze, MazeCell celdaActual) {
+            
+        }
+
         // Heuristica usada:
         // El coste de cada movimineto horizontal o vertical es 10. Sin embargo, si el movimiento tiene que ser horizontal,
         // entonces el coste de cada movimiento es la hipotenusa de un triangulo rectangulo e isosceles cuyos catetos valen 10
