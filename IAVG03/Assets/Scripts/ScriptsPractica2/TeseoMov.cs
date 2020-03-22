@@ -113,24 +113,27 @@ namespace UCM.IAV.Practica2 {
             List<MazeCell> camino = new List<MazeCell>();
             
             float costeActual = 0;
+            float costeOptimo = 0;
             // Abrir dos listas con las celdas posibles, y las ya recorridas
             List<MazeCell> open = new List<MazeCell>();
             List<MazeCell> close = new List<MazeCell>();
             // La primera celda debe ser la actual
             MazeCell celdaActual = maze[dir.x, dir.z];
+            MazeCell celdaMasCercana = null;
             // Asi que se anade en la lista abierta
             open.Add(celdaActual);
             // Y una vez hecho esto empezar a recorrer la lista abierta
             while (open.Count > 0) {
                 // Quita de la lista abierta la celda actual y la mete en la cerrada
-                open.Remove(celdaActual);
+                if (open.Contains(celdaActual))
+                    open.Remove(celdaActual);
                 close.Add(celdaActual);
                 // Mete dentro de la lista abierta todas las posibiidades de movimiento
                 getVecinos(open, maze, celdaActual, costeActual);
                 // Y luego guarda la casilla mas cercana a la casilla actual
-                MazeCell celdaMasCercana = getNearestCell(open, maze, celdaActual);
+                celdaMasCercana = getNearestCell(open, maze, celdaActual);
                 // Actualizar los valores de los vecinos
-
+                actualizaVecinos(open, maze, celdaMasCercana, costeActual);
                 // El coste ahora de todas las G es el de antes mas lo que ya llevamos
                 costeActual += celdaMasCercana.getG();
                 // Quitar esta celda de la lista abierta
@@ -230,8 +233,17 @@ namespace UCM.IAV.Practica2 {
             return celdaCercana;
         }
         // Actualiza los vecinos si tienen una G menor
-        void actualizaVecinos(List<MazeCell> open, MazeCell[,] maze, MazeCell celdaActual) {
-            
+        void actualizaVecinos(List<MazeCell> open, MazeCell[,] maze, MazeCell celdaMasCercana, float costeActual) {
+            foreach (MazeCell c in open) {
+                float nuevoCoste = 0;
+                if (celdaMasCercana.x == c.x || celdaMasCercana.z == c.z)
+                    nuevoCoste = costeMov;
+                else nuevoCoste = Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov);
+                if (c.getG() > costeActual + nuevoCoste) {
+                    c.setG(costeActual + nuevoCoste);
+                    c.setPadre(celdaMasCercana);
+                }
+            }
         }
 
         // Heuristica usada:

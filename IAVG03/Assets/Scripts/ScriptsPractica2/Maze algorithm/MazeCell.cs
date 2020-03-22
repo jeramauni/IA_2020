@@ -36,6 +36,7 @@ namespace UCM.IAV.Practica2 {
 		public float getF() { return finalCost; }
 		public float getG() { return realCost; }
 		public float getH() { return heuristicCost; }
+		public MazeCell getPadre() { return padre; }
 		// Setters
 		public void setG(float g) { realCost = g; }
 		public void setH(float h) { heuristicCost = h; }
