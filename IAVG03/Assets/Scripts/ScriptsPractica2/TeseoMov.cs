@@ -232,14 +232,28 @@ namespace UCM.IAV.Practica2 {
             }
             return celdaCercana;
         }
-        // Actualiza los vecinos si tienen una G menor
+        // Actualiza los vecinos de la celda mas cercana a la celda actual, pero solo si tienen una G menor
         void actualizaVecinos(List<MazeCell> open, MazeCell[,] maze, MazeCell celdaMasCercana, float costeActual) {
             foreach (MazeCell c in open) {
+                bool esVecino = false;
                 float nuevoCoste = 0;
-                if (celdaMasCercana.x == c.x || celdaMasCercana.z == c.z)
+                // Vecinos en horizontal y vertical
+                if (celdaMasCercana.x == c.x && celdaMasCercana.z == c.z - 1 
+                    || celdaMasCercana.x == c.x && celdaMasCercana.z == c.z + 1
+                    || celdaMasCercana.x == c.x - 1 && celdaMasCercana.z == c.z
+                    || celdaMasCercana.x == c.x + 1 && celdaMasCercana.z == c.z) {
+                    esVecino = true;
                     nuevoCoste = costeMov;
-                else nuevoCoste = Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov);
-                if (c.getG() > costeActual + nuevoCoste) {
+                }
+                // Vecinos en diagonal
+                else if (celdaMasCercana.x == c.x + 1&& celdaMasCercana.z == c.z + 1
+                    || celdaMasCercana.x == c.x + 1 && celdaMasCercana.z == c.z - 1
+                    || celdaMasCercana.x == c.x - 1 && celdaMasCercana.z == c.z + 1
+                    || celdaMasCercana.x == c.x - 1 && celdaMasCercana.z == c.z - 1) {
+                    esVecino = true;
+                    nuevoCoste = Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov);
+                }
+                if (esVecino && c.getG() > costeActual + nuevoCoste) {
                     c.setG(costeActual + nuevoCoste);
                     c.setPadre(celdaMasCercana);
                 }
