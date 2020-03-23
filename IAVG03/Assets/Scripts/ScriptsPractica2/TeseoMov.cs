@@ -253,6 +253,8 @@ namespace UCM.IAV.Practica2 {
                     esVecino = true;
                     nuevoCoste = Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov);
                 }
+                // Si es su vecino y el coste de ir desde la casilla vecino es menor que la de ir desde su padre,
+                // ahora su nuevo coste sera el de ir desde el vecino, y su nuevo padre sera dicha casilla
                 if (esVecino && c.getG() > costeActual + nuevoCoste) {
                     c.setG(costeActual + nuevoCoste);
                     c.setPadre(celdaMasCercana);
@@ -264,7 +266,16 @@ namespace UCM.IAV.Practica2 {
         // El coste de cada movimineto horizontal o vertical es 10. Sin embargo, si el movimiento tiene que ser horizontal,
         // entonces el coste de cada movimiento es la hipotenusa de un triangulo rectangulo e isosceles cuyos catetos valen 10
         private float heuristica(int posX, int posY) {
-            return Mathf.Sqrt(posX * posX + posY * posY); 
+            float hipotenusa;
+            if (posX > posY) {
+                hipotenusa = Mathf.Sqrt(Mathf.Pow(posX - posY, 2) + Mathf.Pow(posX - posY, 2));
+                return (posX - posY) + hipotenusa;
+            }
+            else if (posY > posX) {
+                hipotenusa = Mathf.Sqrt(Mathf.Pow(posY - posX, 2) + Mathf.Pow(posY - posX, 2));
+                return (posY - posX) + hipotenusa;
+            }
+            else return Mathf.Sqrt(posX * posX + posY * posY); 
         }
     }
 }
