@@ -105,29 +105,38 @@ namespace UCM.IAV.Practica2 {
             }
             // Si no, usar el algoritmo de busqueda
             else {
-                List<MazeCell> camino = pathfinfinngAStar(mazeLoader.mazeCells, mazeLoader.mazeCells[dir.x, dir.z], mazeLoader.mazeCells[0, 0]);
+                // Cogemos la lista cerrada
+                List<MazeCell> close = pathfinfinngAStar(mazeLoader.mazeCells, mazeLoader.mazeCells[dir.x, dir.z], mazeLoader.mazeCells[0, 0]);
+                // Le damos la vuelta
+                close.Reverse();
+                // Metemos la celda actual del camino (en este caso, la posicion del personaje)
+                List<MazeCell> camino = null;
+                MazeCell celda = close[0];
+                camino.Add(celda);
+                // Recorremos la lista buscando a los padres de cada celda, y asi ya encontraremos el camino
+                foreach (MazeCell c in close) {
+                    if (c == celda.getPadre()) {
+                        camino.Add(c);
+                        celda = c;
+                    }
+                }
+                // Una vez tenemos el camino, recorrer el camino como si de movimiento estandar se tratara
+
             }
         }
-
+        // Algoritmo A* de busqueda del camino mas optimo
         private List<MazeCell> pathfinfinngAStar(MazeCell[,] maze, MazeCell start, MazeCell end) {
-            List<MazeCell> camino = new List<MazeCell>();
-            
             float costeActual = 0;
-            float costeOptimo = 0;
             // Abrir dos listas con las celdas posibles, y las ya recorridas
             List<MazeCell> open = new List<MazeCell>();
             List<MazeCell> close = new List<MazeCell>();
             // La primera celda debe ser la actual
             MazeCell celdaActual = maze[dir.x, dir.z];
             MazeCell celdaMasCercana = null;
-            // Asi que se anade en la lista abierta
-            open.Add(celdaActual);
+            // Asi que se anade en la lista cerrada
+            close.Add(celdaActual);
             // Y una vez hecho esto empezar a recorrer la lista abierta
-            while (open.Count > 0) {
-                // Quita de la lista abierta la celda actual y la mete en la cerrada
-                if (open.Contains(celdaActual))
-                    open.Remove(celdaActual);
-                close.Add(celdaActual);
+            while (close[close.Count - 1] != end) {
                 // Mete dentro de la lista abierta todas las posibiidades de movimiento
                 getVecinos(open, maze, celdaActual, costeActual);
                 // Y luego guarda la casilla mas cercana a la casilla actual
@@ -143,7 +152,7 @@ namespace UCM.IAV.Practica2 {
                 // Ahora la celda actual debe de ser la ultima celda metida en la lista cerrada
                 celdaActual = close[close.Count - 1];
             }
-            return camino;
+            return close;
         }
         // Anade a la lista 'open' todas las celdas que se puedan visitar desde la actual, y les dice de donde vienen
         void getVecinos(List<MazeCell> open, MazeCell[,] maze, MazeCell celdaActual, float costeActual) {
@@ -220,7 +229,9 @@ namespace UCM.IAV.Practica2 {
         MazeCell getNearestCell(List<MazeCell> open, MazeCell[,] maze, MazeCell celdaActual) {
             MazeCell celdaCercana = null;
             float costeMin = 0, coste = 0;
+            // Recorre todas las celdas de la lista abierta
             foreach (MazeCell c in open) {
+                // Si es la primera iteracion, 
                 if(coste == 0) {
                     costeMin = coste = c.getF();
                     celdaCercana = c;
@@ -263,7 +274,7 @@ namespace UCM.IAV.Practica2 {
         }
 
         // Heuristica usada:
-        // El coste de cada movimineto horizontal o vertical es 10. Sin embargo, si el movimiento tiene que ser horizontal,
+        // El coste de cada movimineto horizontal o vertical es 10. Sin embargo, si el movimiento tiene que ser diagonal,
         // entonces el coste de cada movimiento es la hipotenusa de un triangulo rectangulo e isosceles cuyos catetos valen 10
         private float heuristica(int posX, int posY) {
             float hipotenusa;

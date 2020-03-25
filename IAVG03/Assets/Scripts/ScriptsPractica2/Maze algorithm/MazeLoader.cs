@@ -56,6 +56,9 @@ namespace UCM.IAV.Practica2 {
 					mazeCells[r, c].floor = Instantiate(floorGo, new Vector3(r * size, -(size / 2f), c * size), Quaternion.identity) as GameObject;
 					//Le asigna un nombre único...
 					mazeCells[r, c].floor.name = "Floor " + r + "," + c;
+					// Y le mete su posicion (x, y) dentro
+					mazeCells[r, c].x = c;
+					mazeCells[r, c].x = r;
 					if (r == 0 && r == c)
 					{
 						mazeCells[r, c].floor.GetComponent<MeshRenderer>().material = exitMaterial;
