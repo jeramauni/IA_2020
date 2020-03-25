@@ -57,8 +57,8 @@ namespace UCM.IAV.Practica2 {
 					//Le asigna un nombre único...
 					mazeCells[r, c].floor.name = "Floor " + r + "," + c;
 					// Y le mete su posicion (x, y) dentro
-					mazeCells[r, c].x = c;
 					mazeCells[r, c].x = r;
+					mazeCells[r, c].z = c;
 					if (r == 0 && r == c)
 					{
 						mazeCells[r, c].floor.GetComponent<MeshRenderer>().material = exitMaterial;
