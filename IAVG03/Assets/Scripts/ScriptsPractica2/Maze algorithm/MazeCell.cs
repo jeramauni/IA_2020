@@ -25,21 +25,15 @@ namespace UCM.IAV.Practica2 {
 				walls[i] = false;
 			}
 		}
-		private void Start() {
-			realCost = heuristicCost = 0;
-			finalCost = realCost + heuristicCost;
-		}
-		private void Update() {
-			finalCost = realCost + heuristicCost;
-		}
 		// Getters
-		public float getF() { return finalCost; }
 		public float getG() { return realCost; }
 		public float getH() { return heuristicCost; }
+		public float getF() { return finalCost; }
 		public MazeCell getPadre() { return padre; }
 		// Setters
 		public void setG(float g) { realCost = g; }
 		public void setH(float h) { heuristicCost = h; }
+		public void setF(float g, float h) { finalCost = g + h; }
 		public void setPadre(MazeCell p) { padre = p; }
 	}
 }

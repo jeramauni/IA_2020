@@ -138,7 +138,7 @@ namespace UCM.IAV.Practica2 {
             // Y una vez hecho esto empezar a recorrer la lista abierta
             while (close[close.Count - 1] != end) {
                 // Mete dentro de la lista abierta todas las posibiidades de movimiento
-                getVecinos(open, maze, celdaActual, costeActual);
+                getVecinos(open, close, maze, celdaActual, costeActual);
                 // Y luego guarda la casilla mas cercana a la casilla actual
                 celdaMasCercana = getNearestCell(open, maze, celdaActual);
                 // Actualizar los valores de los vecinos
@@ -155,74 +155,90 @@ namespace UCM.IAV.Practica2 {
             return close;
         }
         // Anade a la lista 'open' todas las celdas que se puedan visitar desde la actual, y les dice de donde vienen
-        void getVecinos(List<MazeCell> open, MazeCell[,] maze, MazeCell celdaActual, float costeActual) {
+        void getVecinos(List<MazeCell> open, List<MazeCell> close, MazeCell[,] maze, MazeCell celdaActual, float costeActual) {
             // Celda arriba
             if (celdaActual.walls[2]) {
-                maze[celdaActual.x, celdaActual.z + 1].setPadre(celdaActual);
-                maze[celdaActual.x, celdaActual.z + 1].setG(costeActual + costeMov);
-                maze[celdaActual.x, celdaActual.z + 1].setH(heuristica(celdaActual.x, celdaActual.z + 1));
-                if (!open.Contains(maze[celdaActual.x, celdaActual.z + 1]))
+                if (!open.Contains(maze[celdaActual.x, celdaActual.z + 1]) && !close.Contains(maze[celdaActual.x, celdaActual.z + 1])) {
+                    maze[celdaActual.x, celdaActual.z + 1].setPadre(celdaActual);
+                    maze[celdaActual.x, celdaActual.z + 1].setG(costeActual + costeMov);
+                    maze[celdaActual.x, celdaActual.z + 1].setH(heuristica(celdaActual.x, celdaActual.z + 1));
+                    maze[celdaActual.x, celdaActual.z + 1].setF(maze[celdaActual.x, celdaActual.z + 1].getG(), maze[celdaActual.x, celdaActual.z + 1].getH());
                     open.Add(maze[celdaActual.x, celdaActual.z + 1]);
+                }
             }
             // Celda abajo
             if (celdaActual.walls[3]) {
-                maze[celdaActual.x, celdaActual.z - 1].setPadre(celdaActual);
-                maze[celdaActual.x, celdaActual.z - 1].setG(costeActual + costeMov);
-                maze[celdaActual.x, celdaActual.z - 1].setH(heuristica(celdaActual.x, celdaActual.z - 1));
-                if (!open.Contains(maze[celdaActual.x, celdaActual.z - 1]))
+                if (!open.Contains(maze[celdaActual.x, celdaActual.z - 1]) && !close.Contains(maze[celdaActual.x, celdaActual.z - 1])) {
+                    maze[celdaActual.x, celdaActual.z - 1].setPadre(celdaActual);
+                    maze[celdaActual.x, celdaActual.z - 1].setG(costeActual + costeMov);
+                    maze[celdaActual.x, celdaActual.z - 1].setH(heuristica(celdaActual.x, celdaActual.z - 1));
+                    maze[celdaActual.x, celdaActual.z - 1].setF(maze[celdaActual.x, celdaActual.z - 1].getG(), maze[celdaActual.x, celdaActual.z - 1].getH());
                     open.Add(maze[celdaActual.x, celdaActual.z - 1]);
+                }
             }
             // Celda derecha
             if (celdaActual.walls[1]) {
-                maze[celdaActual.x + 1, celdaActual.z].setPadre(celdaActual);
-                maze[celdaActual.x + 1, celdaActual.z].setG(costeActual + costeMov);
-                maze[celdaActual.x + 1, celdaActual.z].setH(heuristica(celdaActual.x + 1, celdaActual.z));
-                if (!open.Contains(maze[celdaActual.x + 1, celdaActual.z]))
+                if (!open.Contains(maze[celdaActual.x + 1, celdaActual.z]) && !close.Contains(maze[celdaActual.x + 1, celdaActual.z])) {
+                    maze[celdaActual.x + 1, celdaActual.z].setPadre(celdaActual);
+                    maze[celdaActual.x + 1, celdaActual.z].setG(costeActual + costeMov);
+                    maze[celdaActual.x + 1, celdaActual.z].setH(heuristica(celdaActual.x + 1, celdaActual.z));
+                    maze[celdaActual.x + 1, celdaActual.z].setF(maze[celdaActual.x + 1, celdaActual.z].getG(), maze[celdaActual.x + 1, celdaActual.z].getH());
                     open.Add(maze[celdaActual.x + 1, celdaActual.z]);
+                }
             }
             // Celda izquerda
             if (celdaActual.walls[0]) {
-                maze[celdaActual.x - 1, celdaActual.z].setPadre(celdaActual);
-                maze[celdaActual.x - 1, celdaActual.z].setG(costeActual + costeMov);
-                maze[celdaActual.x - 1, celdaActual.z].setH(heuristica(celdaActual.x - 1, celdaActual.z));
-                if (!open.Contains(maze[celdaActual.x - 1, celdaActual.z]))
+                if (!open.Contains(maze[celdaActual.x - 1, celdaActual.z]) && !close.Contains(maze[celdaActual.x - 1, celdaActual.z])) {
+                    maze[celdaActual.x - 1, celdaActual.z].setPadre(celdaActual);
+                    maze[celdaActual.x - 1, celdaActual.z].setG(costeActual + costeMov);
+                    maze[celdaActual.x - 1, celdaActual.z].setH(heuristica(celdaActual.x - 1, celdaActual.z));
+                    maze[celdaActual.x - 1, celdaActual.z].setF(maze[celdaActual.x - 1, celdaActual.z].getG(), maze[celdaActual.x - 1, celdaActual.z].getH());
                     open.Add(maze[celdaActual.x - 1, celdaActual.z]);
+                }
             }
             // Celda arriba derecha
             if (celdaActual.walls[1] && maze[celdaActual.x + 1, celdaActual.z].walls[2] 
                 && celdaActual.walls[2] && maze[celdaActual.x, celdaActual.z + 1].walls[1]) {
-                maze[celdaActual.x + 1, celdaActual.z + 1].setPadre(celdaActual);
-                maze[celdaActual.x + 1, celdaActual.z + 1].setG(costeActual + Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov));
-                maze[celdaActual.x + 1, celdaActual.z + 1].setH(heuristica(celdaActual.x + 1, celdaActual.z + 1));
-                if (!open.Contains(maze[celdaActual.x + 1, celdaActual.z + 1]))
+                if (!open.Contains(maze[celdaActual.x + 1, celdaActual.z + 1]) && !close.Contains(maze[celdaActual.x + 1, celdaActual.z + 1])) {
+                    maze[celdaActual.x + 1, celdaActual.z + 1].setPadre(celdaActual);
+                    maze[celdaActual.x + 1, celdaActual.z + 1].setG(costeActual + Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov));
+                    maze[celdaActual.x + 1, celdaActual.z + 1].setH(heuristica(celdaActual.x + 1, celdaActual.z + 1));
+                    maze[celdaActual.x + 1, celdaActual.z + 1].setF(maze[celdaActual.x + 1, celdaActual.z + 1].getG(), maze[celdaActual.x + 1, celdaActual.z + 1].getH());
                     open.Add(maze[celdaActual.x + 1, celdaActual.z + 1]);
+                }
             }
             // Celda arriba izquierda
             if (celdaActual.walls[0] && maze[celdaActual.x - 1, celdaActual.z].walls[2] 
                 && celdaActual.walls[2] && maze[celdaActual.x, celdaActual.z + 1].walls[0]) {
-                maze[celdaActual.x - 1, celdaActual.z + 1].setPadre(celdaActual);
-                maze[celdaActual.x - 1, celdaActual.z + 1].setG(costeActual + Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov));
-                maze[celdaActual.x - 1, celdaActual.z + 1].setH(heuristica(celdaActual.x - 1, celdaActual.z + 1));
-                if (!open.Contains(maze[celdaActual.x - 1, celdaActual.z + 1]))
+                if (!open.Contains(maze[celdaActual.x - 1, celdaActual.z + 1]) && !close.Contains(maze[celdaActual.x - 1, celdaActual.z + 1])) {
+                    maze[celdaActual.x - 1, celdaActual.z + 1].setPadre(celdaActual);
+                    maze[celdaActual.x - 1, celdaActual.z + 1].setG(costeActual + Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov));
+                    maze[celdaActual.x - 1, celdaActual.z + 1].setH(heuristica(celdaActual.x - 1, celdaActual.z + 1));
+                    maze[celdaActual.x - 1, celdaActual.z + 1].setF(maze[celdaActual.x - 1, celdaActual.z + 1].getG(), maze[celdaActual.x - 1, celdaActual.z + 1].getH());
                     open.Add(maze[celdaActual.x - 1, celdaActual.z + 1]);
+                }
             }
             // Celda abajo derecha
             if (celdaActual.walls[1] && maze[celdaActual.x + 1, celdaActual.z].walls[3] 
                 && celdaActual.walls[3] && maze[celdaActual.x, celdaActual.z - 1].walls[1]) {
-                maze[celdaActual.x + 1, celdaActual.z - 1].setPadre(celdaActual);
-                maze[celdaActual.x + 1, celdaActual.z - 1].setG(costeActual + Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov));
-                maze[celdaActual.x + 1, celdaActual.z - 1].setH(heuristica(celdaActual.x + 1, celdaActual.z - 1));
-                if (!open.Contains(maze[celdaActual.x + 1, celdaActual.z - 1]))
+                if (!open.Contains(maze[celdaActual.x + 1, celdaActual.z - 1]) && !close.Contains(maze[celdaActual.x + 1, celdaActual.z - 1])) {
+                    maze[celdaActual.x + 1, celdaActual.z - 1].setPadre(celdaActual);
+                    maze[celdaActual.x + 1, celdaActual.z - 1].setG(costeActual + Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov));
+                    maze[celdaActual.x + 1, celdaActual.z - 1].setH(heuristica(celdaActual.x + 1, celdaActual.z - 1));
+                    maze[celdaActual.x + 1, celdaActual.z - 1].setF(maze[celdaActual.x + 1, celdaActual.z - 1].getG(), maze[celdaActual.x + 1, celdaActual.z - 1].getH());
                     open.Add(maze[celdaActual.x + 1, celdaActual.z - 1]);
+                }
             }
             // Celda abajo izquierda
             if (celdaActual.walls[0] && maze[celdaActual.x - 1, celdaActual.z].walls[3] 
                 && celdaActual.walls[3] && maze[celdaActual.x, celdaActual.z - 1].walls[0]) {
-                maze[celdaActual.x - 1, celdaActual.z - 1].setPadre(celdaActual);
-                maze[celdaActual.x - 1, celdaActual.z - 1].setG(costeActual + Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov));
-                maze[celdaActual.x - 1, celdaActual.z - 1].setH(heuristica(celdaActual.x - 1, celdaActual.z - 1));
-                if (!open.Contains(maze[celdaActual.x - 1, celdaActual.z - 1]))
+                if (!open.Contains(maze[celdaActual.x - 1, celdaActual.z - 1]) && !close.Contains(maze[celdaActual.x - 1, celdaActual.z - 1])) {
+                    maze[celdaActual.x - 1, celdaActual.z - 1].setPadre(celdaActual);
+                    maze[celdaActual.x - 1, celdaActual.z - 1].setG(costeActual + Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov));
+                    maze[celdaActual.x - 1, celdaActual.z - 1].setH(heuristica(celdaActual.x - 1, celdaActual.z - 1));
+                    maze[celdaActual.x - 1, celdaActual.z - 1].setF(maze[celdaActual.x - 1, celdaActual.z - 1].getG(), maze[celdaActual.x - 1, celdaActual.z - 1].getH());
                     open.Add(maze[celdaActual.x - 1, celdaActual.z - 1]);
+                }
             }
         }
         // Conseguir la celda mas cercana a ti
@@ -278,6 +294,8 @@ namespace UCM.IAV.Practica2 {
         // entonces el coste de cada movimiento es la hipotenusa de un triangulo rectangulo e isosceles cuyos catetos valen 10
         private float heuristica(int posX, int posY) {
             float hipotenusa;
+            posX *= 10;
+            posY *= 10;
             if (posX > posY) {
                 hipotenusa = Mathf.Sqrt(Mathf.Pow(posX - posY, 2) + Mathf.Pow(posX - posY, 2));
                 return (posX - posY) + hipotenusa;
