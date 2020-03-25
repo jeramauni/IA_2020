@@ -146,11 +146,11 @@ namespace UCM.IAV.Practica2 {
                 // El coste ahora de todas las G es el de antes mas lo que ya llevamos
                 costeActual += celdaMasCercana.getG();
                 // Quitar esta celda de la lista abierta
-                open.Remove(celdaActual);
+                open.Remove(celdaMasCercana);
                 // Y meterla en la lista de celdas ya visitadas
-                close.Add(celdaActual);
+                close.Add(celdaMasCercana);
                 // Ahora la celda actual debe de ser la ultima celda metida en la lista cerrada
-                celdaActual = close[close.Count - 1];
+                celdaActual = celdaMasCercana;
             }
             return close;
         }
@@ -173,7 +173,7 @@ namespace UCM.IAV.Practica2 {
                     open.Add(maze[celdaActual.x, celdaActual.z - 1]);
             }
             // Celda derecha
-            if (celdaActual.walls[0]) {
+            if (celdaActual.walls[1]) {
                 maze[celdaActual.x + 1, celdaActual.z].setPadre(celdaActual);
                 maze[celdaActual.x + 1, celdaActual.z].setG(costeActual + costeMov);
                 maze[celdaActual.x + 1, celdaActual.z].setH(heuristica(celdaActual.x + 1, celdaActual.z));
@@ -181,7 +181,7 @@ namespace UCM.IAV.Practica2 {
                     open.Add(maze[celdaActual.x + 1, celdaActual.z]);
             }
             // Celda izquerda
-            if (celdaActual.walls[1]) {
+            if (celdaActual.walls[0]) {
                 maze[celdaActual.x - 1, celdaActual.z].setPadre(celdaActual);
                 maze[celdaActual.x - 1, celdaActual.z].setG(costeActual + costeMov);
                 maze[celdaActual.x - 1, celdaActual.z].setH(heuristica(celdaActual.x - 1, celdaActual.z));
@@ -189,8 +189,8 @@ namespace UCM.IAV.Practica2 {
                     open.Add(maze[celdaActual.x - 1, celdaActual.z]);
             }
             // Celda arriba derecha
-            if (celdaActual.walls[0] && maze[celdaActual.x + 1, celdaActual.z].walls[2] 
-                && celdaActual.walls[2] && maze[celdaActual.x, celdaActual.z + 1].walls[0]) {
+            if (celdaActual.walls[1] && maze[celdaActual.x + 1, celdaActual.z].walls[2] 
+                && celdaActual.walls[2] && maze[celdaActual.x, celdaActual.z + 1].walls[1]) {
                 maze[celdaActual.x + 1, celdaActual.z + 1].setPadre(celdaActual);
                 maze[celdaActual.x + 1, celdaActual.z + 1].setG(costeActual + Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov));
                 maze[celdaActual.x + 1, celdaActual.z + 1].setH(heuristica(celdaActual.x + 1, celdaActual.z + 1));
@@ -198,8 +198,8 @@ namespace UCM.IAV.Practica2 {
                     open.Add(maze[celdaActual.x + 1, celdaActual.z + 1]);
             }
             // Celda arriba izquierda
-            if (celdaActual.walls[1] && maze[celdaActual.x - 1, celdaActual.z].walls[2] 
-                && celdaActual.walls[2] && maze[celdaActual.x, celdaActual.z + 1].walls[1]) {
+            if (celdaActual.walls[0] && maze[celdaActual.x - 1, celdaActual.z].walls[2] 
+                && celdaActual.walls[2] && maze[celdaActual.x, celdaActual.z + 1].walls[0]) {
                 maze[celdaActual.x - 1, celdaActual.z + 1].setPadre(celdaActual);
                 maze[celdaActual.x - 1, celdaActual.z + 1].setG(costeActual + Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov));
                 maze[celdaActual.x - 1, celdaActual.z + 1].setH(heuristica(celdaActual.x - 1, celdaActual.z + 1));
@@ -207,8 +207,8 @@ namespace UCM.IAV.Practica2 {
                     open.Add(maze[celdaActual.x - 1, celdaActual.z + 1]);
             }
             // Celda abajo derecha
-            if (celdaActual.walls[0] && maze[celdaActual.x + 1, celdaActual.z].walls[3] 
-                && celdaActual.walls[3] && maze[celdaActual.x, celdaActual.z - 1].walls[0]) {
+            if (celdaActual.walls[1] && maze[celdaActual.x + 1, celdaActual.z].walls[3] 
+                && celdaActual.walls[3] && maze[celdaActual.x, celdaActual.z - 1].walls[1]) {
                 maze[celdaActual.x + 1, celdaActual.z - 1].setPadre(celdaActual);
                 maze[celdaActual.x + 1, celdaActual.z - 1].setG(costeActual + Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov));
                 maze[celdaActual.x + 1, celdaActual.z - 1].setH(heuristica(celdaActual.x + 1, celdaActual.z - 1));
@@ -216,8 +216,8 @@ namespace UCM.IAV.Practica2 {
                     open.Add(maze[celdaActual.x + 1, celdaActual.z - 1]);
             }
             // Celda abajo izquierda
-            if (celdaActual.walls[1] && maze[celdaActual.x - 1, celdaActual.z].walls[3] 
-                && celdaActual.walls[3] && maze[celdaActual.x, celdaActual.z - 1].walls[1]) {
+            if (celdaActual.walls[0] && maze[celdaActual.x - 1, celdaActual.z].walls[3] 
+                && celdaActual.walls[3] && maze[celdaActual.x, celdaActual.z - 1].walls[0]) {
                 maze[celdaActual.x - 1, celdaActual.z - 1].setPadre(celdaActual);
                 maze[celdaActual.x - 1, celdaActual.z - 1].setG(costeActual + Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov));
                 maze[celdaActual.x - 1, celdaActual.z - 1].setH(heuristica(celdaActual.x - 1, celdaActual.z - 1));
