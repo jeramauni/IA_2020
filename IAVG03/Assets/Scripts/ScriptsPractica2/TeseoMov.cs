@@ -27,9 +27,11 @@ namespace UCM.IAV.Practica2 {
         private Dir dir;
         private float tileSize;
         private bool keypressed;
+        // Script de movimiento automatico
+        MovimientoAutomatico autoMov;
         // Inicializar todos los parametros por defecto
-        void Start()
-        {
+        void Start() {
+            autoMov = GetComponent<MovimientoAutomatico>();
             transform.position = Vector3.zero;
             transform.rotation = default(Quaternion);
             tileSize = mazeLoader.size;
@@ -37,8 +39,7 @@ namespace UCM.IAV.Practica2 {
             keypressed = false;
         }
         // Logica del movimiento
-        void Update()
-        {
+        void Update() {
             // Empieza el movimiento
             float time = Time.deltaTime;
             // Si no esta pulsada la barra espaciadora
@@ -110,7 +111,7 @@ namespace UCM.IAV.Practica2 {
                 // Le damos la vuelta
                 close.Reverse();
                 // Metemos la celda actual del camino (en este caso, la posicion del personaje)
-                List<MazeCell> camino = null;
+                List<MazeCell> camino = new List<MazeCell>();
                 MazeCell celda = close[0];
                 camino.Add(celda);
                 // Recorremos la lista buscando a los padres de cada celda, y asi ya encontraremos el camino
@@ -121,7 +122,9 @@ namespace UCM.IAV.Practica2 {
                     }
                 }
                 // Una vez tenemos el camino, recorrer el camino como si de movimiento estandar se tratara
-
+                for (int i = 0; i < camino.Count - 1; ++i)
+                    Debug.Log("Camino " + i + ": (" + camino[i].x + ", " + camino[i].z + ")");
+                autoMov.StartAutoMov(camino);
             }
         }
         // Algoritmo A* de busqueda del camino mas optimo
@@ -141,7 +144,7 @@ namespace UCM.IAV.Practica2 {
                 getVecinos(open, close, maze, celdaActual, costeActual);
                 // Y luego guarda la casilla mas cercana a la casilla actual
                 celdaMasCercana = getNearestCell(open, maze, celdaActual);
-                // Actualizar los valores de los vecinos
+                // Actualizar los valores de los vecinos si es que hay algun camino mas rapido
                 actualizaVecinos(open, maze, celdaMasCercana, costeActual);
                 // El coste ahora de todas las G es el de antes mas lo que ya llevamos
                 costeActual += celdaMasCercana.getG();
