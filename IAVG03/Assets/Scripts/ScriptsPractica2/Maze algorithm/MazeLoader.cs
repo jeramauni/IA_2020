@@ -24,7 +24,7 @@ namespace UCM.IAV.Practica2 {
 		//Material de la casilla de salida
 		[SerializeField]
 		private Material exitMaterial;
-		void Start () {
+		void Awake () {
 			PlaceCamera();
 			//Instancia los objetos del laberinto en la escena
 			InitializeMaze ();
@@ -109,5 +109,8 @@ namespace UCM.IAV.Practica2 {
 			writer.WriteLine();
 			writer.Close();
 		}
+		public Vector2 getPosInCell(int i, int j) { return new Vector2(mazeCells[i, j].x, mazeCells[i, j].z); }
+
 	}
+
 }
