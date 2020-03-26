@@ -6,40 +6,142 @@ namespace UCM.IAV.Practica2
 {
     public class Merodeo : MonoBehaviour
     {
-        private Vector3 tarPos;
+        [Header("Laberinto")]
+        // Laberinto con casillas y direcciones
+        public MazeLoader mazeLoader;
 
-        public float velMovimiento = 5.0f;
-        public float velRotacion = 2.0f;
+        [Header("Velocidad")]
+        [Range(1.0f, 3.0f)]
+        [Tooltip("Rango optimo de velocidad")]
+        public float speed = 5.0f;
 
-        private float minX, maxX, minZ, maxZ;
+        private enum direction{UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3};
+        
+        protected struct Dir
+        {
+            public Vector3 vel;
+            public int x, z;
+            public Dir(Vector3 v, int ax, int az)
+            {
+                vel = v;
+                x = ax;
+                z = az;
+            }
+        };
+
+        private Dir dir;
+        private float tileSize;
+        private int rand = 0;
 
         // Start is called before the first frame update
         void Start()
         {
-            minX = -45.0f;
-            maxX = 45.0f;
+            Vector3 v = SetStartPos();
 
-            minZ = -45.0f;
-            maxZ = 45.0f;
+            transform.position = v;
+            transform.rotation = default(Quaternion);
 
-            GetNextPosition();
+            tileSize = mazeLoader.size;
+            dir.x = dir.z = 0;
+            //GetNextPosition();
+            InvokeRepeating("GetNextPosition", 0, 3.0f);
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (Vector3.Distance(tarPos, transform.position) <= 5.0f)
-                GetNextPosition();
+            // Empieza el movimiento
+            float time = Time.deltaTime;
 
-            Quaternion tarRot = Quaternion.LookRotation(tarPos - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, tarRot, velRotacion * Time.deltaTime);
 
-            transform.Translate(new Vector3(0, 0, velMovimiento * Time.deltaTime));
+            // Cambiar de casilla al avanzar
+            if (transform.position.x > dir.x * tileSize + (tileSize / 2.0f)) dir.x++;
+            if (transform.position.x < dir.x * tileSize - (tileSize / 2.0f)) dir.x--;
+            if (transform.position.z > dir.z * tileSize + (tileSize / 2.0f)) dir.z++;
+            if (transform.position.z < dir.z * tileSize - (tileSize / 2.0f)) dir.z--;
+            // Movimiento por railes
+            // ARRIBA Y ABAJO
+            // Comprobar que este dentro del rail vertical
+            if (transform.position.x % tileSize > tileSize * 0.85 && transform.position.x % tileSize <= tileSize
+            || transform.position.x % tileSize < tileSize * 0.15 && transform.position.x % tileSize >= 0)
+            {
+
+                // Si esta pulsada la tecla up
+                if (rand == (int)direction.UP)
+                {
+                    // Ha pasado de la mitad y hay un muro en esa direccion, no moverse
+                    if (transform.position.z % tileSize < tileSize * 0.15 && !mazeLoader.mazeCells[dir.x, dir.z].walls[2])
+                        transform.position = new Vector3(transform.position.x, 0.0f, dir.z * tileSize);
+                    // Si no, moverse
+                    else dir.vel.z = speed;
+                }
+                // Si esta pulsada la tecla down
+                else if (rand == (int)direction.DOWN)
+                {
+                    // Ha pasado de la mitad y hay un muro en esa direccion, no moverse
+                    if ((transform.position.z % tileSize > tileSize * 0.85 && !mazeLoader.mazeCells[dir.x, dir.z].walls[3]) || transform.position.z < 0.0f)
+                        transform.position = new Vector3(transform.position.x, 0.0f, dir.z * tileSize);
+                    // Si no, moverse
+                    else dir.vel.z = -speed;
+                }
+            }
+            // IZQUIERDA Y DERECHA
+            // Comprobar que esta en el rail horizontal
+            if (transform.position.z % tileSize > tileSize * 0.85 && transform.position.z % tileSize <= tileSize
+            || transform.position.z % tileSize < tileSize * 0.15 && transform.position.z % tileSize >= 0)
+            {
+                if (rand == (int)direction.RIGHT)
+                {
+                    // Ha pasado de la mitad y hay un muro en esa direccion, no moverse
+                    if (transform.position.x % tileSize < tileSize * 0.15 && !mazeLoader.mazeCells[dir.x, dir.z].walls[1])
+                        transform.position = new Vector3(dir.x * tileSize, 0.0f, transform.position.z);
+                    // Si no, moverse
+                    else dir.vel.x = speed;
+                }
+                else if (rand == (int)direction.LEFT)
+                {
+                    // Ha pasado de la mitad y hay un muro en esa direccion, no moverse
+                    if (transform.position.x % tileSize > tileSize * 0.85 && !mazeLoader.mazeCells[dir.x, dir.z].walls[0])
+                        transform.position = new Vector3(dir.x * tileSize, 0.0f, transform.position.z);
+                    // Si no, moverse
+                    else dir.vel.x = -speed;
+                }
+            }
+            // Actualizar el movimiento
+            transform.position += dir.vel * time;
+            if (transform.position.z < 0)
+                transform.position = new Vector3(transform.position.x, 0.0f, dir.z * tileSize);
+            if (transform.position.x < 0)
+                transform.position = new Vector3(dir.x * tileSize, 0.0f, transform.position.z);
+            // Resetear la velocidad
+            dir.vel = Vector3.zero;
+
         }
 
         void GetNextPosition()
         {
-            tarPos = new Vector3(Random.Range(minX, maxX), 0.5f, Random.Range(minZ, maxZ));
+            rand = Mathf.RoundToInt(Random.Range(0, 3));
+        }
+
+        private Vector3 SetStartPos()
+        {
+            Vector2 vec;
+            int i, j;
+            i = Mathf.RoundToInt(Random.Range(0, mazeLoader.mazeRows - 1));
+            j = Mathf.RoundToInt(Random.Range(0, mazeLoader.mazeColumns - 1));
+
+            //Debug.Log("[i,j]: " + i + " " + j);
+
+            vec = mazeLoader.getPosInCell(i, j);
+
+            Vector3 v = Vector3.zero;
+            v.x = vec.x;
+            v.y = 0.0f;
+            v.z = vec.y;
+
+            //Debug.Log("[x,z]: " + v.x + " " + v.z);
+
+            return v;
         }
     }
 }
