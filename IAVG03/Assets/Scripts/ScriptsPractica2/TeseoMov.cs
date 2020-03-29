@@ -122,9 +122,9 @@ namespace UCM.IAV.Practica2 {
                     }
                 }
                 // Una vez tenemos el camino, recorrer el camino como si de movimiento estandar se tratara
-                for (int i = 0; i < camino.Count - 1; ++i)
-                    Debug.Log("Camino " + i + ": (" + camino[i].x + ", " + camino[i].z + ")");
-                autoMov.StartAutoMov(camino);
+                camino.Reverse();
+                if (autoMov != null)
+                    autoMov.StartAutoMov(camino);
             }
         }
         // Algoritmo A* de busqueda del camino mas optimo
@@ -250,13 +250,13 @@ namespace UCM.IAV.Practica2 {
             float costeMin = 0, coste = 0;
             // Recorre todas las celdas de la lista abierta
             foreach (MazeCell c in open) {
-                // Si es la primera iteracion, 
+                // Si es la primera iteracion, esa casilla sera la mas cercana (porsiaca)
                 if(coste == 0) {
                     costeMin = coste = c.getF();
                     celdaCercana = c;
                 }
                 else coste = c.getF();
-
+                // Si el coste minimo es menor que el coste de la anterior casilla, la mas cercana es la nueva
                 if (costeMin > coste)
                     celdaCercana = c;
             }
@@ -294,20 +294,22 @@ namespace UCM.IAV.Practica2 {
 
         // Heuristica usada:
         // El coste de cada movimineto horizontal o vertical es 10. Sin embargo, si el movimiento tiene que ser diagonal,
-        // entonces el coste de cada movimiento es la hipotenusa de un triangulo rectangulo e isosceles cuyos catetos valen 10
+        // entonces el coste de cada movimiento es la hipotenusa de un triangulo rectangulo e isosceles cuyos catetos valen 10.
+        // Esto quiere decir que si buscamos la (0,0) y estamos en la (2,1), el coste sera 24,14:
+        // 14,14 de ir de (0,0) a (1,1) + 10,0 de ir de (1,1) a (2,1).  
         private float heuristica(int posX, int posY) {
             float hipotenusa;
-            posX *= 10;
-            posY *= 10;
-            if (posX > posY) {
-                hipotenusa = Mathf.Sqrt(Mathf.Pow(posX - posY, 2) + Mathf.Pow(posX - posY, 2));
-                return (posX - posY) + hipotenusa;
+            float x = posX * costeMov;
+            float y = posY * costeMov;
+            if (x > y) {
+                hipotenusa = Mathf.Sqrt(Mathf.Pow(x - y, 2) + Mathf.Pow(x - y, 2));
+                return (x - y) + hipotenusa;
             }
-            else if (posY > posX) {
-                hipotenusa = Mathf.Sqrt(Mathf.Pow(posY - posX, 2) + Mathf.Pow(posY - posX, 2));
-                return (posY - posX) + hipotenusa;
+            else if (y > x) {
+                hipotenusa = Mathf.Sqrt(Mathf.Pow(y - x, 2) + Mathf.Pow(y - x, 2));
+                return (y - x) + hipotenusa;
             }
-            else return Mathf.Sqrt(posX * posX + posY * posY); 
+            else return Mathf.Sqrt(x * x + y * y); 
         }
     }
 }

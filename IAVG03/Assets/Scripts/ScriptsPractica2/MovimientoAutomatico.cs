@@ -52,7 +52,7 @@ namespace UCM.IAV.Practica2
                     {
                         inStep = false;
                         //Si llegó al último nodo, finaliza
-                        if (node == recorrido.Count - 1)
+                        if (node == recorrido.Count)
                         {
                             running = false;
                         }
