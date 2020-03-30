@@ -28,6 +28,9 @@ namespace UCM.IAV.Practica2 {
         private float tileSize;
         // Booleano para no pulsar dos direcciones a la vez
         private bool keypressed;
+        // Booleano para saber si estas pulsando la tecla space
+        private bool spacePressed;
+        private bool nuevoCamino;
         // Script de movimiento automatico, para inicial ese mov
         MovimientoAutomatico autoMov;
         // Inicializar todos los parametros por defecto
@@ -44,8 +47,10 @@ namespace UCM.IAV.Practica2 {
         void Update() {
             // Empieza el movimiento
             float time = Time.deltaTime;
+            if (Input.GetKeyDown(KeyCode.Space)) spacePressed = true;
+            if (Input.GetKeyUp(KeyCode.Space)) spacePressed = false;
             // Si no esta pulsada la barra espaciadora
-            if (!Input.GetKey(KeyCode.Space)) {
+            if (!spacePressed) {
                 keypressed = false;
                 // Cambiar de casilla al avanzar
                 if (transform.position.x > dir.x * tileSize + (tileSize / 2.0f)) dir.x++;
@@ -125,8 +130,15 @@ namespace UCM.IAV.Practica2 {
                 }
                 // Una vez tenemos el camino, recorrer el camino como si de movimiento estandar se tratara
                 camino.Reverse();
-                if (autoMov != null)
+                
+                if (!nuevoCamino && autoMov != null) {
+                    nuevoCamino = true;
+                    if ((dir.x != camino[0].x && dir.z != camino[0].z) || (dir.x == 0 && dir.z == 0)) {
+                        nuevoCamino = true;
+                        Debug.Log("Nuevo camino");
+                    }
                     autoMov.StartAutoMov(camino);
+                }
             }
         }
         // Algoritmo A* de busqueda del camino mas optimo
