@@ -6,79 +6,67 @@ namespace UCM.IAV.Practica2
 {
     public class MovimientoAutomatico : MonoBehaviour
     {
-        private List <MazeCell> recorrido;
-        [SerializeField]
+        // Laberinto con casillas y direcciones
+        [SerializeField] [Header ("Laberinto")]
         private GameObject mazeLoader;
-        private float startTime;
+        // GameObject que representa el hilo de Ariadna
+        [SerializeField] [Header ("Hilo de Ariadna")]
+        private GameObject hilo;
+        // Velocidad del player
+        [Header ("Velocidad")] [Range(1.0f, 3.0f)]
+        [Tooltip ("Rango optimo de velocidad")]
+        public float speed = 1.0f;
+        // Lista que pasa TeseoMov.cs
+        private List <MazeCell> recorrido;
         private float journeyLength;
         private float margin = 0.05f;
         private Vector3 v;
         private bool running, inStep;
         private int node;
         private float size;
-
-        public float speed = 1;
-        void Start()
-        {
+        void Start() {
             running = inStep = false;
-            startTime = 0.0f;
             node = 0;
             size = mazeLoader.GetComponent<MazeLoader>().size;
         }
-
-        void Update()
-        {           
-            if (running)
-            {
+        void Update() {
+            float time = Time.deltaTime;
+            // Movimiento automatico
+            if (running) {
                 //Si está corriendo pero no está entre nodos calcula el siguiente nodo
-                if (!inStep)
-                {
-                    startTime = Time.time;
+                if (!inStep) {
                     SetParameters();
                     inStep = true;
                     node++;
                 }
-
-                if (inStep)
-                {
+                if (inStep) {
                     //Distancia recorrida es igual al tiempo transcurrido por la velocidad..
-                    float distCovered = (Time.time - startTime) * speed;                   
-
+                    float distCovered = time * speed;
                     // Setea la posición a una fracción de la distancia entre los puntos
                     transform.position = Vector3.Lerp(transform.position, v, distCovered);
-
                     //Si llegó a la celda destino, finaliza el step
-                    if ((transform.position.x <= v.x + margin && transform.position.x >= v.x - margin) && (transform.position.z <= v.z + margin && transform.position.z >= v.z - margin))
-                    {
+                    if ((transform.position.x <= v.x + margin && transform.position.x >= v.x - margin) && (transform.position.z <= v.z + margin && transform.position.z >= v.z - margin)) {
                         inStep = false;
                         //Si llegó al último nodo, finaliza
-                        if (node == recorrido.Count)
-                        {
+                        if (node == recorrido.Count) {
                             running = false;
                         }
                     }
-                }               
-            }   
+                }
+            }
         }
-
-        private void SetParameters()
-        {
+        // Instantiate(hilo, new Vector3(c.x * tileSize, 0, c.z * tileSize), Quaternion.identity);
+        private void SetParameters() {
             //Calcula la posición de la MazeCell
             v = new Vector3(recorrido[node].x * size, transform.position.y, recorrido[node].z * size);
         }
-
-        public void StartAutoMov(List<MazeCell> recorrido_)
-        {
+        public void StartAutoMov(List<MazeCell> recorrido_) {
             Reset();
             recorrido = recorrido_;
-            running = true;
-            Debug.Log("Movimiento automático iniciado...");   
+            running = true; 
         }
-
-        private void Reset()
-        {
+        private void Reset() {
             running = inStep = false;
-            startTime = 0.0f;
             node = 0;
         }
     }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 namespace UCM.IAV.Practica2 {
     public class TeseoMov : MonoBehaviour
     {
-        [Header ("Laberinto")]
         // Laberinto con casillas y direcciones
-        public MazeLoader mazeLoader;
+        [SerializeField] [Header ("Laberinto")]
+        private MazeLoader mazeLoader;
         // Velocidad del player
         [Header ("Velocidad")] [Range(1.0f, 3.0f)]
         [Tooltip ("Rango optimo de velocidad")]
@@ -26,11 +26,13 @@ namespace UCM.IAV.Practica2 {
         };
         private Dir dir;
         private float tileSize;
+        // Booleano para no pulsar dos direcciones a la vez
         private bool keypressed;
-        // Script de movimiento automatico
+        // Script de movimiento automatico, para inicial ese mov
         MovimientoAutomatico autoMov;
         // Inicializar todos los parametros por defecto
         void Start() {
+            // Variables para el movimiento normal
             autoMov = GetComponent<MovimientoAutomatico>();
             transform.position = Vector3.zero;
             transform.rotation = default(Quaternion);
