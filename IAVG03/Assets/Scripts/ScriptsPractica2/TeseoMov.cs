@@ -188,11 +188,10 @@ namespace UCM.IAV.Practica2 {
         private List<MazeCell> pathfinfinngAStar(MazeCell[,] maze, MazeCell start, MazeCell end)
         {
             float costeActual = 0;
-
+            nodosExplorados = 0;
             // Abrir dos listas con las celdas posibles, y las ya recorridas
             List<MazeCell> open = new List<MazeCell>();
             List<MazeCell> close = new List<MazeCell>();
-
             // La primera celda debe ser la actual
             MazeCell celdaActual = maze[dir.x, dir.z];
             MazeCell celdaMasCercana = null;
