@@ -1,42 +1,38 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-
-namespace UCM.IAV.Practica2
-{
+namespace UCM.IAV.Practica2 {
     public class MovimientoAutomatico : MonoBehaviour
     {
         // Laberinto con casillas y direcciones
         [SerializeField] [Header ("Laberinto")]
-        private GameObject mazeLoader;
-        // GameObject que representa el hilo de Ariadna
-        [SerializeField] [Header ("Hilo de Ariadna")]
-        private GameObject hilo;
+        private MazeLoader mazeLoader;
         // Velocidad del player
         [Header ("Velocidad")] [Range(1.0f, 3.0f)]
         [Tooltip ("Rango optimo de velocidad")]
         public float speed = 1.0f;
         // Lista que pasa TeseoMov.cs
-        private List <MazeCell> recorrido;
-        private float journeyLength;
+        private List<MazeCell> recorrido;
         private float margin = 0.05f;
         private Vector3 v;
         private bool running, inStep;
         private int node;
-        private float size;
+        private float tileSize;
         // Booleano para comprobar si esta pulsada la barra espaciadora
         private bool spacepressed;
+        private TeseoMov teseoMov;
         void Start() {
+            tileSize = mazeLoader.size;
             running = inStep = false;
-            node = 0;
-            size = mazeLoader.GetComponent<MazeLoader>().size;
             spacepressed = true;
+            node = 0;
+            // Script de teseo para actualizar la posicion
+            teseoMov = GetComponent<TeseoMov>();
         }
         void Update() {
             float time = Time.deltaTime;
             if (Input.GetKeyDown(KeyCode.Space)) spacepressed = true;
             if (Input.GetKeyUp(KeyCode.Space)) spacepressed = false;
-
+            // Si la barra espaciadora esta pulsada
             if (spacepressed) {
                 // Movimiento automatico
                 if (running) {
@@ -59,15 +55,18 @@ namespace UCM.IAV.Practica2
                                 running = false;
                             }
                         }
+                        if (transform.position.x > teseoMov.dir.x * tileSize + (tileSize / 2.0f)) teseoMov.dir.x++;
+                        if (transform.position.x < teseoMov.dir.x * tileSize - (tileSize / 2.0f)) teseoMov.dir.x--;
+                        if (transform.position.z > teseoMov.dir.z * tileSize + (tileSize / 2.0f)) teseoMov.dir.z++;
+                        if (transform.position.z < teseoMov.dir.z * tileSize - (tileSize / 2.0f)) teseoMov.dir.z--;
                     }
                 }
             }
-            //else Reset();
         }
         // Instantiate(hilo, new Vector3(c.x * tileSize, 0, c.z * tileSize), Quaternion.identity);
         private void SetParameters() {
             //Calcula la posición de la MazeCell
-            v = new Vector3(recorrido[node].x * size, transform.position.y, recorrido[node].z * size);
+            v = new Vector3(recorrido[node].x * tileSize, transform.position.y, recorrido[node].z * tileSize);
         }
         public void StartAutoMov(List<MazeCell> recorrido_) {
             Reset();

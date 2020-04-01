@@ -6,6 +6,9 @@ namespace UCM.IAV.Practica2 {
         // Laberinto con casillas y direcciones
         [SerializeField] [Header ("Laberinto")]
         private MazeLoader mazeLoader;
+        // GameObject que representa el hilo de Ariadna
+        [SerializeField] [Header ("Hilo de Ariadna")]
+        private GameObject nodoCuerda;
         // Velocidad del player
         [Header ("Velocidad")] [Range(1.0f, 3.0f)]
         [Tooltip ("Rango optimo de velocidad")]
@@ -14,8 +17,12 @@ namespace UCM.IAV.Practica2 {
         [Header ("Coste de A*")] [Range(1.0f, 10.0f)]
         [Tooltip ("Rango optimo de costes")]
         public float costeMov = 10.0f;
+        // Coste del movimiento en casilla de minotauro
+        [Header ("Coste de A*")] [Range(10.0f, 50.0f)]
+        [Tooltip ("Rango optimo de costes")]
+        public float costeMovMinot = 10.0f;
         // Struct con velocidad y angulo
-        protected struct Dir {
+        public struct Dir {
             public Vector3 vel;
             public int x, z;
             public Dir(Vector3 v, int ax, int az) {
@@ -24,7 +31,8 @@ namespace UCM.IAV.Practica2 {
                 z = az;
             }
         };
-        private Dir dir;
+        [SerializeField]
+        public Dir dir;
         private float tileSize;
         // Booleano para no pulsar dos direcciones a la vez
         private bool keypressed;
@@ -33,15 +41,20 @@ namespace UCM.IAV.Practica2 {
         private bool nuevoCamino;
         // Script de movimiento automatico, para inicial ese mov
         MovimientoAutomatico autoMov;
+        // Camino en curso
+        List<MazeCell> caminoActual;
+        // Array de gameobjects del hilo
+        private GameObject[] hilos;
         // Inicializar todos los parametros por defecto
         void Start() {
-            // Variables para el movimiento normal
             autoMov = GetComponent<MovimientoAutomatico>();
             transform.position = Vector3.zero;
             transform.rotation = default(Quaternion);
             tileSize = mazeLoader.size;
             dir.x = dir.z = 0;
             keypressed = false;
+            caminoActual = null;
+            hilos = new GameObject[0];
         }
         // Logica del movimiento
         void Update() {
@@ -51,7 +64,13 @@ namespace UCM.IAV.Practica2 {
             if (Input.GetKeyUp(KeyCode.Space)) spacePressed = false;
             // Si no esta pulsada la barra espaciadora
             if (!spacePressed) {
+                // Si hay un hilo, destruirlo
+                for (int i = 0; i < hilos.Length; i++) {
+                    if (hilos[i] != null)
+                        Destroy(hilos[i]);
+                }
                 keypressed = false;
+                nuevoCamino = false;
                 // Cambiar de casilla al avanzar
                 if (transform.position.x > dir.x * tileSize + (tileSize / 2.0f)) dir.x++;
                 if (transform.position.x < dir.x * tileSize - (tileSize / 2.0f)) dir.x--;
@@ -130,14 +149,26 @@ namespace UCM.IAV.Practica2 {
                 }
                 // Una vez tenemos el camino, recorrer el camino como si de movimiento estandar se tratara
                 camino.Reverse();
-                
+                // Si ya esta recorriendo un camino, no cojas otro a no ser que se suelte la barra espaciadora
                 if (!nuevoCamino && autoMov != null) {
+                    // Actualiza el camino actual
                     nuevoCamino = true;
-                    if ((dir.x != camino[0].x && dir.z != camino[0].z) || (dir.x == 0 && dir.z == 0)) {
-                        nuevoCamino = true;
-                        Debug.Log("Nuevo camino");
+                    caminoActual = camino;
+                    // Empezar el movimiento
+                    autoMov.StartAutoMov(caminoActual);
+                    // Si hay un hilo, destruirlo
+                    for (int i = 0; i < hilos.Length; i++) {
+                        if (hilos[i] != null)
+                            Destroy(hilos[i]);
                     }
-                    autoMov.StartAutoMov(camino);
+                    // Crear el hilo
+                    hilos = new GameObject[caminoActual.Count];
+                    for (int i = 0; i < hilos.Length; i++) {
+                        hilos[i] = (GameObject)Instantiate(nodoCuerda, new Vector3(caminoActual[i].x * tileSize, 0, caminoActual[i].z * tileSize), Quaternion.identity);
+                    }
+                }
+                if (caminoActual != null && (dir.x != caminoActual[0].x || dir.z != caminoActual[0].z)) {
+                    nuevoCamino = false;
                 }
             }
         }
@@ -158,10 +189,23 @@ namespace UCM.IAV.Practica2 {
                 getVecinos(open, close, maze, celdaActual, costeActual);
                 // Y luego guarda la casilla mas cercana a la casilla actual
                 celdaMasCercana = getNearestCell(open, maze, celdaActual);
+                // Calcular el coste hasta los vecinos en horizontal y vertical
+                float costeHastaCeldaCercana = 0;
+                if (celdaMasCercana.x == celdaActual.x && celdaMasCercana.z == celdaActual.z - 1 
+                    || celdaMasCercana.x == celdaActual.x && celdaMasCercana.z == celdaActual.z + 1
+                    || celdaMasCercana.x == celdaActual.x - 1 && celdaMasCercana.z == celdaActual.z
+                    || celdaMasCercana.x == celdaActual.x + 1 && celdaMasCercana.z == celdaActual.z)
+                    costeHastaCeldaCercana = costeMov;
+                // O hasta los vecinos en diagonal
+                else if (celdaMasCercana.x == celdaActual.x + 1 && celdaMasCercana.z == celdaActual.z + 1
+                    || celdaMasCercana.x == celdaActual.x + 1 && celdaMasCercana.z == celdaActual.z - 1
+                    || celdaMasCercana.x == celdaActual.x - 1 && celdaMasCercana.z == celdaActual.z + 1
+                    || celdaMasCercana.x == celdaActual.x - 1 && celdaMasCercana.z == celdaActual.z - 1)
+                    costeHastaCeldaCercana = Mathf.Sqrt(costeMov * costeMov + costeMov * costeMov);
                 // Actualizar los valores de los vecinos si es que hay algun camino mas rapido
-                actualizaVecinos(open, maze, celdaMasCercana, costeActual);
+                actualizaVecinos(open, maze, celdaMasCercana, costeActual + costeHastaCeldaCercana);
                 // El coste ahora de todas las G es el de antes mas lo que ya llevamos
-                costeActual += celdaMasCercana.getG();
+                costeActual += costeHastaCeldaCercana;
                 // Quitar esta celda de la lista abierta
                 open.Remove(celdaMasCercana);
                 // Y meterla en la lista de celdas ya visitadas
@@ -301,6 +345,7 @@ namespace UCM.IAV.Practica2 {
                 // ahora su nuevo coste sera el de ir desde el vecino, y su nuevo padre sera dicha casilla
                 if (esVecino && c.getG() > costeActual + nuevoCoste) {
                     c.setG(costeActual + nuevoCoste);
+                    c.setF(c.getG(), c.getH());
                     c.setPadre(celdaMasCercana);
                 }
             }
@@ -316,11 +361,11 @@ namespace UCM.IAV.Practica2 {
             float x = posX * costeMov;
             float y = posY * costeMov;
             if (x > y) {
-                hipotenusa = Mathf.Sqrt(Mathf.Pow(x - y, 2) + Mathf.Pow(x - y, 2));
+                hipotenusa = Mathf.Sqrt(Mathf.Pow(y, 2) + Mathf.Pow(y, 2));
                 return (x - y) + hipotenusa;
             }
             else if (y > x) {
-                hipotenusa = Mathf.Sqrt(Mathf.Pow(y - x, 2) + Mathf.Pow(y - x, 2));
+                hipotenusa = Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(x, 2));
                 return (y - x) + hipotenusa;
             }
             else return Mathf.Sqrt(x * x + y * y); 
