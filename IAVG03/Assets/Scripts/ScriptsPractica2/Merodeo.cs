@@ -17,7 +17,7 @@ namespace UCM.IAV.Practica2
 
         private enum direction{UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3};
         
-        protected struct Dir
+        public struct Dir
         {
             public Vector3 vel;
             public int x, z;
@@ -29,7 +29,7 @@ namespace UCM.IAV.Practica2
             }
         };
 
-        private Dir dir;
+        public Dir dir;
         private float tileSize;
         private int rand = 0;
 

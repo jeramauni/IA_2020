@@ -9,6 +9,9 @@ namespace UCM.IAV.Practica2 {
         // GameObject que representa el hilo de Ariadna
         [SerializeField] [Header ("Hilo de Ariadna")]
         private GameObject nodoCuerda;
+        // GameObject del minotauro
+        [SerializeField] [Header("Minotauro")]
+        private Merodeo minotauro;
         // Velocidad del player
         [Header ("Velocidad")] [Range(1.0f, 3.0f)]
         [Tooltip ("Rango optimo de velocidad")]
@@ -21,11 +24,6 @@ namespace UCM.IAV.Practica2 {
         [Header ("Coste de A*")] [Range(10.0f, 50.0f)]
         [Tooltip ("Rango optimo de costes")]
         public float costeMovMinot = 10.0f;
-
-        [Header("Minotauro")]
-        public Transform minotauro;
-        private Transform track;
-
         // Struct con velocidad y angulo
         public struct Dir {
             public Vector3 vel;
@@ -52,23 +50,17 @@ namespace UCM.IAV.Practica2 {
         private GameObject[] hilos;
         // Inicializar todos los parametros por defecto
         void Start() {
-            track = minotauro;
-
-            // Variables para el movimiento normal
             autoMov = GetComponent<MovimientoAutomatico>();
-            transform.position = Vector3.zero;
             transform.rotation = default(Quaternion);
+            transform.position = Vector3.zero;
             tileSize = mazeLoader.size;
-            dir.x = dir.z = 0;
-            keypressed = false;
-            caminoActual = null;
             hilos = new GameObject[0];
+            caminoActual = null;
+            keypressed = false;
+            dir.x = dir.z = 0;
         }
         // Logica del movimiento
         void Update() {
-
-            track.position = minotauro.position;
-
             // Empieza el movimiento
             float time = Time.deltaTime;
             if (Input.GetKeyDown(KeyCode.Space)) spacePressed = true;
@@ -326,12 +318,13 @@ namespace UCM.IAV.Practica2 {
                 }
                 else coste = c.getF();
 
-                // Si la celda que esta que estamos mirando es en la que esta el minotauro
-                // El coste se multiplica por 5
-
-                if (celdaCercana.x * tileSize == track.position.x
-                    && celdaCercana.z * tileSize == track.position.z)
-                    coste = coste * 5;
+                // Si la celda que esta que estamos mirando es en la que esta el minotauro, esa celda cuesta mas
+                if (minotauro.dir.x <= celdaCercana.x + 1 &&
+                    minotauro.dir.x >= celdaCercana.x - 1 &&
+                    minotauro.dir.z <= celdaCercana.z + 1 &&
+                    minotauro.dir.z >= celdaCercana.z - 1) {
+                    coste = costeMovMinot;
+                }
 
                 // Si el coste minimo es menor que el coste de la anterior casilla, la mas cercana es la nueva
                 if (costeMin > coste)
