@@ -36,15 +36,16 @@ namespace UCM.IAV.Practica2
         // Start is called before the first frame update
         void Start()
         {
+            tileSize = mazeLoader.size;
+
             Vector3 v = SetStartPos();
 
             transform.position = v;
             transform.rotation = default(Quaternion);
 
-            tileSize = mazeLoader.size;
             dir.x = dir.z = 0;
-            //GetNextPosition();
-            InvokeRepeating("GetNextPosition", 0, 3.0f);
+            GetNextPosition();
+            //InvokeRepeating("GetNextPosition", 0, 3.0f);
         }
 
         // Update is called once per frame
@@ -71,7 +72,8 @@ namespace UCM.IAV.Practica2
                 {
                     // Ha pasado de la mitad y hay un muro en esa direccion, no moverse
                     if (transform.position.z % tileSize < tileSize * 0.15 && !mazeLoader.mazeCells[dir.x, dir.z].walls[2])
-                        transform.position = new Vector3(transform.position.x, 0.0f, dir.z * tileSize);
+                        GetNextPosition();
+                    //transform.position = new Vector3(transform.position.x, 0.0f, dir.z * tileSize);
                     // Si no, moverse
                     else dir.vel.z = speed;
                 }
@@ -80,7 +82,8 @@ namespace UCM.IAV.Practica2
                 {
                     // Ha pasado de la mitad y hay un muro en esa direccion, no moverse
                     if ((transform.position.z % tileSize > tileSize * 0.85 && !mazeLoader.mazeCells[dir.x, dir.z].walls[3]) || transform.position.z < 0.0f)
-                        transform.position = new Vector3(transform.position.x, 0.0f, dir.z * tileSize);
+                        GetNextPosition();
+                    //transform.position = new Vector3(transform.position.x, 0.0f, dir.z * tileSize);
                     // Si no, moverse
                     else dir.vel.z = -speed;
                 }
@@ -94,7 +97,8 @@ namespace UCM.IAV.Practica2
                 {
                     // Ha pasado de la mitad y hay un muro en esa direccion, no moverse
                     if (transform.position.x % tileSize < tileSize * 0.15 && !mazeLoader.mazeCells[dir.x, dir.z].walls[1])
-                        transform.position = new Vector3(dir.x * tileSize, 0.0f, transform.position.z);
+                        GetNextPosition();
+                    //transform.position = new Vector3(dir.x * tileSize, 0.0f, transform.position.z);
                     // Si no, moverse
                     else dir.vel.x = speed;
                 }
@@ -102,7 +106,8 @@ namespace UCM.IAV.Practica2
                 {
                     // Ha pasado de la mitad y hay un muro en esa direccion, no moverse
                     if (transform.position.x % tileSize > tileSize * 0.85 && !mazeLoader.mazeCells[dir.x, dir.z].walls[0])
-                        transform.position = new Vector3(dir.x * tileSize, 0.0f, transform.position.z);
+                        GetNextPosition();
+                    //transform.position = new Vector3(dir.x * tileSize, 0.0f, transform.position.z);
                     // Si no, moverse
                     else dir.vel.x = -speed;
                 }
@@ -120,26 +125,24 @@ namespace UCM.IAV.Practica2
 
         void GetNextPosition()
         {
-            rand = Mathf.RoundToInt(Random.Range(0, 3));
+            rand = Random.Range(0, 3);
         }
 
         private Vector3 SetStartPos()
         {
             Vector2 vec;
             int i, j;
-            i = Mathf.RoundToInt(Random.Range(0, mazeLoader.mazeRows - 1));
-            j = Mathf.RoundToInt(Random.Range(0, mazeLoader.mazeColumns - 1));
+            i = mazeLoader.mazeRows / 2;
+            j = mazeLoader.mazeColumns / 2;
 
-            //Debug.Log("[i,j]: " + i + " " + j);
 
             vec = mazeLoader.getPosInCell(i, j);
 
             Vector3 v = Vector3.zero;
-            v.x = vec.x;
+            v.x = vec.x * tileSize;
             v.y = 0.0f;
-            v.z = vec.y;
+            v.z = vec.y * tileSize;
 
-            //Debug.Log("[x,z]: " + v.x + " " + v.z);
 
             return v;
         }

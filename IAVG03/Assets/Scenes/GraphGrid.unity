@@ -139,8 +139,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mazeLoader: {fileID: 2039109465}
+  nodoCuerda: {fileID: 100000, guid: e21d80611fd411c46b6e933e86fc639c, type: 3}
   speed: 3
   costeMov: 10
+  costeMovMinot: 15.5
+  minotauro: {fileID: 1140426888}
 --- !u!114 &174099612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,8 +156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89dadd4ec5cd6234f9f8c5b87535cc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mazeLoader: {fileID: 2039109464}
-  speed: 0.15
+  mazeLoader: {fileID: 2039109465}
+  speed: 3
 --- !u!1001 &393744378
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -162,20 +165,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 100004, guid: bdca98e7fbe1b4f4c889014d5782539c, type: 3}
+      propertyPath: m_Name
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 4273168190261077867, guid: bdca98e7fbe1b4f4c889014d5782539c,
         type: 3}
       propertyPath: speed
-      value: 2.81
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4273168190261077867, guid: bdca98e7fbe1b4f4c889014d5782539c,
         type: 3}
       propertyPath: mazeLoader
       value: 
       objectReference: {fileID: 2039109465}
-    - target: {fileID: 100004, guid: bdca98e7fbe1b4f4c889014d5782539c, type: 3}
-      propertyPath: m_Name
-      value: Enemy
-      objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: bdca98e7fbe1b4f4c889014d5782539c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -227,6 +230,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: 0d552b782a490d8498f28bcfebd43b8a,
     type: 3}
   m_PrefabInstance: {fileID: 1562929415}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1140426888 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400004, guid: bdca98e7fbe1b4f4c889014d5782539c,
+    type: 3}
+  m_PrefabInstance: {fileID: 393744378}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1215951688
 GameObject:

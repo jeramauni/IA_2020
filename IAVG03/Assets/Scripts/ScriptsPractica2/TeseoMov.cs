@@ -21,6 +21,11 @@ namespace UCM.IAV.Practica2 {
         [Header ("Coste de A*")] [Range(10.0f, 50.0f)]
         [Tooltip ("Rango optimo de costes")]
         public float costeMovMinot = 10.0f;
+
+        [Header("Minotauro")]
+        public Transform minotauro;
+        private Transform track;
+
         // Struct con velocidad y angulo
         public struct Dir {
             public Vector3 vel;
@@ -47,6 +52,9 @@ namespace UCM.IAV.Practica2 {
         private GameObject[] hilos;
         // Inicializar todos los parametros por defecto
         void Start() {
+            track = minotauro;
+
+            // Variables para el movimiento normal
             autoMov = GetComponent<MovimientoAutomatico>();
             transform.position = Vector3.zero;
             transform.rotation = default(Quaternion);
@@ -58,6 +66,9 @@ namespace UCM.IAV.Practica2 {
         }
         // Logica del movimiento
         void Update() {
+
+            track.position = minotauro.position;
+
             // Empieza el movimiento
             float time = Time.deltaTime;
             if (Input.GetKeyDown(KeyCode.Space)) spacePressed = true;
@@ -314,6 +325,14 @@ namespace UCM.IAV.Practica2 {
                     celdaCercana = c;
                 }
                 else coste = c.getF();
+
+                // Si la celda que esta que estamos mirando es en la que esta el minotauro
+                // El coste se multiplica por 5
+
+                if (celdaCercana.x * tileSize == track.position.x
+                    && celdaCercana.z * tileSize == track.position.z)
+                    coste = coste * 5;
+
                 // Si el coste minimo es menor que el coste de la anterior casilla, la mas cercana es la nueva
                 if (costeMin > coste)
                     celdaCercana = c;
