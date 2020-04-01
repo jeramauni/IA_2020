@@ -49,6 +49,10 @@ namespace UCM.IAV.Practica2 {
         // Array de gameobjects del hilo
         private GameObject[] hilos;
         // Inicializar todos los parametros por defecto
+
+        private float tiempoAlgoritmo = 0.0f;
+        private int nodosExplorados = 0;
+
         void Start() {
             autoMov = GetComponent<MovimientoAutomatico>();
             transform.rotation = default(Quaternion);
@@ -132,9 +136,12 @@ namespace UCM.IAV.Practica2 {
                     transform.position = new Vector3(dir.x * tileSize, 0.0f, transform.position.z);
                 // Resetear la velocidad
                 dir.vel = Vector3.zero;
+
+                nodosExplorados = 0;
             }
             // Si no, usar el algoritmo de busqueda
             else {
+                float aux = Time.realtimeSinceStartup;
                 // Cogemos la lista cerrada
                 List<MazeCell> close = pathfinfinngAStar(mazeLoader.mazeCells, mazeLoader.mazeCells[dir.x, dir.z], mazeLoader.mazeCells[0, 0]);
                 // Le damos la vuelta
@@ -173,28 +180,35 @@ namespace UCM.IAV.Practica2 {
                 if (caminoActual != null && (dir.x != caminoActual[0].x || dir.z != caminoActual[0].z)) {
                     nuevoCamino = false;
                 }
+                float aux2 = Time.realtimeSinceStartup;
+                tiempoAlgoritmo = aux2 - aux;
             }
         }
         // Algoritmo A* de busqueda del camino mas optimo
-        private List<MazeCell> pathfinfinngAStar(MazeCell[,] maze, MazeCell start, MazeCell end) {
+        private List<MazeCell> pathfinfinngAStar(MazeCell[,] maze, MazeCell start, MazeCell end)
+        {
             float costeActual = 0;
+
             // Abrir dos listas con las celdas posibles, y las ya recorridas
             List<MazeCell> open = new List<MazeCell>();
             List<MazeCell> close = new List<MazeCell>();
+
             // La primera celda debe ser la actual
             MazeCell celdaActual = maze[dir.x, dir.z];
             MazeCell celdaMasCercana = null;
             // Asi que se anade en la lista cerrada
             close.Add(celdaActual);
+            nodosExplorados++;
             // Y una vez hecho esto empezar a recorrer la lista abierta
-            while (close[close.Count - 1] != end) {
+            while (close[close.Count - 1] != end)
+            {
                 // Mete dentro de la lista abierta todas las posibiidades de movimiento
                 getVecinos(open, close, maze, celdaActual, costeActual);
                 // Y luego guarda la casilla mas cercana a la casilla actual
                 celdaMasCercana = getNearestCell(open, maze, celdaActual);
                 // Calcular el coste hasta los vecinos en horizontal y vertical
                 float costeHastaCeldaCercana = 0;
-                if (celdaMasCercana.x == celdaActual.x && celdaMasCercana.z == celdaActual.z - 1 
+                if (celdaMasCercana.x == celdaActual.x && celdaMasCercana.z == celdaActual.z - 1
                     || celdaMasCercana.x == celdaActual.x && celdaMasCercana.z == celdaActual.z + 1
                     || celdaMasCercana.x == celdaActual.x - 1 && celdaMasCercana.z == celdaActual.z
                     || celdaMasCercana.x == celdaActual.x + 1 && celdaMasCercana.z == celdaActual.z)
@@ -215,6 +229,7 @@ namespace UCM.IAV.Practica2 {
                 close.Add(celdaMasCercana);
                 // Ahora la celda actual debe de ser la ultima celda metida en la lista cerrada
                 celdaActual = celdaMasCercana;
+                nodosExplorados++;
             }
             return close;
         }
@@ -228,6 +243,7 @@ namespace UCM.IAV.Practica2 {
                     maze[celdaActual.x, celdaActual.z + 1].setH(heuristica(celdaActual.x, celdaActual.z + 1));
                     maze[celdaActual.x, celdaActual.z + 1].setF(maze[celdaActual.x, celdaActual.z + 1].getG(), maze[celdaActual.x, celdaActual.z + 1].getH());
                     open.Add(maze[celdaActual.x, celdaActual.z + 1]);
+                    nodosExplorados++;
                 }
             }
             // Celda abajo
@@ -238,6 +254,8 @@ namespace UCM.IAV.Practica2 {
                     maze[celdaActual.x, celdaActual.z - 1].setH(heuristica(celdaActual.x, celdaActual.z - 1));
                     maze[celdaActual.x, celdaActual.z - 1].setF(maze[celdaActual.x, celdaActual.z - 1].getG(), maze[celdaActual.x, celdaActual.z - 1].getH());
                     open.Add(maze[celdaActual.x, celdaActual.z - 1]);
+                    nodosExplorados++;
+
                 }
             }
             // Celda derecha
@@ -248,6 +266,7 @@ namespace UCM.IAV.Practica2 {
                     maze[celdaActual.x + 1, celdaActual.z].setH(heuristica(celdaActual.x + 1, celdaActual.z));
                     maze[celdaActual.x + 1, celdaActual.z].setF(maze[celdaActual.x + 1, celdaActual.z].getG(), maze[celdaActual.x + 1, celdaActual.z].getH());
                     open.Add(maze[celdaActual.x + 1, celdaActual.z]);
+                    nodosExplorados++;
                 }
             }
             // Celda izquerda
@@ -258,6 +277,7 @@ namespace UCM.IAV.Practica2 {
                     maze[celdaActual.x - 1, celdaActual.z].setH(heuristica(celdaActual.x - 1, celdaActual.z));
                     maze[celdaActual.x - 1, celdaActual.z].setF(maze[celdaActual.x - 1, celdaActual.z].getG(), maze[celdaActual.x - 1, celdaActual.z].getH());
                     open.Add(maze[celdaActual.x - 1, celdaActual.z]);
+                    nodosExplorados++;
                 }
             }
             // Celda arriba derecha
@@ -269,6 +289,7 @@ namespace UCM.IAV.Practica2 {
                     maze[celdaActual.x + 1, celdaActual.z + 1].setH(heuristica(celdaActual.x + 1, celdaActual.z + 1));
                     maze[celdaActual.x + 1, celdaActual.z + 1].setF(maze[celdaActual.x + 1, celdaActual.z + 1].getG(), maze[celdaActual.x + 1, celdaActual.z + 1].getH());
                     open.Add(maze[celdaActual.x + 1, celdaActual.z + 1]);
+                    nodosExplorados++;
                 }
             }
             // Celda arriba izquierda
@@ -280,6 +301,7 @@ namespace UCM.IAV.Practica2 {
                     maze[celdaActual.x - 1, celdaActual.z + 1].setH(heuristica(celdaActual.x - 1, celdaActual.z + 1));
                     maze[celdaActual.x - 1, celdaActual.z + 1].setF(maze[celdaActual.x - 1, celdaActual.z + 1].getG(), maze[celdaActual.x - 1, celdaActual.z + 1].getH());
                     open.Add(maze[celdaActual.x - 1, celdaActual.z + 1]);
+                    nodosExplorados++;
                 }
             }
             // Celda abajo derecha
@@ -291,6 +313,7 @@ namespace UCM.IAV.Practica2 {
                     maze[celdaActual.x + 1, celdaActual.z - 1].setH(heuristica(celdaActual.x + 1, celdaActual.z - 1));
                     maze[celdaActual.x + 1, celdaActual.z - 1].setF(maze[celdaActual.x + 1, celdaActual.z - 1].getG(), maze[celdaActual.x + 1, celdaActual.z - 1].getH());
                     open.Add(maze[celdaActual.x + 1, celdaActual.z - 1]);
+                    nodosExplorados++;
                 }
             }
             // Celda abajo izquierda
@@ -302,6 +325,7 @@ namespace UCM.IAV.Practica2 {
                     maze[celdaActual.x - 1, celdaActual.z - 1].setH(heuristica(celdaActual.x - 1, celdaActual.z - 1));
                     maze[celdaActual.x - 1, celdaActual.z - 1].setF(maze[celdaActual.x - 1, celdaActual.z - 1].getG(), maze[celdaActual.x - 1, celdaActual.z - 1].getH());
                     open.Add(maze[celdaActual.x - 1, celdaActual.z - 1]);
+                    nodosExplorados++;
                 }
             }
         }
@@ -381,6 +405,21 @@ namespace UCM.IAV.Practica2 {
                 return (y - x) + hipotenusa;
             }
             else return Mathf.Sqrt(x * x + y * y); 
+        }
+
+        public int NodosExplorados()
+        {
+            return nodosExplorados;
+        }
+
+        public float TiempoAlgoritmo()
+        {
+            return tiempoAlgoritmo;
+        }
+
+        public bool getSpace()
+        {
+            return spacePressed;
         }
     }
 }
