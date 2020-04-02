@@ -9,6 +9,12 @@ namespace UCM.IAV.Practica2 {
         // GameObject que representa el hilo de Ariadna
         [SerializeField] [Header ("Hilo de Ariadna")]
         private GameObject nodoCuerda;
+        // GameObject que representa el hilo de Ariadna
+        [SerializeField] [Header ("Hilo de Ariadna")]
+        private GameObject nodoListaAbierta;
+        // GameObject que representa el hilo de Ariadna
+        [SerializeField] [Header ("Hilo de Ariadna")]
+        private GameObject nodoListaCerrada;
         // GameObject del minotauro
         [SerializeField] [Header("Minotauro")]
         private MinotauroMov minotauro;
@@ -48,17 +54,20 @@ namespace UCM.IAV.Practica2 {
         List<MazeCell> caminoActual;
         // Array de gameobjects del hilo
         private GameObject[] hilos;
-        // Inicializar todos los parametros por defecto
-
+        private GameObject[] lc;
+        private GameObject[] lo;
+        // HUD
         private float tiempoAlgoritmo = 0.0f;
         private int nodosExplorados = 0;
-
+        // Inicializar todos los parametros por defecto
         void Start() {
             autoMov = GetComponent<AutoMov>();
             transform.rotation = default(Quaternion);
             transform.position = Vector3.zero;
             tileSize = mazeLoader.size;
             hilos = new GameObject[0];
+            lc = new GameObject[0];
+            lo = new GameObject[0];
             caminoActual = null;
             keypressed = false;
             dir.x = dir.z = 0;
@@ -75,6 +84,15 @@ namespace UCM.IAV.Practica2 {
                 for (int i = 0; i < hilos.Length; i++) {
                     if (hilos[i] != null)
                         Destroy(hilos[i]);
+                }
+                // Si hay gameobjects de lista cerrada, borrarlos
+                for (int i = 0; i < lc.Length; i++) {
+                    if (lc[i] != null)
+                        Destroy(lc[i]);
+                }
+                for (int i = 0; i < lo.Length; i++) {
+                    if (lo[i] != null)
+                        Destroy(lo[i]);
                 }
                 keypressed = false;
                 nuevoCamino = false;
@@ -136,14 +154,13 @@ namespace UCM.IAV.Practica2 {
                     transform.position = new Vector3(dir.x * tileSize, 0.0f, transform.position.z);
                 // Resetear la velocidad
                 dir.vel = Vector3.zero;
-
-                nodosExplorados = 0;
             }
             // Si no, usar el algoritmo de busqueda
             else {
                 float aux = Time.realtimeSinceStartup;
-                // Cogemos la lista cerrada
-                List<MazeCell> close = pathfinfinngAStar(mazeLoader.mazeCells, mazeLoader.mazeCells[dir.x, dir.z], mazeLoader.mazeCells[0, 0]);
+                // Cogemos la lista cerrada, y declaramos la lista open fuera para poder hacer un debug in game de los nodos
+                List<MazeCell> open;
+                List<MazeCell> close = pathfinfinngAStar(mazeLoader.mazeCells, mazeLoader.mazeCells[dir.x, dir.z], mazeLoader.mazeCells[0, 0], out open);
                 // Le damos la vuelta
                 close.Reverse();
                 // Metemos la celda actual del camino (en este caso, la posicion del personaje)
@@ -171,36 +188,55 @@ namespace UCM.IAV.Practica2 {
                         if (hilos[i] != null)
                             Destroy(hilos[i]);
                     }
+                    // Si hay gameobjects de lista cerrada, borrarlos
+                    for (int i = 0; i < lc.Length; i++) {
+                        if (lc[i] != null)
+                            Destroy(lc[i]);
+                    }
+                    // Si hay gameobjects de lista abierta, borrarlos
+                    for (int i = 0; i < lo.Length; i++) {
+                        if (lo[i] != null)
+                            Destroy(lo[i]);
+                    }
                     // Crear el hilo
                     hilos = new GameObject[caminoActual.Count];
                     for (int i = 0; i < hilos.Length; i++) {
                         hilos[i] = (GameObject)Instantiate(nodoCuerda, new Vector3(caminoActual[i].x * tileSize, 0, caminoActual[i].z * tileSize), Quaternion.identity);
                     }
+                    // Crear la lista cerrada de nodos
+                    lc = new GameObject[close.Count];
+                    for (int i = 0; i < close.Count; i++) {
+                        lc[i] = (GameObject)Instantiate(nodoListaCerrada, new Vector3(close[i].x * tileSize, 0, close[i].z * tileSize), Quaternion.identity);
+                    }
+                    // Crear la lista abierta de nodos
+                    lo = new GameObject[open.Count];
+                    for (int i = 0; i < open.Count; i++) {
+                        lo[i] = (GameObject)Instantiate(nodoListaAbierta, new Vector3(open[i].x * tileSize, 0, open[i].z * tileSize), Quaternion.identity);
+                    }
                 }
-                if (caminoActual != null && (dir.x != caminoActual[0].x || dir.z != caminoActual[0].z)) {
+                if (caminoActual != null && (dir.x != caminoActual[0].x || dir.z != caminoActual[0].z))
                     nuevoCamino = false;
-                }
+                // HUD
+                nodosExplorados = open.Count + close.Count;
                 float aux2 = Time.realtimeSinceStartup;
                 tiempoAlgoritmo = aux2 - aux;
             }
         }
         // Algoritmo A* de busqueda del camino mas optimo
-        private List<MazeCell> pathfinfinngAStar(MazeCell[,] maze, MazeCell start, MazeCell end)
+        private List<MazeCell> pathfinfinngAStar(MazeCell[,] maze, MazeCell start, MazeCell end, out List<MazeCell> open)
         {
             float costeActual = 0;
             nodosExplorados = 0;
             // Abrir dos listas con las celdas posibles, y las ya recorridas
-            List<MazeCell> open = new List<MazeCell>();
             List<MazeCell> close = new List<MazeCell>();
+            open = new List<MazeCell>();
             // La primera celda debe ser la actual
             MazeCell celdaActual = maze[dir.x, dir.z];
             MazeCell celdaMasCercana = null;
             // Asi que se anade en la lista cerrada
             close.Add(celdaActual);
-            nodosExplorados++;
             // Y una vez hecho esto empezar a recorrer la lista abierta
-            while (close[close.Count - 1] != end)
-            {
+            while (close[close.Count - 1] != end) {
                 // Mete dentro de la lista abierta todas las posibiidades de movimiento
                 getVecinos(open, close, maze, celdaActual, costeActual);
                 // Y luego guarda la casilla mas cercana a la casilla actual
@@ -228,7 +264,6 @@ namespace UCM.IAV.Practica2 {
                 close.Add(celdaMasCercana);
                 // Ahora la celda actual debe de ser la ultima celda metida en la lista cerrada
                 celdaActual = celdaMasCercana;
-                nodosExplorados++;
             }
             return close;
         }
@@ -242,7 +277,6 @@ namespace UCM.IAV.Practica2 {
                     maze[celdaActual.x, celdaActual.z + 1].setH(heuristica(celdaActual.x, celdaActual.z + 1));
                     maze[celdaActual.x, celdaActual.z + 1].setF(maze[celdaActual.x, celdaActual.z + 1].getG(), maze[celdaActual.x, celdaActual.z + 1].getH());
                     open.Add(maze[celdaActual.x, celdaActual.z + 1]);
-                    nodosExplorados++;
                 }
             }
             // Celda abajo
@@ -253,7 +287,6 @@ namespace UCM.IAV.Practica2 {
                     maze[celdaActual.x, celdaActual.z - 1].setH(heuristica(celdaActual.x, celdaActual.z - 1));
                     maze[celdaActual.x, celdaActual.z - 1].setF(maze[celdaActual.x, celdaActual.z - 1].getG(), maze[celdaActual.x, celdaActual.z - 1].getH());
                     open.Add(maze[celdaActual.x, celdaActual.z - 1]);
-                    nodosExplorados++;
 
                 }
             }
@@ -265,7 +298,6 @@ namespace UCM.IAV.Practica2 {
                     maze[celdaActual.x + 1, celdaActual.z].setH(heuristica(celdaActual.x + 1, celdaActual.z));
                     maze[celdaActual.x + 1, celdaActual.z].setF(maze[celdaActual.x + 1, celdaActual.z].getG(), maze[celdaActual.x + 1, celdaActual.z].getH());
                     open.Add(maze[celdaActual.x + 1, celdaActual.z]);
-                    nodosExplorados++;
                 }
             }
             // Celda izquerda
@@ -276,7 +308,6 @@ namespace UCM.IAV.Practica2 {
                     maze[celdaActual.x - 1, celdaActual.z].setH(heuristica(celdaActual.x - 1, celdaActual.z));
                     maze[celdaActual.x - 1, celdaActual.z].setF(maze[celdaActual.x - 1, celdaActual.z].getG(), maze[celdaActual.x - 1, celdaActual.z].getH());
                     open.Add(maze[celdaActual.x - 1, celdaActual.z]);
-                    nodosExplorados++;
                 }
             }
             // Celda arriba derecha
@@ -288,7 +319,6 @@ namespace UCM.IAV.Practica2 {
                     maze[celdaActual.x + 1, celdaActual.z + 1].setH(heuristica(celdaActual.x + 1, celdaActual.z + 1));
                     maze[celdaActual.x + 1, celdaActual.z + 1].setF(maze[celdaActual.x + 1, celdaActual.z + 1].getG(), maze[celdaActual.x + 1, celdaActual.z + 1].getH());
                     open.Add(maze[celdaActual.x + 1, celdaActual.z + 1]);
-                    nodosExplorados++;
                 }
             }
             // Celda arriba izquierda
@@ -300,7 +330,6 @@ namespace UCM.IAV.Practica2 {
                     maze[celdaActual.x - 1, celdaActual.z + 1].setH(heuristica(celdaActual.x - 1, celdaActual.z + 1));
                     maze[celdaActual.x - 1, celdaActual.z + 1].setF(maze[celdaActual.x - 1, celdaActual.z + 1].getG(), maze[celdaActual.x - 1, celdaActual.z + 1].getH());
                     open.Add(maze[celdaActual.x - 1, celdaActual.z + 1]);
-                    nodosExplorados++;
                 }
             }
             // Celda abajo derecha
@@ -312,7 +341,6 @@ namespace UCM.IAV.Practica2 {
                     maze[celdaActual.x + 1, celdaActual.z - 1].setH(heuristica(celdaActual.x + 1, celdaActual.z - 1));
                     maze[celdaActual.x + 1, celdaActual.z - 1].setF(maze[celdaActual.x + 1, celdaActual.z - 1].getG(), maze[celdaActual.x + 1, celdaActual.z - 1].getH());
                     open.Add(maze[celdaActual.x + 1, celdaActual.z - 1]);
-                    nodosExplorados++;
                 }
             }
             // Celda abajo izquierda
@@ -324,7 +352,6 @@ namespace UCM.IAV.Practica2 {
                     maze[celdaActual.x - 1, celdaActual.z - 1].setH(heuristica(celdaActual.x - 1, celdaActual.z - 1));
                     maze[celdaActual.x - 1, celdaActual.z - 1].setF(maze[celdaActual.x - 1, celdaActual.z - 1].getG(), maze[celdaActual.x - 1, celdaActual.z - 1].getH());
                     open.Add(maze[celdaActual.x - 1, celdaActual.z - 1]);
-                    nodosExplorados++;
                 }
             }
         }
