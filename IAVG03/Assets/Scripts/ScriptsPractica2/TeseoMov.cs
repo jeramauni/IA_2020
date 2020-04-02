@@ -148,7 +148,7 @@ namespace UCM.IAV.Practica2 {
                         keypressed = true;
                     }
                 }
-                // Actualizar el movimiento
+                // Actualizar el movimiento (direccion y rotacion)
                 transform.position += dir.vel * time;
                 if (dir.vel.x > 0) yRotation = 1;
                 else if (dir.vel.x < 0) yRotation = -1;

@@ -12,6 +12,8 @@ namespace UCM.IAV.Practica2 {
         public float speed = 1.0f;
         // Lista que pasa TeseoMov.cs
         private List<MazeCell> recorrido;
+        // Rotacion del personaje
+        private float yRotation;
         private float margin = 0.05f;
         private Vector3 v;
         private bool running, inStep;
@@ -24,6 +26,7 @@ namespace UCM.IAV.Practica2 {
             tileSize = mazeLoader.size;
             running = inStep = false;
             spacepressed = true;
+            yRotation = 0;
             node = 0;
             // Script de teseo para actualizar la posicion
             teseoMov = GetComponent<TeseoMov>();
@@ -47,6 +50,14 @@ namespace UCM.IAV.Practica2 {
                         float distCovered = time * speed;
                         // Setea la posición a una fracción de la distancia entre los puntos
                         transform.position = Vector3.Lerp(transform.position, v, distCovered);
+                        Debug.Log("x: " + (v.x - transform.position.x) + " z:" + (v.z - transform.position.z));
+                        // float x = v.x - transform.position.x;
+                        // float z = v.z - transform.position.z;
+                        // if (x > 0) yRotation = 1;
+                        // else if (x < 0) yRotation = -1;
+                        // else if (z < 0) yRotation = 90;
+                        // else if (z > 0) yRotation = 0;
+                        transform.rotation = Quaternion.Slerp(transform.rotation, new Quaternion(0, yRotation, 0, 1),1);
                         //Si llegó a la celda destino, finaliza el step
                         if ((transform.position.x <= v.x + margin && transform.position.x >= v.x - margin) && (transform.position.z <= v.z + margin && transform.position.z >= v.z - margin)) {
                             inStep = false;
@@ -63,9 +74,8 @@ namespace UCM.IAV.Practica2 {
                 }
             }
         }
-        // Instantiate(hilo, new Vector3(c.x * tileSize, 0, c.z * tileSize), Quaternion.identity);
+        // Calcula la posición de la MazeCell
         private void SetParameters() {
-            //Calcula la posición de la MazeCell
             v = new Vector3(recorrido[node].x * tileSize, transform.position.y, recorrido[node].z * tileSize);
         }
         public void StartAutoMov(List<MazeCell> recorrido_) {
