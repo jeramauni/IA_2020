@@ -15,7 +15,7 @@ namespace UCM.IAV.Practica2
         [Tooltip("Rango optimo de velocidad")]
         public float speed = 5.0f;
 
-        private enum direction{UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3};
+        private enum direction{UP = 2, DOWN = 3, LEFT = 0, RIGHT = 1};
         
         public struct Dir
         {
@@ -32,20 +32,19 @@ namespace UCM.IAV.Practica2
         public Dir dir;
         private float tileSize;
         private int rand = 0;
+        private DiffRandomGenerator rnd = new DiffRandomGenerator(0, 3);
 
         // Start is called before the first frame update
         void Start()
         {
             tileSize = mazeLoader.size;
 
-            Vector3 v = SetStartPos();
-
-            transform.position = v;
+            transform.position = SetStartPos();
             transform.rotation = default(Quaternion);
 
             dir.x = dir.z = 0;
-            GetNextPosition();
             //InvokeRepeating("GetNextPosition", 0, 3.0f);
+            GetNextPosition();
         }
 
         // Update is called once per frame
@@ -72,8 +71,10 @@ namespace UCM.IAV.Practica2
                 {
                     // Ha pasado de la mitad y hay un muro en esa direccion, no moverse
                     if (transform.position.z % tileSize < tileSize * 0.15 && !mazeLoader.mazeCells[dir.x, dir.z].walls[2])
+                    {
+                        transform.position = new Vector3(transform.position.x, 0.0f, dir.z * tileSize);
                         GetNextPosition();
-                    //transform.position = new Vector3(transform.position.x, 0.0f, dir.z * tileSize);
+                    }
                     // Si no, moverse
                     else dir.vel.z = speed;
                 }
@@ -82,8 +83,10 @@ namespace UCM.IAV.Practica2
                 {
                     // Ha pasado de la mitad y hay un muro en esa direccion, no moverse
                     if ((transform.position.z % tileSize > tileSize * 0.85 && !mazeLoader.mazeCells[dir.x, dir.z].walls[3]) || transform.position.z < 0.0f)
+                    {
+                        transform.position = new Vector3(transform.position.x, 0.0f, dir.z * tileSize);
                         GetNextPosition();
-                    //transform.position = new Vector3(transform.position.x, 0.0f, dir.z * tileSize);
+                    }
                     // Si no, moverse
                     else dir.vel.z = -speed;
                 }
@@ -97,8 +100,10 @@ namespace UCM.IAV.Practica2
                 {
                     // Ha pasado de la mitad y hay un muro en esa direccion, no moverse
                     if (transform.position.x % tileSize < tileSize * 0.15 && !mazeLoader.mazeCells[dir.x, dir.z].walls[1])
+                    {
+                        transform.position = new Vector3(dir.x * tileSize, 0.0f, transform.position.z);
                         GetNextPosition();
-                    //transform.position = new Vector3(dir.x * tileSize, 0.0f, transform.position.z);
+                    }
                     // Si no, moverse
                     else dir.vel.x = speed;
                 }
@@ -106,8 +111,10 @@ namespace UCM.IAV.Practica2
                 {
                     // Ha pasado de la mitad y hay un muro en esa direccion, no moverse
                     if (transform.position.x % tileSize > tileSize * 0.85 && !mazeLoader.mazeCells[dir.x, dir.z].walls[0])
+                    {
+                        transform.position = new Vector3(dir.x * tileSize, 0.0f, transform.position.z);
                         GetNextPosition();
-                    //transform.position = new Vector3(dir.x * tileSize, 0.0f, transform.position.z);
+                    }
                     // Si no, moverse
                     else dir.vel.x = -speed;
                 }
@@ -125,7 +132,22 @@ namespace UCM.IAV.Practica2
 
         void GetNextPosition()
         {
-            rand = Random.Range(0, 3);
+            bool newDir = false;
+            int i = 0;
+
+            rand = rnd.Next(); 
+            
+            // mientras haya una pared en la direccion elegida
+            while(!mazeLoader.mazeCells[dir.x, dir.z].walls[rand])
+            {
+                // cambia direccion
+                rand = rnd.Next();
+            }
+
+            // reset del generador de random
+            rnd.Reset(0, 3);
+
+            Debug.Log("DIR: " + rand);
         }
 
         private Vector3 SetStartPos()

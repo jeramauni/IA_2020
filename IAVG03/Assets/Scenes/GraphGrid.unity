@@ -348,7 +348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mazeLoader: {fileID: 2039109465}
-  speed: 3
+  speed: 1.5
 --- !u!4 &441223021 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: 0d552b782a490d8498f28bcfebd43b8a,
