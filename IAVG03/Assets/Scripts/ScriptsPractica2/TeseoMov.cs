@@ -42,6 +42,7 @@ namespace UCM.IAV.Practica2 {
         };
         [SerializeField]
         public Dir dir;
+        private float yRotation;
         private float tileSize;
         // Booleano para no pulsar dos direcciones a la vez
         private bool keypressed;
@@ -71,6 +72,7 @@ namespace UCM.IAV.Practica2 {
             caminoActual = null;
             keypressed = false;
             dir.x = dir.z = 0;
+            yRotation = 0;
         }
         // Logica del movimiento
         void Update() {
@@ -148,6 +150,12 @@ namespace UCM.IAV.Practica2 {
                 }
                 // Actualizar el movimiento
                 transform.position += dir.vel * time;
+                if (dir.vel.x > 0) yRotation = 1;
+                else if (dir.vel.x < 0) yRotation = -1;
+                if (dir.vel.z < 0) yRotation = 90;
+                else if (dir.vel.z > 0) yRotation = 0;
+                transform.rotation = Quaternion.Slerp(transform.rotation, new Quaternion(0, yRotation, 0, 1), 1);
+                // Corregir la desviacion
                 if (transform.position.z < 0)
                     transform.position = new Vector3(transform.position.x, 0.0f, dir.z * tileSize);
                 if (transform.position.x < 0)
@@ -412,7 +420,6 @@ namespace UCM.IAV.Practica2 {
                 }
             }
         }
-
         // Heuristica usada:
         // El coste de cada movimineto horizontal o vertical es 10. Sin embargo, si el movimiento tiene que ser diagonal,
         // entonces el coste de cada movimiento es la hipotenusa de un triangulo rectangulo e isosceles cuyos catetos valen 10.
@@ -432,20 +439,9 @@ namespace UCM.IAV.Practica2 {
             }
             else return Mathf.Sqrt(x * x + y * y); 
         }
-
-        public int NodosExplorados()
-        {
-            return nodosExplorados;
-        }
-
-        public float TiempoAlgoritmo()
-        {
-            return tiempoAlgoritmo;
-        }
-
-        public bool getSpace()
-        {
-            return spacePressed;
-        }
+        // Getters para otros scripts
+        public int NodosExplorados() { return nodosExplorados; }
+        public float TiempoAlgoritmo() { return tiempoAlgoritmo; }
+        public bool getSpace() { return spacePressed; }
     }
 }
