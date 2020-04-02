@@ -44,6 +44,10 @@ namespace UCM.IAV.Practica2 {
                         SetParameters();
                         inStep = true;
                         node++;
+                        //Rotate towards next node
+                        float x = v.x - transform.position.x;
+                        float z = v.z - transform.position.z;
+                        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(x,0,z)), 1);
                     }
                     if (inStep) {
                         //Distancia recorrida es igual al tiempo transcurrido por la velocidad..
@@ -51,13 +55,7 @@ namespace UCM.IAV.Practica2 {
                         // Setea la posición a una fracción de la distancia entre los puntos
                         transform.position = Vector3.Lerp(transform.position, v, distCovered);
                         Debug.Log("x: " + (v.x - transform.position.x) + " z:" + (v.z - transform.position.z));
-                        // float x = v.x - transform.position.x;
-                        // float z = v.z - transform.position.z;
-                        // if (x > 0) yRotation = 1;
-                        // else if (x < 0) yRotation = -1;
-                        // else if (z < 0) yRotation = 90;
-                        // else if (z > 0) yRotation = 0;
-                        transform.rotation = Quaternion.Slerp(transform.rotation, new Quaternion(0, yRotation, 0, 1),1);
+                       
                         //Si llegó a la celda destino, finaliza el step
                         if ((transform.position.x <= v.x + margin && transform.position.x >= v.x - margin) && (transform.position.z <= v.z + margin && transform.position.z >= v.z - margin)) {
                             inStep = false;
