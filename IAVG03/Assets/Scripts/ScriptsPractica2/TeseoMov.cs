@@ -11,7 +11,7 @@ namespace UCM.IAV.Practica2 {
         private GameObject nodoCuerda;
         // GameObject del minotauro
         [SerializeField] [Header("Minotauro")]
-        private Merodeo minotauro;
+        private MinotauroMov minotauro;
         // Velocidad del player
         [Header ("Velocidad")] [Range(1.0f, 3.0f)]
         [Tooltip ("Rango optimo de velocidad")]
@@ -43,7 +43,7 @@ namespace UCM.IAV.Practica2 {
         private bool spacePressed;
         private bool nuevoCamino;
         // Script de movimiento automatico, para inicial ese mov
-        MovimientoAutomatico autoMov;
+        AutoMov autoMov;
         // Camino en curso
         List<MazeCell> caminoActual;
         // Array de gameobjects del hilo
@@ -54,7 +54,7 @@ namespace UCM.IAV.Practica2 {
         private int nodosExplorados = 0;
 
         void Start() {
-            autoMov = GetComponent<MovimientoAutomatico>();
+            autoMov = GetComponent<AutoMov>();
             transform.rotation = default(Quaternion);
             transform.position = Vector3.zero;
             tileSize = mazeLoader.size;

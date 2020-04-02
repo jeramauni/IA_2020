@@ -219,18 +219,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &126429284 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4273168190261077867, guid: bdca98e7fbe1b4f4c889014d5782539c,
-    type: 3}
-  m_PrefabInstance: {fileID: 393744378}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7667cc9ffa52be04ea3ab8ff646332c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &174099607 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100004, guid: 0d552b782a490d8498f28bcfebd43b8a,
@@ -251,11 +239,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mazeLoader: {fileID: 2039109465}
   nodoCuerda: {fileID: 100000, guid: e21d80611fd411c46b6e933e86fc639c, type: 3}
-  minotauro: {fileID: 126429284}
+  minotauro: {fileID: 422764031}
   speed: 3
   costeMov: 10
-  costeMovMinot: 15.5
---- !u!114 &174099612
+  costeMovMinot: 50
+--- !u!114 &174099609
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -264,7 +252,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 174099607}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89dadd4ec5cd6234f9f8c5b87535cc1b, type: 3}
+  m_Script: {fileID: 11500000, guid: d61ea5078c5956046be533c3e790c437, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mazeLoader: {fileID: 2039109465}
@@ -320,7 +308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: bdca98e7fbe1b4f4c889014d5782539c, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: bdca98e7fbe1b4f4c889014d5782539c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -334,8 +322,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4273168190261077867, guid: bdca98e7fbe1b4f4c889014d5782539c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bdca98e7fbe1b4f4c889014d5782539c, type: 3}
+--- !u!1 &422764030 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100004, guid: bdca98e7fbe1b4f4c889014d5782539c,
+    type: 3}
+  m_PrefabInstance: {fileID: 393744378}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &422764031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422764030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5961f4cfd9b40f43be7f7a91ee134ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mazeLoader: {fileID: 2039109465}
+  speed: 3
 --- !u!4 &441223021 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: 0d552b782a490d8498f28bcfebd43b8a,
@@ -500,7 +509,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 0d552b782a490d8498f28bcfebd43b8a, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 0d552b782a490d8498f28bcfebd43b8a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -611,7 +620,7 @@ Transform:
   m_LocalScale: {x: 1, y: 0.99999994, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2039109464
 GameObject:
@@ -661,7 +670,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2114354606
 GameObject:
