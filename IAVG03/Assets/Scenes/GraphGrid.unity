@@ -239,6 +239,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mazeLoader: {fileID: 2039109465}
   nodoCuerda: {fileID: 100000, guid: e21d80611fd411c46b6e933e86fc639c, type: 3}
+  nodoListaAbierta: {fileID: 3316700765905655428, guid: ed2e7d1d0364ccf41b51a29866674a32,
+    type: 3}
+  nodoListaCerrada: {fileID: 6743051929626426446, guid: 03f491abd2fefbe42aaebb55a46416c7,
+    type: 3}
   minotauro: {fileID: 422764031}
   speed: 3
   costeMov: 10
