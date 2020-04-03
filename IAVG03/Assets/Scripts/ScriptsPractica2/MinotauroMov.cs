@@ -15,7 +15,7 @@ namespace UCM.IAV.Practica2
         [Tooltip("Rango optimo de velocidad")]
         public float speed = 5.0f;
 
-        private enum direction{UP = 2, DOWN = 3, LEFT = 0, RIGHT = 1};
+        private enum direction{ LEFT = 0, RIGHT = 1, UP = 2, DOWN = 3};
         
         public struct Dir
         {
@@ -30,6 +30,8 @@ namespace UCM.IAV.Practica2
         };
 
         public Dir dir;
+        private float yRotation;
+
         private float tileSize;
         private int rand = 0;
         private DiffRandomGenerator rnd = new DiffRandomGenerator(0, 3);
@@ -43,6 +45,8 @@ namespace UCM.IAV.Practica2
             transform.rotation = default(Quaternion);
 
             dir.x = dir.z = 0;
+            yRotation = 0;
+
             //InvokeRepeating("GetNextPosition", 0, 3.0f);
             GetNextPosition();
         }
@@ -59,6 +63,7 @@ namespace UCM.IAV.Practica2
             if (transform.position.x < dir.x * tileSize - (tileSize / 2.0f)) dir.x--;
             if (transform.position.z > dir.z * tileSize + (tileSize / 2.0f)) dir.z++;
             if (transform.position.z < dir.z * tileSize - (tileSize / 2.0f)) dir.z--;
+
             // Movimiento por railes
             // ARRIBA Y ABAJO
             // Comprobar que este dentro del rail vertical
@@ -87,6 +92,14 @@ namespace UCM.IAV.Practica2
                         transform.position = new Vector3(transform.position.x, 0.0f, dir.z * tileSize);
                         GetNextPosition();
                     }
+
+                    if (this.transform.position.z == 0)
+                    {
+                        //
+                        rnd.Reset(0, 2);
+                        rand = rnd.Next();
+                    }
+
                     // Si no, moverse
                     else dir.vel.z = -speed;
                 }
@@ -115,6 +128,13 @@ namespace UCM.IAV.Practica2
                         transform.position = new Vector3(dir.x * tileSize, 0.0f, transform.position.z);
                         GetNextPosition();
                     }
+
+                    if (this.transform.position.x == 0)
+                    {
+                        // 
+                        rnd.Reset(1, 3);
+                        rand = rnd.Next();
+                    }
                     // Si no, moverse
                     else dir.vel.x = -speed;
                 }
@@ -125,6 +145,13 @@ namespace UCM.IAV.Practica2
                 transform.position = new Vector3(transform.position.x, 0.0f, dir.z * tileSize);
             if (transform.position.x < 0)
                 transform.position = new Vector3(dir.x * tileSize, 0.0f, transform.position.z);
+
+            if (dir.vel.x > 0) yRotation = 1;
+            else if (dir.vel.x < 0) yRotation = -1;
+            if (dir.vel.z < 0) yRotation = 90;
+            else if (dir.vel.z > 0) yRotation = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, new Quaternion(0, yRotation, 0, 1), 1);
+
             // Resetear la velocidad
             dir.vel = Vector3.zero;
 
@@ -132,8 +159,6 @@ namespace UCM.IAV.Practica2
 
         void GetNextPosition()
         {
-            bool newDir = false;
-            int i = 0;
 
             rand = rnd.Next(); 
             
@@ -146,8 +171,6 @@ namespace UCM.IAV.Practica2
 
             // reset del generador de random
             rnd.Reset(0, 3);
-
-            Debug.Log("DIR: " + rand);
         }
 
         private Vector3 SetStartPos()
@@ -157,8 +180,7 @@ namespace UCM.IAV.Practica2
             i = mazeLoader.mazeRows / 2;
             j = mazeLoader.mazeColumns / 2;
 
-
-            vec = mazeLoader.getPosInCell(i, j);
+            vec = mazeLoader.getPosInCell(j, i);
 
             Vector3 v = Vector3.zero;
             v.x = vec.x * tileSize;

@@ -27,7 +27,7 @@ namespace UCM.IAV.Practica2
             }
             tiempoAlgoritmo = mov.TiempoAlgoritmo();
             costeText.text = "Nodos explorados: " + nodosExplorados.ToString()
-                + "\nTiempo algoritmo: " + tiempoAlgoritmo;
+                + "\nTiempo algoritmo: " + tiempoAlgoritmo + " ms";
         }
     }
 }
