@@ -54,8 +54,6 @@ namespace UCM.IAV.Practica2 {
                         float distCovered = time * speed;
                         // Setea la posición a una fracción de la distancia entre los puntos
                         transform.position = Vector3.Lerp(transform.position, v, distCovered);
-                        Debug.Log("x: " + (v.x - transform.position.x) + " z:" + (v.z - transform.position.z));
-                       
                         //Si llegó a la celda destino, finaliza el step
                         if ((transform.position.x <= v.x + margin && transform.position.x >= v.x - margin) && (transform.position.z <= v.z + margin && transform.position.z >= v.z - margin)) {
                             inStep = false;
