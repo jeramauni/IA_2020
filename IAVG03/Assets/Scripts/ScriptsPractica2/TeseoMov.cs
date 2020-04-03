@@ -227,7 +227,7 @@ namespace UCM.IAV.Practica2 {
                 // HUD
                 nodosExplorados = open.Count + close.Count;
                 float aux2 = Time.realtimeSinceStartup;
-                tiempoAlgoritmo = aux2 - aux * 1000 * -1;
+                tiempoAlgoritmo = (aux2 - aux) * 1000;
             }
         }
         // Algoritmo A* de busqueda del camino mas optimo

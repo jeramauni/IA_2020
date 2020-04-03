@@ -159,7 +159,8 @@ namespace UCM.IAV.Practica2
 
         void GetNextPosition()
         {
-
+            // reset del generador de random
+            rnd.Reset(0, 3);
             rand = rnd.Next(); 
             
             // mientras haya una pared en la direccion elegida
@@ -168,9 +169,6 @@ namespace UCM.IAV.Practica2
                 // cambia direccion
                 rand = rnd.Next();
             }
-
-            // reset del generador de random
-            rnd.Reset(0, 3);
         }
 
         private Vector3 SetStartPos()
