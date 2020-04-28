@@ -2,12 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//THE RECOMMENDED POSITION OF THE LAMP IS 5/-5X 10Y 0Z WITHOUT ANY ROTATION
 public class Lamp : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject lever;   //Lever that affects this lamp
+    private Lever lever_;
+
     private bool fall;
     private Behaviour halo;
 
-    public void Fall()
+    //Makes the lamp fall down
+    //Returns true if succeed
+    public bool Fall()
     {
         if (!fall)
         {
@@ -23,10 +30,14 @@ public class Lamp : MonoBehaviour
 
 
             fall = true;
+            return true;
         }
-
+        return false;
     }
-    public void Repair()
+
+    //Repairs the lamp
+    //Returns true if succeed
+    public bool Repair()
     {
         if (fall)
         {
@@ -40,16 +51,21 @@ public class Lamp : MonoBehaviour
             //Turn halo on
             halo.enabled = true;
 
-            fall = false;
+            fall = false;           
+            return true;
         }
+        return false;
     }
 
     //Getters and Setters
-    public bool FalledDown() { return fall; }
+    //public bool FalledDown() { return fall; }
 
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Lamp start!");
+        lever_ = lever.GetComponent<Lever>();
+
         //Initial state
         fall = false;
         halo = (Behaviour)transform.GetChild(0).gameObject.GetComponent("Halo");
