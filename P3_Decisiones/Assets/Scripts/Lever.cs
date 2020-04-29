@@ -49,15 +49,14 @@ public class Lever : MonoBehaviour
     {
         if( Input.GetKeyDown(KeyCode.F) && enemy_inside)
         {
-            Toggle();
+            TurnOff();
         }
     }
 
-
-    public void Toggle()
+    public void TurnOff()
     {
         //If green button is turned on
-        if (status)
+        if (status && enemy_inside)
         {
             //Sets the off status and makes the lamp fall
             on_button.SetActive(false);
@@ -65,13 +64,14 @@ public class Lever : MonoBehaviour
             status = false;
             lamp_.Fall();
         }
+    }
+
+    public void TurnOn()
+    {
         //If red button is turned on
-        else if (enemy_inside)
-        {
-            //Sets the ready(on) status
-            on_button.SetActive(true);
-            off_button.SetActive(false);
-            status = true;
-        }
+        //Sets the ready(on) status
+        on_button.SetActive(true);
+        off_button.SetActive(false);
+        status = true;
     }
 }

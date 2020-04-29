@@ -40,7 +40,9 @@ public class Lamp : MonoBehaviour
             // Encender el halo
             halo.enabled = true;
             // Actualiza el booleano de caida
-            fall = false;           
+            fall = false;
+            //Actualizar la palanca correspondiente
+            lever_.TurnOn();
             return true;
         }
         return false;
