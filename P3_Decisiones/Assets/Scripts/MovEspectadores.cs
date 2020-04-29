@@ -25,7 +25,7 @@ public class MovEspectadores : MonoBehaviour
             Debug.LogError("The NavMeshAgent is not attached to:" + gameObject.name);
         // Booleano de la lampara
         fallEast = fallWest = false;
-        if (lampEast == null || lampWest)
+        if (lampEast == null || lampWest == null)
             Debug.LogError("The lamp is not attached to: " + gameObject.name);
         else {
             fallEast = lampEast.GetComponent<Lamp>().FalledDown();
@@ -34,13 +34,13 @@ public class MovEspectadores : MonoBehaviour
     }
     void Update() {
         // Si la lampara esta caida, entonces ir a ese destino
-        if ((fallEast || fallWest) && destination != null) {
+        if ((lampEast.GetComponent<Lamp>().FalledDown() || lampWest.GetComponent<Lamp>().FalledDown()) && destination != null) {
             // Llevar a esa direccion el gameObject por la mesh
             Vector3 targetVec = destination.transform.position;
             navMeshAgent.SetDestination(targetVec);
         }
         // Si la lampara ha vuelto a su sitio, volver a su posicion inicial
-        if (!fallEast && !fallWest) {
+        if (!lampEast.GetComponent<Lamp>().FalledDown() && !lampWest.GetComponent<Lamp>().FalledDown()) {
             navMeshAgent.SetDestination(initialPos);
         }
     }
