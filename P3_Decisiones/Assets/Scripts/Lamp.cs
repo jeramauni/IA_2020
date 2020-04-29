@@ -1,72 +1,55 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-//THE RECOMMENDED POSITION OF THE LAMP IS 5/-5X 10Y 0Z WITHOUT ANY ROTATION
+// La posicion recomendada de la lampara es 5/-5 x, 10 y, 0 z sin ninguna rotacion
 public class Lamp : MonoBehaviour
 {
+    // La palanca que afecta a la lampara
     [SerializeField]
-    private GameObject lever;   //Lever that affects this lamp
+    private GameObject lever;   
     private Lever lever_;
-
-    private bool fall;
     private Behaviour halo;
+    // Booleano para saber si esta caida o no
+    public bool fall;
 
-    //Makes the lamp fall down
-    //Returns true if succeed
-    public bool Fall()
-    {
-        if (!fall)
-        {
-            //On ground position
+    // Hace que la lampara se caiga. Devuelve true si se ha caido exitosamente
+    public bool Fall() {
+        if (!fall) {
+            // En la posicion del suelo
             this.transform.position = new Vector3(transform.position.x, 1.4f, transform.position.z);
             this.transform.Rotate(-100, 0, 0);
-
-            //Turn off directional light
+            // Apagar la luz direccional
             transform.GetChild(1).gameObject.SetActive(false);
-
-            //Turn halo off
+            // Apagar el halo
             halo.enabled = false;
-
-
+            // Actualiza el booleano de caida
             fall = true;
             return true;
         }
         return false;
     }
-
-    //Repairs the lamp
-    //Returns true if succeed
-    public bool Repair()
-    {
-        if (fall)
-        {
-            //On ceiling position
+    // Repara la lampara. Devuelve true si se ha hecho con exito
+    public bool Repair() {
+        if (fall) {
+            // En la posicion del techo
             this.transform.position = new Vector3(transform.position.x, 10.0f, transform.position.z);
             this.transform.Rotate(100, 0, 0);
-
-            //Turn directional light back on
+            // Encender la luz direccional
             transform.GetChild(1).gameObject.SetActive(true);
-
-            //Turn halo on
+            // Encender el halo
             halo.enabled = true;
-
+            // Actualiza el booleano de caida
             fall = false;           
             return true;
         }
         return false;
     }
 
-    //Getters and Setters
-    //public bool FalledDown() { return fall; }
+    // Getters and Setters
+    public bool FalledDown() { return fall; }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Debug.Log("Lamp start!");
+    void Start() {
         lever_ = lever.GetComponent<Lever>();
-
-        //Initial state
+        // Estado inicial
         fall = false;
         halo = (Behaviour)transform.GetChild(0).gameObject.GetComponent("Halo");
     }
