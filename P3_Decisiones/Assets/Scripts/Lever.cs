@@ -9,7 +9,7 @@ public class Lever : MonoBehaviour
     private GameObject on_button;
     private GameObject off_button;
 
-    private bool player_inside;
+    private bool enemy_inside;
     private bool status;
 
     void Awake()
@@ -21,38 +21,34 @@ public class Lever : MonoBehaviour
 
     void Start()
     {
-        player_inside = false;
+        enemy_inside = false;
         //Starts with status on
         status = true;
         on_button.SetActive(true);
         off_button.SetActive(false);
-        Debug.Log("Lever start!");
     }
 
     //Detection of player position related to area of lever influence
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Enemy"))
         {
-            Debug.Log("Player inside!");
-            player_inside = true;
+            enemy_inside = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Enemy"))
         {
-            Debug.Log("Player exit!");
-            player_inside = false;
+            enemy_inside = false;
         }
     }
 
     void Update()
     {
-        if( Input.GetKeyDown(KeyCode.F) && player_inside)
+        if( Input.GetKeyDown(KeyCode.F) && enemy_inside)
         {
-            Debug.Log("F key pressed!");
             Toggle();
         }
     }
@@ -72,7 +68,7 @@ public class Lever : MonoBehaviour
             lamp_.Fall();
         }
         //If red button is turned on
-        else if (player_inside)
+        else if (enemy_inside)
         {
             //Sets the ready(on) status
             on_button.SetActive(true);
