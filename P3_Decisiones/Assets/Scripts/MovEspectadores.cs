@@ -4,7 +4,9 @@ using UnityEngine.AI;
 public class MovEspectadores : MonoBehaviour
 {
     [SerializeField]
-    private GameObject lamp;
+    private GameObject lampEast;
+    [SerializeField]
+    private GameObject lampWest;
     [SerializeField]
     private Transform destination;
     [SerializeField]
@@ -12,7 +14,8 @@ public class MovEspectadores : MonoBehaviour
     // Posicion inicial a la que volver cuando la lampara vuelva a su sitio
     private Vector3 initialPos;
     // Booleano para saber si la lampara esta caida o no
-    private bool fall;
+    private bool fallEast;
+    private bool fallWest;
     void Start() {
         // Asignar la posicion inicial
         initialPos = transform.position;
@@ -21,20 +24,23 @@ public class MovEspectadores : MonoBehaviour
         if (navMeshAgent == null)
             Debug.LogError("The NavMeshAgent is not attached to:" + gameObject.name);
         // Booleano de la lampara
-        fall = false;
-        if (lamp == null)
+        fallEast = fallWest = false;
+        if (lampEast == null || lampWest == null)
             Debug.LogError("The lamp is not attached to: " + gameObject.name);
-        else fall = lamp.GetComponent<Lamp>().fall;
+        else {
+            fallEast = lampEast.GetComponent<Lamp>().FalledDown();
+            fallWest = lampWest.GetComponent<Lamp>().FalledDown();
+        }
     }
     void Update() {
         // Si la lampara esta caida, entonces ir a ese destino
-        if (fall && destination != null) {
+        if ((lampEast.GetComponent<Lamp>().FalledDown() || lampWest.GetComponent<Lamp>().FalledDown()) && destination != null) {
             // Llevar a esa direccion el gameObject por la mesh
             Vector3 targetVec = destination.transform.position;
             navMeshAgent.SetDestination(targetVec);
         }
         // Si la lampara ha vuelto a su sitio, volver a su posicion inicial
-        if (!fall) {
+        if (!lampEast.GetComponent<Lamp>().FalledDown() && !lampWest.GetComponent<Lamp>().FalledDown()) {
             navMeshAgent.SetDestination(initialPos);
         }
     }
