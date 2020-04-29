@@ -11,6 +11,7 @@ public class MoveToClickPoint : MonoBehaviour {
     {
         agent = GetComponent<NavMeshAgent>();
     }
+
     void Update() {
         if (Input.GetMouseButtonDown(0)) {
 
@@ -22,5 +23,14 @@ public class MoveToClickPoint : MonoBehaviour {
         }
 
         
+    }
+
+    void LateUpdate()
+    {
+
+        Vector3 v = agent.velocity.normalized;
+        v.y = 0;
+        Vector3 f = this.transform.position + v;
+        this.transform.LookAt(f);
     }
 }

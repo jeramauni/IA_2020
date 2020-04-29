@@ -44,4 +44,12 @@ public class MovEspectadores : MonoBehaviour
             navMeshAgent.SetDestination(initialPos);
         }
     }
+    void LateUpdate()
+    {
+
+        Vector3 v = navMeshAgent.velocity.normalized;
+        v.y = 0;
+        Vector3 f = this.transform.position + v;
+        this.transform.LookAt(f);
+    }
 }
