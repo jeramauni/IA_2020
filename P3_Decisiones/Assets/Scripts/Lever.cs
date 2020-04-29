@@ -56,8 +56,6 @@ public class Lever : MonoBehaviour
 
     public void Toggle()
     {
-        Debug.Log("Toggle!");
-
         //If green button is turned on
         if (status)
         {
