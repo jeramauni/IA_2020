@@ -13,7 +13,7 @@ namespace BehaviorDesigner.Runtime.Tasks
         [Tooltip("The minimum wait time if random wait is enabled")]
         public SharedFloat randomWaitMin = 1;
         [Tooltip("The maximum wait time if random wait is enabled")]
-        public SharedFloat randomWaitMax = 1;
+        public SharedFloat randomWaitMax = 3;
 
         // The time to wait
         private float waitDuration;
