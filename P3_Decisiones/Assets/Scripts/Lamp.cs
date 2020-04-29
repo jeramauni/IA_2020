@@ -9,6 +9,7 @@ public class Lamp : MonoBehaviour
     private Lever lever_;
     private Behaviour halo;
     // Booleano para saber si esta caida o no
+    [HideInInspector]
     public bool fall;
 
     // Hace que la lampara se caiga. Devuelve true si se ha caido exitosamente
