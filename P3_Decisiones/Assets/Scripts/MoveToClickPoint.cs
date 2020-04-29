@@ -7,6 +7,7 @@ public class MoveToClickPoint : MonoBehaviour {
     void Start() {
         agent = GetComponent<NavMeshAgent>();
     }
+
     void Update() {
         if (Input.GetMouseButtonDown(0)) {
             RaycastHit hit;
@@ -14,5 +15,14 @@ public class MoveToClickPoint : MonoBehaviour {
                 agent.destination = hit.point;
             }
         }
+    }
+
+    void LateUpdate()
+    {
+
+        Vector3 v = agent.velocity.normalized;
+        v.y = 0;
+        Vector3 f = this.transform.position + v;
+        this.transform.LookAt(f);
     }
 }
