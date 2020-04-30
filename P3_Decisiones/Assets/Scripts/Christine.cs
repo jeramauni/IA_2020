@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using BehaviorDesigner.Runtime;
 
 public class Christine : MonoBehaviour
 {
@@ -10,6 +11,12 @@ public class Christine : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+    }
+    public void Grabbed()
+    {
+       var grab_ = GlobalVariables.Instance.GetVariable("Grabbed_global");
+        grab_.SetValue(true);
+        GlobalVariables.Instance.SetVariable("Grabbed_global", grab_);
     }
     void LateUpdate()
     {
