@@ -16,7 +16,13 @@ public class Christine : MonoBehaviour
     {
         var grab_ = GlobalVariables.Instance.GetVariable("Grabbed_global");
         grab_.SetValue(b);
-        GlobalVariables.Instance.SetVariable("Grabbed_global", grab_);
+        GlobalVariables.Instance.SetVariable("Grabbed_global", grab_);      
+    }
+    public void SetLlevando(bool b)
+    {
+        var llevando_ = GlobalVariables.Instance.GetVariable("llevando");
+        llevando_.SetValue(b);
+        GlobalVariables.Instance.SetVariable("llevando", llevando_);
     }
     void LateUpdate()
     {
