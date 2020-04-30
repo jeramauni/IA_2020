@@ -12,10 +12,10 @@ public class Christine : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
     }
-    public void Grabbed()
+    public void SetGrabbed(bool b)
     {
-       var grab_ = GlobalVariables.Instance.GetVariable("Grabbed_global");
-        grab_.SetValue(true);
+        var grab_ = GlobalVariables.Instance.GetVariable("Grabbed_global");
+        grab_.SetValue(b);
         GlobalVariables.Instance.SetVariable("Grabbed_global", grab_);
     }
     void LateUpdate()
