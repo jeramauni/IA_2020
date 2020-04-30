@@ -45,14 +45,6 @@ public class Lever : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if(enemy_inside)
-        {
-            TurnOff();
-        }
-    }
-
     public void TurnOff()
     {
         //If green button is turned on
