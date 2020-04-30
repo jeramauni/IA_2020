@@ -4,6 +4,8 @@ using UnityEngine.AI;
 public class MovEspectadores : MonoBehaviour
 {
     [SerializeField]
+    private Fantasma phantom;
+    [SerializeField]
     private GameObject lampEast;
     [SerializeField]
     private GameObject lampWest;
@@ -11,7 +13,6 @@ public class MovEspectadores : MonoBehaviour
     private Transform destination;
     // Numero de hijos de espectadores
     private int numChildren;
-    private NavMeshAgent[] navMeshAgent;
     // Posicion inicial a la que volver cuando la lampara vuelva a su sitio
     private Vector3[] initialPos;
     // Booleanos para saber si las lamparas se han caido
@@ -20,15 +21,16 @@ public class MovEspectadores : MonoBehaviour
     // Booleano que se pone a true si alguna de las lamparas se ha caido
     private bool toogle = false;
     private void Start() {
+        // El fantasma no debe poder pasar por el escenario en un principio
+        phantom.SetNavMeshCost(NavMesh.GetAreaFromName("Escenario"), 1000);
+        // Numero de hijos
         numChildren = transform.childCount;
         // Declarar cual es el tamaño del array
         initialPos = new Vector3[numChildren];
-        navMeshAgent = new NavMeshAgent[numChildren];
         // Coger la posicion inicial de cada espectaador
         for (int i = 0; i < numChildren; ++i) {
             initialPos[i] = transform.GetChild(i).position;
-            navMeshAgent[i] = transform.GetChild(i).GetComponent<NavMeshAgent>();
-            if (navMeshAgent[i] == null)
+            if (transform.GetChild(i).GetComponent<NavMeshAgent>() == null)
                 Debug.LogError("The NavMeshAgent is not attached to:" + transform.GetChild(i).name);
         }
     }
@@ -56,7 +58,8 @@ public class MovEspectadores : MonoBehaviour
                 // Llevar a esa direccion el gameObject por la mesh
                 Vector3 targetVec = destination.transform.position;
                 transform.GetChild(i).GetComponent<NavMeshAgent>().SetDestination(targetVec);
-                NavMesh.SetAreaCost(NavMesh.GetAreaFromName("Escenario"), 5);
+                // Cuando se van todos, el movimiento del fantasma por el escenario es menor
+                phantom.SetNavMeshCost(NavMesh.GetAreaFromName("Escenario"), 1);
             }
         }
     }
@@ -66,16 +69,15 @@ public class MovEspectadores : MonoBehaviour
         for (int i = 0; i < numChildren; i++)
             transform.GetChild(i).GetComponent<NavMeshAgent>().SetDestination(initialPos[i]);
         // Establecer el coste de la malla de navegacion en "muy alto" para que el fantasma no pase por ahi mientras hay espectadores
-        NavMesh.SetAreaCost(NavMesh.GetAreaFromName("Escenario"), 1000);
+        phantom.SetNavMeshCost(NavMesh.GetAreaFromName("Escenario"), 1000);
     }
     // Corregir el moviminento de los espectadores
     private void LateUpdate() {
         for (int i = 0; i < numChildren; i++) {
-            Vector3 v = navMeshAgent[i].velocity.normalized;
+            Vector3 v = transform.GetChild(i).GetComponent<NavMeshAgent>().velocity.normalized;
             v.y = 0;
-            Vector3 f = this.transform.position + v;
-            this.transform.LookAt(f);
-            
+            Vector3 f = transform.GetChild(i).position + v;
+            transform.GetChild(i).LookAt(f);
         }
     }
     // Getters y Setters
