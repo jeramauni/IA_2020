@@ -71,11 +71,10 @@ public class MovEspectadores : MonoBehaviour
     // Corregir el moviminento de los espectadores
     private void LateUpdate() {
         for (int i = 0; i < numChildren; i++) {
-            Vector3 v = navMeshAgent[i].velocity.normalized;
+            Vector3 v = transform.GetChild(i).GetComponent<NavMeshAgent>().velocity.normalized;
             v.y = 0;
-            Vector3 f = this.transform.position + v;
-            this.transform.LookAt(f);
-            
+            Vector3 f = transform.GetChild(i).position + v;
+            transform.GetChild(i).LookAt(f);
         }
     }
     // Getters y Setters
