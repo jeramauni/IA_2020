@@ -3,7 +3,13 @@ using UnityEngine.AI;
 
 public class MovBarca : MonoBehaviour
 {
+    // Link (salto por donde va la barca)
     public NavMeshLink link;
+    // Posicion inicial en 'Y' de la barca
+    private float myYPosition;
+    private void Start() {
+        myYPosition = transform.position.y;
+    }
     // Cuando la barca se empieza a usar por el FANTASMA o RAOUL, hacer que se mueva con ellos
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Player")
@@ -17,12 +23,15 @@ public class MovBarca : MonoBehaviour
     // Cuando la barca ha sido usada, invertir la posicion del link
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Trigger") {
+            // Resetear la barca
             transform.SetParent(null);
             transform.localRotation = Quaternion.identity;
-
+            transform.position = new Vector3(transform.position.x, myYPosition, transform.position.z);
+            // Invertir el link
             Vector3 aux = link.startPoint;
             link.startPoint = link.endPoint;
             link.endPoint = aux;
+
         }
     }
 }
