@@ -12,9 +12,6 @@ public class Fantasma : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         SetNavMeshCost(NavMesh.GetAreaFromName("Escenario"), 1000);
     }
-    private void Update() {
-        Debug.Log(navMeshAgent.GetAreaCost(3));
-    }
     // Getters y Setters
     public void SetNavMeshCost(int areaIdex, float areaCost) {
         navMeshAgent.SetAreaCost(areaIdex, areaCost);
