@@ -21,8 +21,6 @@ public class MovEspectadores : MonoBehaviour
     // Booleano que se pone a true si alguna de las lamparas se ha caido
     private bool toogle = false;
     private void Start() {
-        // El fantasma no debe poder pasar por el escenario en un principio
-        phantom.SetNavMeshCost(NavMesh.GetAreaFromName("Escenario"), 1000);
         // Numero de hijos
         numChildren = transform.childCount;
         // Declarar cual es el tamaño del array
