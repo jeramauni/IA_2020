@@ -11,7 +11,7 @@ NavMeshProjectSettings:
     cost: 1
   - name: Jump
     cost: 2
-  - name: escenario
+  - name: Escenario
     cost: 1000
   - name: 
     cost: 1
