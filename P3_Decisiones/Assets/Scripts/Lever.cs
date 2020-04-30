@@ -47,7 +47,7 @@ public class Lever : MonoBehaviour
 
     void Update()
     {
-        if( Input.GetKeyDown(KeyCode.F) && enemy_inside)
+        if(enemy_inside)
         {
             TurnOff();
         }

@@ -3,6 +3,8 @@
 // La posicion recomendada de la lampara es 5/-5 x, 10 y, 0 z sin ninguna rotacion
 public class Lamp : MonoBehaviour
 {
+    // Script del movimineto de los espectadores
+    public MovEspectadores movEspectadoresScript;
     // La palanca que afecta a la lampara
     [SerializeField]
     private GameObject lever;   
@@ -16,6 +18,7 @@ public class Lamp : MonoBehaviour
     // Hace que la lampara se caiga. Devuelve true si se ha caido exitosamente
     public bool Fall() {
         if (!fall) {
+            movEspectadoresScript.SetToggle(true);
             // En la posicion del suelo
             this.transform.position = new Vector3(transform.position.x, 1.4f, transform.position.z);
             this.transform.Rotate(-100, 0, 0);
@@ -32,6 +35,7 @@ public class Lamp : MonoBehaviour
     // Repara la lampara. Devuelve true si se ha hecho con exito
     public bool Repair() {
         if (fall) {
+            movEspectadoresScript.SetToggle(true);
             // En la posicion del techo
             this.transform.position = new Vector3(transform.position.x, 10.0f, transform.position.z);
             this.transform.Rotate(100, 0, 0);
