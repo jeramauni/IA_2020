@@ -69,7 +69,7 @@ public class MovEspectadores : MonoBehaviour
         // Establecer el coste de la malla de navegacion en "muy alto" para que el fantasma no pase por ahi mientras hay espectadores
         phantom.SetNavMeshCost(NavMesh.GetAreaFromName("Escenario"), 1000);
     }
-    // Corregir el moviminento de los espectadores
+    // Corregir el lugar hacia el que miran los espectadores
     private void LateUpdate() {
         for (int i = 0; i < numChildren; i++) {
             Vector3 v = transform.GetChild(i).GetComponent<NavMeshAgent>().velocity.normalized;

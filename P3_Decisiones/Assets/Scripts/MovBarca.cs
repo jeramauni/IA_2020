@@ -1,30 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class MovBarca : MonoBehaviour
 {
     public NavMeshLink link;
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Enemy")
-        {
+    // Cuando la barca se empieza a usar por el FANTASMA o RAOUL, hacer que se mueva con ellos
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Player")
             transform.SetParent(collision.collider.transform);
-        }
     }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Enemy")
-        {
+    // Cuando la barca deja de ser usada por el FANTASMA o RAOUL, que vuelva a ser independiente
+    private void OnCollisionExit(Collision collision) {
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Player")
             transform.SetParent(null);
-        }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Trigger")
-        {
+    // Cuando la barca ha sido usada, invertir la posicion del link
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.tag == "Trigger") {
             transform.SetParent(null);
             transform.localRotation = Quaternion.identity;
 
