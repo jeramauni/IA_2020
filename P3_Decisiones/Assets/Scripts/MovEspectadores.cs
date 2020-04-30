@@ -76,6 +76,12 @@ public class MovEspectadores : MonoBehaviour
             v.y = 0;
             Vector3 f = transform.GetChild(i).position + v;
             transform.GetChild(i).LookAt(f);
+            // Si estan en las butacas, mirar hacia el frente
+            float range = 0.5f;
+            if (transform.GetChild(i).transform.position.x < initialPos[i].x + range && transform.GetChild(i).transform.position.x > initialPos[i].x - range) {
+                if (transform.GetChild(i).transform.position.z < initialPos[i].z + range && transform.GetChild(i).transform.position.z > initialPos[i].z - range)
+                    transform.GetChild(i).LookAt(new Vector3(0, transform.GetChild(i).transform.position.y, 10));
+            }
         }
     }
     // Getters y Setters
