@@ -15,6 +15,13 @@ public class Christine : MonoBehaviour
         coll = GetComponent<Collider>();
         agent = GetComponent<NavMeshAgent>();
     }
+    // Corregir la direccion de su mirada
+    void LateUpdate() {
+        Vector3 v = agent.velocity.normalized;
+        v.y = 0;
+        Vector3 f = this.transform.position + v;
+        this.transform.LookAt(f);
+    }
     // Cuando ha sido cogida por el fantasma, y hasta que Raoul no la consuele, hacer que no haga nada
     public void SetGrabbed(bool b) {
         var grab_ = GlobalVariables.Instance.GetVariable("Grabbed_global");
@@ -39,12 +46,5 @@ public class Christine : MonoBehaviour
             transform.SetParent(null);
             coll.enabled = true;
         }
-    }
-    // Corregir la direccion de su mirada
-    void LateUpdate() {
-        Vector3 v = agent.velocity.normalized;
-        v.y = 0;
-        Vector3 f = this.transform.position + v;
-        this.transform.LookAt(f);
     }
 }

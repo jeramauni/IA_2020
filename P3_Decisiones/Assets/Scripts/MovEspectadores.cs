@@ -22,6 +22,7 @@ public class MovEspectadores : MonoBehaviour
     private bool toogle = false;
     // Booleano que detecta cuando están en la salida
     private bool onExit = false;
+    // Establecer todos los valores iniciales
     private void Start() {
         // Numero de hijos
         numChildren = transform.childCount;
@@ -34,14 +35,32 @@ public class MovEspectadores : MonoBehaviour
                 Debug.LogError("The NavMeshAgent is not attached to:" + transform.GetChild(i).name);
         }
     }
+    // Si algun booleano ha cambiado, ejecuta la orden
     private void Update() {
-        // Si algun booleano ha cambiado, ejecuta la orden
         if (toogle) {
             lampRiFallen = lampEast.GetComponent<Lamp>().FalledDown();
             lampLeFallen = lampWest.GetComponent<Lamp>().FalledDown();
             ExecuteOrder();
         }
         toogle = false;
+    }
+    // Corregir el lugar hacia el que miran los espectadores
+    private void LateUpdate() {
+        // Si no estan en la salida
+        if (!onExit) {
+            for (int i = 0; i < numChildren; i++) {
+                Vector3 v = transform.GetChild(i).GetComponent<NavMeshAgent>().velocity.normalized;
+                v.y = 0;
+                Vector3 f = transform.GetChild(i).position + v;
+                transform.GetChild(i).LookAt(f);
+                // Si estan en las butacas, mirar hacia el frente
+                float range = 0.5f;
+                if (transform.GetChild(i).transform.position.x < initialPos[i].x + range && transform.GetChild(i).transform.position.x > initialPos[i].x - range) {
+                    if (transform.GetChild(i).transform.position.z < initialPos[i].z + range && transform.GetChild(i).transform.position.z > initialPos[i].z - range)
+                        transform.GetChild(i).LookAt(new Vector3(0, transform.GetChild(i).transform.position.y, 10));
+                }
+            }
+        }     
     }
     // Ejecutar la orden pertinente
     private void ExecuteOrder() {
@@ -70,26 +89,6 @@ public class MovEspectadores : MonoBehaviour
             transform.GetChild(i).GetComponent<NavMeshAgent>().SetDestination(initialPos[i]);
         // Establecer el coste de la malla de navegacion en "muy alto" para que el fantasma no pase por ahi mientras hay espectadores
         phantom.SetNavMeshCost(NavMesh.GetAreaFromName("Escenario"), 1000);
-    }
-    // Corregir el lugar hacia el que miran los espectadores
-    private void LateUpdate() {
-        if (!onExit)
-        {
-            for (int i = 0; i < numChildren; i++)
-            {
-                Vector3 v = transform.GetChild(i).GetComponent<NavMeshAgent>().velocity.normalized;
-                v.y = 0;
-                Vector3 f = transform.GetChild(i).position + v;
-                transform.GetChild(i).LookAt(f);
-                // Si estan en las butacas, mirar hacia el frente
-                float range = 0.5f;
-                if (transform.GetChild(i).transform.position.x < initialPos[i].x + range && transform.GetChild(i).transform.position.x > initialPos[i].x - range)
-                {
-                    if (transform.GetChild(i).transform.position.z < initialPos[i].z + range && transform.GetChild(i).transform.position.z > initialPos[i].z - range)
-                        transform.GetChild(i).LookAt(new Vector3(0, transform.GetChild(i).transform.position.y, 10));
-                }
-            }
-        }     
     }
     // Getters y Setters
     public void SetToggle(bool b) { toogle = b; }
