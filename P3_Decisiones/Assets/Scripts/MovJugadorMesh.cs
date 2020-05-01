@@ -31,11 +31,8 @@ public class MovJugadorMesh : MonoBehaviour
             christine.SetGrabbed(false);
             christine.SetLlevando(false);
 
-        }
-
-        }
+        }      
         if (al_alcance && llevando) {
-            Debug.Log("Liberada del fantasma");
             christine.SetLlevando(false);
             christine.SetGrabbed(false);
         }
@@ -122,7 +119,6 @@ public class MovJugadorMesh : MonoBehaviour
             var llevando_ = GlobalVariables.Instance.GetVariable("llevando");
             llevando = (bool)llevando_.GetValue();
             if (llevando) {
-                texto.SetActive(true);
                 al_alcance = true;
             }
         }
