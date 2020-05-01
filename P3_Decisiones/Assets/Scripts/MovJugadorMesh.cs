@@ -81,7 +81,7 @@ public class MovJugadorMesh : MonoBehaviour
 
         }
 
-        if (al_alcance && llevando) //&& Input.GetKeyDown(KeyCode.F)
+        if (al_alcance && llevando)
         {
             Debug.Log("Liberada del fantasma");
             christine.SetLlevando(false);
