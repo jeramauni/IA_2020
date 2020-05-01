@@ -16,4 +16,11 @@ public class Fantasma : MonoBehaviour
     public void SetNavMeshCost(int areaIdex, float areaCost) {
         navMeshAgent.SetAreaCost(areaIdex, areaCost);
     }
+    void LateUpdate()
+    {
+        Vector3 v = navMeshAgent.velocity.normalized;
+        v.y = 0;
+        Vector3 f = this.transform.position + v;
+        this.transform.LookAt(f);
+    }
 }

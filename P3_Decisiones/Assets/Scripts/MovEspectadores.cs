@@ -20,6 +20,8 @@ public class MovEspectadores : MonoBehaviour
     private bool lampRiFallen = false;
     // Booleano que se pone a true si alguna de las lamparas se ha caido
     private bool toogle = false;
+    // Booleano que detecta cuando están en la salida
+    private bool onExit = false;
     private void Start() {
         // Numero de hijos
         numChildren = transform.childCount;
@@ -71,19 +73,25 @@ public class MovEspectadores : MonoBehaviour
     }
     // Corregir el lugar hacia el que miran los espectadores
     private void LateUpdate() {
-        for (int i = 0; i < numChildren; i++) {
-            Vector3 v = transform.GetChild(i).GetComponent<NavMeshAgent>().velocity.normalized;
-            v.y = 0;
-            Vector3 f = transform.GetChild(i).position + v;
-            transform.GetChild(i).LookAt(f);
-            // Si estan en las butacas, mirar hacia el frente
-            float range = 0.5f;
-            if (transform.GetChild(i).transform.position.x < initialPos[i].x + range && transform.GetChild(i).transform.position.x > initialPos[i].x - range) {
-                if (transform.GetChild(i).transform.position.z < initialPos[i].z + range && transform.GetChild(i).transform.position.z > initialPos[i].z - range)
-                    transform.GetChild(i).LookAt(new Vector3(0, transform.GetChild(i).transform.position.y, 10));
+        if (!onExit)
+        {
+            for (int i = 0; i < numChildren; i++)
+            {
+                Vector3 v = transform.GetChild(i).GetComponent<NavMeshAgent>().velocity.normalized;
+                v.y = 0;
+                Vector3 f = transform.GetChild(i).position + v;
+                transform.GetChild(i).LookAt(f);
+                // Si estan en las butacas, mirar hacia el frente
+                float range = 0.5f;
+                if (transform.GetChild(i).transform.position.x < initialPos[i].x + range && transform.GetChild(i).transform.position.x > initialPos[i].x - range)
+                {
+                    if (transform.GetChild(i).transform.position.z < initialPos[i].z + range && transform.GetChild(i).transform.position.z > initialPos[i].z - range)
+                        transform.GetChild(i).LookAt(new Vector3(0, transform.GetChild(i).transform.position.y, 10));
+                }
             }
-        }
+        }     
     }
     // Getters y Setters
     public void SetToggle(bool b) { toogle = b; }
+    public void SetExit(bool b) { onExit = b; }
 }
