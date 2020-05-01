@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using BehaviorDesigner.Runtime;
 public class MovJugadorMesh : MonoBehaviour
 {
     private NavMeshAgent navMeshAgent;
@@ -7,12 +8,86 @@ public class MovJugadorMesh : MonoBehaviour
     private Vector3 vel;
     // Booleano para saber si esta usando la barca
     private bool usingBoat = false;
+    // Booleanos para el control de la situación de Christine
+    private bool animable = false;
+    private bool llevando = false;
+    private bool al_alcance = false;
+
+
+    // Notificacion pulsar F
+    [SerializeField]
+    private GameObject texto;
+    // Christine
+    [SerializeField]
+    private Christine christine;
     void Awake() {
         navMeshAgent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Christine"))
+        {
+            var grabbed_ = GlobalVariables.Instance.GetVariable("Grabbed_global");
+            if ((bool)grabbed_.GetValue())
+            {
+                animable = true;
+                texto.SetActive(true);
+            }
+        }
+        if (other.CompareTag("Enemy"))
+        {
+            var llevando_ = GlobalVariables.Instance.GetVariable("llevando");
+            llevando = (bool)llevando_.GetValue();
+            if (llevando)
+            {
+                texto.SetActive(true);
+                al_alcance = true;
+            }
+        }
+    }
+
+    void OnTriggerExit (Collider other)
+    {
+        if (!llevando && other.CompareTag("Christine"))
+        {
+            animable = false;
+            texto.SetActive(false);
+        }
+
+        if (llevando && other.CompareTag("Christine"))
+        {
+            texto.SetActive(false);
+        }
+
+        if (llevando && other.CompareTag("Enemy"))
+        {
+            texto.SetActive(false);
+            al_alcance = false;
+        }
+    }
+
     // Movimiento de Raoul
-    void Update() {
+    void Update() 
+    {
+        // Animar y liberar Christine
+
+        if (animable && Input.GetKeyDown(KeyCode.F))
+        {            
+            Debug.Log("Liberada");
+            christine.SetGrabbed(false);
+            christine.SetLlevando(false);
+
+        }
+
+        if (al_alcance && llevando) //&& Input.GetKeyDown(KeyCode.F)
+        {
+            Debug.Log("Liberada del fantasma");
+            christine.SetLlevando(false);
+            christine.SetGrabbed(false);
+        }
+
         // Para que pueda viajar en barco hay que capar las direcciones manualmente
         // Puente OESTE
         if (transform.position.x > -20 && transform.position.x < -18 && transform.position.z > 24 && transform.position.z < 51) {

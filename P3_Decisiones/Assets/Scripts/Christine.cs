@@ -20,24 +20,32 @@ public class Christine : MonoBehaviour
         var grab_ = GlobalVariables.Instance.GetVariable("Grabbed_global");
         grab_.SetValue(b);
         GlobalVariables.Instance.SetVariable("Grabbed_global", grab_);
-        agent.enabled = !agent.enabled;
+        grab_ = GlobalVariables.Instance.GetVariable("Grabbed_global");
+        Debug.Log("Grabbed: " + (bool)grab_.GetValue());
+        if (b)
+        {
+            agent.enabled = false;
+        }
+        else
+        {
+            agent.enabled = true;
+        }
     }
     // Mientras este siendo llevada por el fantasma, hacer que se mueva a la vez que el
     public void SetLlevando(bool b) {
         var llevando_ = GlobalVariables.Instance.GetVariable("llevando");
         llevando_.SetValue(b);
         GlobalVariables.Instance.SetVariable("llevando", llevando_);
-        // Hacer que vaya de la mano del fantasma
+        // Hacer que vaya de la mano del fantasma y cambiar el collider cuando la coge o la suelta
+
         if (b) {
-            Debug.Log("ESTOY SIENDO LLEVADA");
             transform.SetParent(Phantom);
+            coll.enabled = false;
         }
         else {
-            Debug.Log("ME HAN SOLTADO");
             transform.SetParent(null);
+            coll.enabled = true;
         }
-        // Cambiar el collider cuando la coge o la suelta
-        coll.enabled = !coll.enabled;
     }
     // Corregir la direccion de su mirada
     void LateUpdate() {
