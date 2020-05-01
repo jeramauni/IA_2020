@@ -75,7 +75,6 @@ public class MovJugadorMesh : MonoBehaviour
 
         if (animable && Input.GetKeyDown(KeyCode.F))
         {            
-            Debug.Log("Liberada");
             christine.SetGrabbed(false);
             christine.SetLlevando(false);
 
@@ -83,7 +82,6 @@ public class MovJugadorMesh : MonoBehaviour
 
         if (al_alcance && llevando)
         {
-            Debug.Log("Liberada del fantasma");
             christine.SetLlevando(false);
             christine.SetGrabbed(false);
         }
