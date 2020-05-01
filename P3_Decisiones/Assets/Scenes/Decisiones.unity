@@ -21029,6 +21029,7 @@ GameObject:
   - component: {fileID: 902925940}
   - component: {fileID: 902925942}
   - component: {fileID: 902925939}
+  - component: {fileID: 902925943}
   m_Layer: 0
   m_Name: Raoul
   m_TagString: Player
@@ -21043,7 +21044,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902925938}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17e54b633ca6b534e99bccffa9992a19, type: 3}
   m_Name: 
@@ -21101,6 +21102,18 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &902925943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902925938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c476068416eb63e4588635188a44a31a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!23 &902925944
 MeshRenderer:
   m_ObjectHideFlags: 0
