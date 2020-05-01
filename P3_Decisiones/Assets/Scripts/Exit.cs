@@ -1,25 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Exit : MonoBehaviour
 {
     public MovEspectadores espectadores_;
     private bool onExit = false;
-
-    void OnTriggerEnter (Collider other)
-    {
-        if (!onExit && other.gameObject.CompareTag("Espectador"))
-        {
+    // Cuando la salida colisiona con el espectador, avisar a los espectadores de que estan en la salida
+    void OnTriggerEnter (Collider other) {
+        if (!onExit && other.gameObject.CompareTag("Espectador")) {
             espectadores_.SetExit(true);
             onExit = true;
         }
     }
-
-    void OnTriggerExit (Collider other)
-    {
-        if (onExit && other.gameObject.CompareTag("Espectador"))
-        {
+    // Cuando sale, volver a avisarles
+    void OnTriggerExit (Collider other) {
+        if (onExit && other.gameObject.CompareTag("Espectador")) {
             espectadores_.SetExit(false);
             onExit = false;
         }
