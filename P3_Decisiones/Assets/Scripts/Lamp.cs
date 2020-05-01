@@ -14,6 +14,9 @@ public class Lamp : MonoBehaviour
     private bool fall;
     //  Booleano para el control de la posicion del jugador
     private bool player_inside = false;
+    // Notificacion de pulsar F
+    [SerializeField]
+    private GameObject notification;
     // Inicializar todas las variables
     private void Start() {
         lever_ = lever.GetComponent<Lever>();
@@ -67,12 +70,14 @@ public class Lamp : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Player")) {
             player_inside = true;
+            notification.SetActive(true);
         }
     }
     // Deteccion de la salida del jugador del area de influencia
     private void OnTriggerExit(Collider other) {
         if (other.CompareTag("Player")) {
             player_inside = false;
+            notification.SetActive(false);
         }
     }
 

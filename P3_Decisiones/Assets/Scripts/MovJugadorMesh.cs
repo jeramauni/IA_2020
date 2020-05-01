@@ -36,7 +36,7 @@ public class MovJugadorMesh : MonoBehaviour
                 texto.SetActive(true);
             }
         }
-        if (other.CompareTag("Enemy"))
+        else if (other.CompareTag("Enemy"))
         {
             var llevando_ = GlobalVariables.Instance.GetVariable("llevando");
             llevando = (bool)llevando_.GetValue();
@@ -50,18 +50,18 @@ public class MovJugadorMesh : MonoBehaviour
 
     void OnTriggerExit (Collider other)
     {
-        if (!llevando && other.CompareTag("Christine"))
+        if ( other.CompareTag("Christine"))
         {
             animable = false;
             texto.SetActive(false);
         }
 
-        if (llevando && other.CompareTag("Christine"))
-        {
-            texto.SetActive(false);
-        }
+        /* if (llevando && other.CompareTag("Christine"))
+         {
+             texto.SetActive(false);
+         }*/
 
-        if (llevando && other.CompareTag("Enemy"))
+        else if ( other.CompareTag("Enemy") && llevando)
         {
             texto.SetActive(false);
             al_alcance = false;
