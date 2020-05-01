@@ -7,6 +7,7 @@ public class MovBarca : MonoBehaviour
     public NavMeshLink link;
     // Posicion inicial en 'Y' de la barca
     private float myYPosition;
+    // Coger la posicion inicial por si se altera al moverla
     private void Start() {
         myYPosition = transform.position.y;
     }
