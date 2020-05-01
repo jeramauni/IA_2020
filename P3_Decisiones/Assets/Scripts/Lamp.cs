@@ -14,7 +14,19 @@ public class Lamp : MonoBehaviour
     private bool fall;
     //  Booleano para el control de la posicion del jugador
     private bool player_inside = false;
-
+    // Inicializar todas las variables
+    private void Start() {
+        lever_ = lever.GetComponent<Lever>();
+        // Estado inicial
+        fall = false;
+        halo = (Behaviour)transform.GetChild(0).gameObject.GetComponent("Halo");
+    }
+    // Cuando se pulsa 'F' y el jugador esta dentro, reparar la lampara
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.F) && player_inside) {
+            Repair();
+        }
+    }
     // Hace que la lampara se caiga. Devuelve true si se ha caido exitosamente
     public bool Fall() {
         if (!fall) {
@@ -51,39 +63,19 @@ public class Lamp : MonoBehaviour
         }
         return false;
     }
-
-    // Getters and Setters
-    public bool FalledDown() { return fall; }
-
-    //Detection of player position related to area of lamp influence
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
+    // Deteccion del jugador en el area de influencia de la lampara
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Player")) {
             player_inside = true;
         }
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
+    // Deteccion de la salida del jugador del area de influencia
+    private void OnTriggerExit(Collider other) {
+        if (other.CompareTag("Player")) {
             player_inside = false;
         }
     }
 
-    void Start() {
-        lever_ = lever.GetComponent<Lever>();
-        // Estado inicial
-        fall = false;
-        halo = (Behaviour)transform.GetChild(0).gameObject.GetComponent("Halo");
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F) && player_inside)
-        {
-            Repair();
-        }
-    }
+    // Getters and Setters
+    public bool FalledDown() { return fall; }
 }
